@@ -1,10 +1,11 @@
 #include "SitioWeb.h"
 
-SitioWeb::SitioWeb(std::string nom, std::string ur):nombre(nom),url(ur), etiqueta(""),marcado(false)
+SitioWeb::SitioWeb(std::string dom, std::string titu, std::string ur) :dominio(dom), titulo(titu), url(ur), etiqueta(""), marcado(false) 
 {
+
 }
 
-SitioWeb::SitioWeb() :nombre(""), url(""), etiqueta(""), marcado(false)
+SitioWeb::SitioWeb() :dominio(""), titulo(""), url(""), etiqueta(""), marcado(false)
 {
 }
 
@@ -28,9 +29,14 @@ std::string SitioWeb::getEtiqueta()
 	return etiqueta;
 }
 
-std::string SitioWeb::getNombre()
+std::string SitioWeb::getTitulo()
 {
-	return nombre;
+	return titulo;
+}
+
+std::string SitioWeb::getDominio()
+{
+	return dominio;
 }
 
 std::string SitioWeb::getUrl()
@@ -48,9 +54,14 @@ void SitioWeb::setEtiqueta(std::string tag)
 	etiqueta = tag;
 }
 
-void SitioWeb::setNombre(std::string nom)
+void SitioWeb::setTitulo(std::string titu)
 {
-	nombre = nom;
+	titulo = titu;
+}
+
+void SitioWeb::setDominio(std::string dom)
+{
+	dominio = dom;	
 }
 
 void SitioWeb::setUrl(std::string ur)

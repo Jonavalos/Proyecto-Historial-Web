@@ -1,6 +1,6 @@
 #include "Pestana.h"
 
-std::vector<SitioWeb*> Pestana::sitiosPermitidos;
+std::vector<SitioWeb*> Pestana::sitiosDisponibles;
 
 Pestana::Pestana()
 {
@@ -17,7 +17,7 @@ void Pestana::leerSitios(std::fstream& arc)
 Pestana::~Pestana()
 {
 	if (this->sitio ==nullptr) {
-		delete sitio;		//No se si deberia borrar
+		//delete sitio;		//No se si deberia borrar, por ahora no, eventualmente
 	}
 }
 
@@ -25,7 +25,7 @@ void Pestana::vaciarLista()
 {
 	std::vector<SitioWeb*>::iterator iter;
 
-	for (iter = sitiosPermitidos.begin(); iter != sitiosPermitidos.end(); iter++) {
+	for (iter = sitiosDisponibles.begin(); iter != sitiosDisponibles.end(); iter++) {
 		delete (*iter);
 	}
 }

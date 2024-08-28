@@ -6,7 +6,7 @@
 class Pestana
 {
 private:
-	static std::vector<SitioWeb*>  sitiosPermitidos;
+	static std::vector<SitioWeb*>  sitiosDisponibles;
 	SitioWeb* sitio;
 public:
 	Pestana();

@@ -1,9 +1,11 @@
-#include <iostream>
-
+#include "Pestana.h"
 
 int main() {
 
-	std::cout << "hello world\n";
+	SitioWeb google("google.com", "Google", "https::www.google.com");
+	google.setMarcado(true);
+	google.setEtiqueta("buscador");
+	std::cout << google.toString() << '\n';
 
 	return 0;
 }
