@@ -7,8 +7,8 @@
 class SitioWeb
 {
 private:
-	bool marcado;
-	std::string marcador;
+	bool marcado; //bookmark
+	std::string etiqueta; //tag
 	std::string nombre;
 	std::string url;
 public:
@@ -17,11 +17,11 @@ public:
 	virtual~SitioWeb();
 	static SitioWeb leer(std::fstream& arch);		//Debe ser en binario
 	bool getMarcado();
-	std::string getMarcador();
+	std::string getEtiqueta();
 	std::string getNombre();
 	std::string getUrl();
 	void setMarcado(bool mar);
-	void setMarcador(std::string mar);
+	void setEtiqueta(std::string mar);
 	void setNombre(std::string nom);
 	void setUrl(std::string ur);
 

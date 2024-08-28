@@ -1,10 +1,10 @@
 #include "SitioWeb.h"
 
-SitioWeb::SitioWeb(std::string nom, std::string ur):nombre(nom),url(ur),marcador(""),marcado(false)
+SitioWeb::SitioWeb(std::string nom, std::string ur):nombre(nom),url(ur), etiqueta(""),marcado(false)
 {
 }
 
-SitioWeb::SitioWeb() :nombre(""), url(""), marcador(""), marcado(false)
+SitioWeb::SitioWeb() :nombre(""), url(""), etiqueta(""), marcado(false)
 {
 }
 
@@ -23,9 +23,9 @@ bool SitioWeb::getMarcado()
 	return marcado;
 }
 
-std::string SitioWeb::getMarcador()
+std::string SitioWeb::getEtiqueta()
 {
-	return marcador;
+	return etiqueta;
 }
 
 std::string SitioWeb::getNombre()
@@ -43,9 +43,9 @@ void SitioWeb::setMarcado(bool mar)
 	marcado = mar;
 }
 
-void SitioWeb::setMarcador(std::string mar)
+void SitioWeb::setEtiqueta(std::string tag)
 {
-	marcador = mar;
+	etiqueta = tag;
 }
 
 void SitioWeb::setNombre(std::string nom)
