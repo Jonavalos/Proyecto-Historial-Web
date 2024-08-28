@@ -3,30 +3,36 @@
 #include<sstream>
 #include<string>
 #include<fstream>
-
+#define SEPARA_DATO ' '
+#define SEPARA_REGISTRO '\n'
 class SitioWeb
 {
 private:
-	bool marcado;			//bookmark
-	std::string etiqueta;	//tag
+	
 	std::string titulo;		//Google (nombre)
 	std::string dominio;	//google.com
-	std::string url;		//https::www.google.com/algo
+	std::string url;		//https//::www.google.com/algo (no usar // porque lo comenta)			
+	std::string etiqueta;	//tag
+	bool marcado;			//bookmark
 public:
-	SitioWeb(std::string dom, std::string titu, std::string ur);
+	SitioWeb(std::string titu, std::string dom, std::string ur);
+	SitioWeb(std::string titu, std::string dom, std::string ur, std::string etiqueta, bool marcado);
 	SitioWeb();
 	virtual~SitioWeb();
-	static SitioWeb leer(std::fstream& arch);		//Debe ser en binario
-	bool getMarcado();
-	std::string getEtiqueta();
+	
 	std::string getTitulo();
 	std::string getDominio();
 	std::string getUrl();
-	void setMarcado(bool mar);
-	void setEtiqueta(std::string mar);
+	std::string getEtiqueta();
+	bool getMarcado();
+	
 	void setTitulo(std::string titu);
 	void setDominio(std::string dom);
 	void setUrl(std::string ur);
+	void setEtiqueta(std::string mar);
+	void setMarcado(bool mar);
+
+	static SitioWeb* recuperar(std::fstream& strm);
 
 	std::string toString() {
 		std::stringstream s;

@@ -2,7 +2,7 @@
 #include"SitioWeb.h"
 #include<forward_list>
 #include<vector>
-#include<fstream>
+
 class Pestana
 {
 private:
@@ -10,7 +10,7 @@ private:
 	SitioWeb* sitio;
 public:
 	Pestana();
-	static void leerSitios(std::fstream& arc);
+	static void leerSitiosDisponibles();
 	virtual~Pestana();
 	void vaciarLista();
 	SitioWeb* getSitio();

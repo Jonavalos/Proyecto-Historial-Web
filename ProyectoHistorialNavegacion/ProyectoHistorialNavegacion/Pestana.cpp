@@ -7,11 +7,15 @@ Pestana::Pestana()
 	sitio=nullptr;
 }
 
-void Pestana::leerSitios(std::fstream& arc)
+void Pestana::leerSitiosDisponibles()
 {
-	//while (!arc.eof()) {
-	//	sitiosPermitidos.push_back(SitioWeb::leer(arc));	//Ve la direccion de memoria del nuevo sitioWeb
-	//}
+	std::fstream strm("sitiosDispinibles.csv", std::ios::in);
+	std::string  tituloStr = "", dominioStr = "", urlStr = "", marcadoStr = "", etiquetaStr = "";
+
+	while (std::getline(strm, marcadoStr, SEPARA_DATO)) {
+
+	}
+
 }
 
 Pestana::~Pestana()

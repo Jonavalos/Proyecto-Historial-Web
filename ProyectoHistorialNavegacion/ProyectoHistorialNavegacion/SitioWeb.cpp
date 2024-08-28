@@ -1,11 +1,14 @@
 #include "SitioWeb.h"
 
-SitioWeb::SitioWeb(std::string dom, std::string titu, std::string ur) :dominio(dom), titulo(titu), url(ur), etiqueta(""), marcado(false) 
+SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur) : titulo(titu), dominio(dom), url(ur), etiqueta(""), marcado(false)
 {
 
 }
 
-SitioWeb::SitioWeb() :dominio(""), titulo(""), url(""), etiqueta(""), marcado(false)
+SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur, std::string etiqueta, bool marcado)
+	: titulo(titu), dominio(dom), url(ur), etiqueta(etiqueta), marcado(marcado) {}
+
+SitioWeb::SitioWeb() : titulo(""), dominio(""), url(""), etiqueta(""), marcado(false)
 {
 }
 
@@ -14,20 +17,7 @@ SitioWeb::~SitioWeb()
 
 }
 
-SitioWeb SitioWeb::leer(std::fstream& arch)
-{
-	return SitioWeb();		//Desarrollar
-}
 
-bool SitioWeb::getMarcado()
-{
-	return marcado;
-}
-
-std::string SitioWeb::getEtiqueta()
-{
-	return etiqueta;
-}
 
 std::string SitioWeb::getTitulo()
 {
@@ -44,15 +34,17 @@ std::string SitioWeb::getUrl()
 	return url;
 }
 
-void SitioWeb::setMarcado(bool mar)
+std::string SitioWeb::getEtiqueta()
 {
-	marcado = mar;
+	return etiqueta;
 }
 
-void SitioWeb::setEtiqueta(std::string tag)
+bool SitioWeb::getMarcado()
 {
-	etiqueta = tag;
+	return marcado;
 }
+
+
 
 void SitioWeb::setTitulo(std::string titu)
 {
@@ -68,3 +60,40 @@ void SitioWeb::setUrl(std::string ur)
 {
 	url = ur;
 }
+
+void SitioWeb::setEtiqueta(std::string tag)
+{
+	etiqueta = tag;
+}
+
+void SitioWeb::setMarcado(bool mar)
+{
+	marcado = mar;
+}
+
+
+
+SitioWeb* SitioWeb::recuperar(std::fstream& strm) //binario
+{
+	SitioWeb* sitio = new SitioWeb();
+	strm.read(reinterpret_cast<char*>(sitio), sizeof(SitioWeb));
+	return sitio;
+}
+
+
+/*
+std::fstream strm("sitiosDispinibles.csv", std::ios::in);
+		std::string  tituloStr = "", dominioStr = "", urlStr = "", etiquetaStr = "", marcadoStr = "";
+
+		std::getline(strm, tituloStr, SEPARA_DATO);
+		std::getline(strm, dominioStr, SEPARA_DATO);
+		std::getline(strm, urlStr, SEPARA_DATO);
+		std::getline(strm, etiquetaStr, SEPARA_REGISTRO);
+		std::getline(strm, marcadoStr, SEPARA_DATO);
+
+
+		if (tituloStr == "" || dominioStr == "" || urlStr == "")
+			return nullptr;
+
+		return new SitioWeb(blabla)
+*/

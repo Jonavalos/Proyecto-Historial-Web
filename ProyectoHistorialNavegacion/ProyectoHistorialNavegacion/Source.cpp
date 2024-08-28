@@ -7,5 +7,8 @@ int main() {
 	google.setEtiqueta("buscador");
 	std::cout << google.toString() << '\n';
 
+
+
+
 	return 0;
 }
