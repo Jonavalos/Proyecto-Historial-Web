@@ -7,15 +7,21 @@ Pestana::Pestana()
 	sitio=nullptr;
 }
 
+Pestana::Pestana(SitioWeb* si)
+{
+	sitio = si;
+}
+
 void Pestana::leerSitiosDisponibles()
 {
 	std::fstream strm("sitiosDispinibles.csv", std::ios::in);
-	std::string  tituloStr = "", dominioStr = "", urlStr = "", marcadoStr = "", etiquetaStr = "";
-
-	while (std::getline(strm, marcadoStr, SEPARA_DATO)) {
-
+	if (strm.good() && strm.is_open()) {
+		SitioWeb* aux;
+		while ((aux = SitioWeb::recuperar(strm)) != nullptr) {
+			sitiosDisponibles.push_back(aux);
+		}
 	}
-
+	strm.close();
 }
 
 Pestana::~Pestana()
@@ -42,4 +48,15 @@ SitioWeb* Pestana::getSitio()
 void Pestana::setSitio(SitioWeb& si)		//Por referencia
 {
 	sitio = &si;
+}
+
+void Pestana::guardar(std::fstream& strm)
+{
+	sitio->guardar(strm);
+}
+
+Pestana* Pestana::recuperar(std::fstream& strm)
+{
+	SitioWeb* aux = SitioWeb::recuperar(strm);
+	return new Pestana(aux);
 }

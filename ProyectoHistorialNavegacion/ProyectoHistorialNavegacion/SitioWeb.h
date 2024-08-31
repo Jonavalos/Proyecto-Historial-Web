@@ -5,6 +5,7 @@
 #include<fstream>
 #define SEPARA_DATO ' '
 #define SEPARA_REGISTRO '\n'
+#define LONGITUD_MAXIMA_STRING 50
 class SitioWeb
 {
 private:
@@ -32,17 +33,10 @@ public:
 	void setEtiqueta(std::string mar);
 	void setMarcado(bool mar);
 
+	void guardar(std::fstream& strm);
 	static SitioWeb* recuperar(std::fstream& strm);
 
-	std::string toString() {
-		std::stringstream s;
-		s << "[		" << url << "			]" << '\n';
-		s << "[	" << dominio << "		-> "  << titulo << "		]" << '\n';
-		if (marcado)
-			s << "[		" << "Marcado(Bookmark): activo" << "		]" << '\n';
-		s << "[		" << "Etiqueta(Tag): " << etiqueta << "			]" << '\n';
-		return s.str();
-	}
+	std::string toString();
 
 };
 

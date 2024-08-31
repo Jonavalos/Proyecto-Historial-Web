@@ -10,10 +10,14 @@ private:
 	SitioWeb* sitio;
 public:
 	Pestana();
+	Pestana(SitioWeb* si);
 	static void leerSitiosDisponibles();
 	virtual~Pestana();
 	void vaciarLista();
 	SitioWeb* getSitio();
 	void setSitio(SitioWeb& si);
+
+	void guardar(std::fstream& strm);
+	static Pestana* recuperar(std::fstream& strm);
 };
 

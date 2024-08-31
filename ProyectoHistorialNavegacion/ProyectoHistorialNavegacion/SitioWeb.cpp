@@ -73,11 +73,52 @@ void SitioWeb::setMarcado(bool mar)
 
 
 
-SitioWeb* SitioWeb::recuperar(std::fstream& strm) //binario
+void SitioWeb::guardar(std::fstream& strm)	//Binario
 {
-	SitioWeb* sitio = new SitioWeb();
-	strm.read(reinterpret_cast<char*>(sitio), sizeof(SitioWeb));
-	return sitio;
+	const char* tit = titulo.c_str();
+	const char* domi = dominio.c_str();
+	const char* ur = url.c_str();
+	const char* etiq = etiqueta.c_str();
+	bool marca = marcado;
+
+	strm.write(tit, LONGITUD_MAXIMA_STRING);	
+	strm.write(domi, LONGITUD_MAXIMA_STRING);
+	strm.write(ur, LONGITUD_MAXIMA_STRING);
+	strm.write(etiq, LONGITUD_MAXIMA_STRING);
+	strm.write(reinterpret_cast<char*>(&marca), sizeof(bool));
+}
+
+SitioWeb* SitioWeb::recuperar(std::fstream& strm) //Binario
+{
+	char tit[LONGITUD_MAXIMA_STRING];
+	char domi[LONGITUD_MAXIMA_STRING];
+	char ur[LONGITUD_MAXIMA_STRING];
+	char etiq[LONGITUD_MAXIMA_STRING];
+	bool marca;
+
+	strm.read(tit, LONGITUD_MAXIMA_STRING);
+	strm.read(domi, LONGITUD_MAXIMA_STRING);
+	strm.read(ur, LONGITUD_MAXIMA_STRING);
+	strm.read(etiq, LONGITUD_MAXIMA_STRING);
+	strm.read(reinterpret_cast<char*>(&marca), sizeof(bool));
+
+	if (strm.fail()) {
+		//Ocurrio un error, deberia tirar excepcion
+		return nullptr;
+	}
+
+	return new SitioWeb(tit, domi, ur, etiq, marca);
+}
+
+std::string SitioWeb::toString()
+{
+	std::stringstream s;
+	s << "[		" << url << "			]" << '\n';
+	s << "[	" << dominio << "		-> " << titulo << "		]" << '\n';
+	if (marcado)
+		s << "[		" << "Marcado(Bookmark): activo" << "		]" << '\n';
+	s << "[		" << "Etiqueta(Tag): " << etiqueta << "			]" << '\n';
+	return s.str();
 }
 
 
