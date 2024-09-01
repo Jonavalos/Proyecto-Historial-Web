@@ -124,6 +124,15 @@ std::string Pestana::toString()
 
 	return s.str();
 }
+std::string Pestana::imprimir()
+{
+	std::stringstream s;
+
+	s << "~~	PESTANA		~~" << '\n';
+	s << sitioActual->toString();
+	s << "~~	FinPestana	~~" << '\n';
+	return s.str();
+}
 int indice = 0;
 std::string Pestana::navegarPorHistorialStr()
 {

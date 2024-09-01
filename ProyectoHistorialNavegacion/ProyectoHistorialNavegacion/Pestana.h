@@ -29,6 +29,8 @@ public:
 
 	std::string toString();
 
+	std::string imprimir(); //imprime el actual dentro de la pestana
+
 	std::string navegarPorHistorialStr();
 
 	void navegarPorHistorial();

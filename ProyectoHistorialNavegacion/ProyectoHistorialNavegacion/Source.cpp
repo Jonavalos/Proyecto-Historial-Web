@@ -17,7 +17,7 @@ int main() {
     Pestana* pestana2 = new Pestana();
     std::cout << pestana2->asignarActual("yahoo.com") << '\n';
     pestana2->navegarPorHistorial();
-    std::cout << pestana2->getSitioActual()->toString() << '\n';
+    std::cout << pestana2->imprimir() << '\n';
 
 
 
