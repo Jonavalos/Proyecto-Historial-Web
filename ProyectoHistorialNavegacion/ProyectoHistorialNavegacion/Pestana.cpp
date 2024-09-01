@@ -183,13 +183,42 @@ std::string Pestana::navegarPorHistorialStr()
 	return s.str();
 }
 
+std::string Pestana::navegarPorHistorialStr2()
+{
+	std::stringstream s;
+	s << " >>>>>>>>>>>>>>>>	Historial		<<<<<<<<<<<<<<<<" << '\n';
+	s << "salir (Q), moverse (<-  ->),  " << '\n';
+
+	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+		if (indice - 1 >= 0) {
+			s << "Posicion:" << indice - 1 << "/" << historialSitios.size() - 1 << '\n';
+			s << historialSitios.at(indice - 1)->toString() << '\n';
+			indice--;
+		}
+	}
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+		if (indice + 1 < historialSitios.size()) {
+			s << "Posicion:" << indice + 1 << "/" << historialSitios.size() - 1 << '\n';
+			s << historialSitios.at(indice + 1)->toString() << '\n';
+			indice++;
+		}
+	}
+	else {
+		return "";
+	}
+	
+	s << " >>>>>>>>>>>>>>>>	Fin	Historial	<<<<<<<<<<<<<<<<" << '\n';
+
+	return s.str();
+}
+
 void Pestana::navegarPorHistorial()
 {
 	char tecla;
 	std::cout << "Posicion:" << 0 << "/" << historialSitios.size() - 1 << '\n';
 	std::cout << *historialSitios.at(0) << '\n';
 	while (true) {
-		std::string h = navegarPorHistorialStr();
+		std::string h = navegarPorHistorialStr2();
 
 		if (h!="") {
 			std::cout << h << '\n';

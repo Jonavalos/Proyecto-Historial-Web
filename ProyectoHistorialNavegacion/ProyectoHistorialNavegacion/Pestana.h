@@ -3,6 +3,7 @@
 #include<forward_list>
 #include<vector>
 #include <algorithm>
+#include <windows.h>
 class Pestana
 {
 private:
@@ -32,6 +33,7 @@ public:
 	std::string imprimir(); //imprime el actual dentro de la pestana
 
 	std::string navegarPorHistorialStr();
+	std::string navegarPorHistorialStr2();
 
 	void navegarPorHistorial();
 };
