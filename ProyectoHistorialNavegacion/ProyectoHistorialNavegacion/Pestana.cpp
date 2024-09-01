@@ -145,10 +145,10 @@ std::string Pestana::navegarPorHistorialStr()
 
 	tecla = _getch();  // Captura una tecla
 
-	if (tecla == ENTER) {
-		setSitio(historialSitios.at(indice));
-		return "sitioActual actualizado.   <-  ->  para navegar.   Q para salir \n";
-	}
+	//if (tecla == ENTER) { "cada vez que se navega por el historial, no se debe intentar visitar el sitio web"
+		//setSitio(historialSitios.at(indice));
+		//return "sitioActual actualizado.   <-  ->  para navegar.   Q para salir \n";
+	//}
 
 	if (tecla == 0 || tecla == -32) {// Esto es necesario para detectar las teclas especiales como las flechas
 		
