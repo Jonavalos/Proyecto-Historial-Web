@@ -3,6 +3,7 @@
 #include<sstream>
 #include<string>
 #include<fstream>
+#include <conio.h>
 #define SEPARA_DATO ' '
 #define SEPARA_REGISTRO '\n'
 #define LONGITUD_MAXIMA_STRING 50

@@ -25,11 +25,13 @@ public:
 	//busca el sitioWeb y lo asigna al atributo sitioActual
 	bool asignarActual(std::string dominio);
 
-	std::string mostrarHistorial();
+	std::string mostrarHistorialCompleto();
 
 	std::string toString();
 
+	std::string navegarPorHistorialStr();
 
+	void navegarPorHistorial();
 };
 
 

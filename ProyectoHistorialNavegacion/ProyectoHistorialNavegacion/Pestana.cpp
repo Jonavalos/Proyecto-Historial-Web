@@ -1,4 +1,6 @@
 #include "Pestana.h"
+#define FLECHA_IZQ 75
+#define FLECHA_DER 77
 
 std::vector<SitioWeb*> Pestana::sitiosDisponibles;
 std::vector<SitioWeb*> Pestana::historialSitios;
@@ -95,7 +97,7 @@ bool Pestana::asignarActual(std::string dominio)
 	*/
 }
 
-std::string Pestana::mostrarHistorial()
+std::string Pestana::mostrarHistorialCompleto()
 {
 	std::stringstream s;
 	s << '\n';
@@ -115,8 +117,70 @@ std::string Pestana::toString()
 	std::stringstream s;
 	s << " >>>>>>>>>>>>>>>>	PESTANA		<<<<<<<<<<<<<<<<" << '\n';
 	s << sitioActual->toString();
-	s << mostrarHistorial() << '\n';
+	s << mostrarHistorialCompleto() << '\n';
 	s << " >>>>>>>>>>>>>>>>	Fin		<<<<<<<<<<<<<<<<" << '\n';
 
 	return s.str();
+}
+int indice = 0;
+std::string Pestana::navegarPorHistorialStr()
+{
+	//system("pause");
+	//system("cls");
+	std::stringstream s;
+	s << " >>>>>>>>>>>>>>>>	Historial		<<<<<<<<<<<<<<<<" << '\n';
+	s << "Flecha de abajo para salir, Izq o Der para moverse" << '\n';
+	char tecla;
+
+	tecla = _getch();  // Captura una tecla
+
+
+
+	if (tecla == 0 || tecla == -32) {
+		// Esto es necesario para capturar las teclas especiales como las flechas
+		tecla = _getch();
+
+		if (tecla != FLECHA_IZQ && tecla != FLECHA_DER)
+			return "";
+
+		if (tecla == FLECHA_IZQ) { //izq
+			if (indice - 1 >= 0) {
+				s << "Posicion:" << indice - 1 << '\n';
+				s << historialSitios.at(indice - 1)->toString() << '\n';
+				indice--;
+			}
+		}
+		if (tecla == FLECHA_DER) { //der
+			if (indice + 1 < historialSitios.size()) {
+				s << "Posicion:" << indice + 1 << '\n';
+				s << historialSitios.at(indice + 1)->toString() << '\n';
+				indice++;
+			}
+		}
+		
+	}
+
+
+	s << " >>>>>>>>>>>>>>>>	Fin	Historial	<<<<<<<<<<<<<<<<" << '\n';
+
+	return s.str();
+}
+
+void Pestana::navegarPorHistorial()
+{
+	 // Captura una tecla
+	std::cout<<"Posicion:" << 0 << '\n';
+	std::cout << *historialSitios.at(0) << '\n';
+	while (true) {
+		std::string h = navegarPorHistorialStr();
+
+		if (h!="") {
+			std::cout << h << '\n';
+		}
+		else {
+			break;
+		}
+		
+	}
+
 }
