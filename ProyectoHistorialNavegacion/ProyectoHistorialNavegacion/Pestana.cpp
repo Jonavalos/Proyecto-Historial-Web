@@ -140,7 +140,7 @@ std::string Pestana::navegarPorHistorialStr()
 	//system("cls");
 	std::stringstream s;
 	s << " >>>>>>>>>>>>>>>>	Historial		<<<<<<<<<<<<<<<<" << '\n';
-	s << "salir (Q), moverse (<-  ->), ir a sitio(enter) " << '\n';
+	s << "salir (Q), moverse (<-  ->),  " << '\n';
 	char tecla;
 
 	tecla = _getch();  // Captura una tecla
