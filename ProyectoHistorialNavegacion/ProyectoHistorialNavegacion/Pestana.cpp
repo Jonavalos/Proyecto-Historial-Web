@@ -1,8 +1,8 @@
 #include "Pestana.h"
-#define FLECHA_IZQ 75
-#define FLECHA_DER 77
-#define ENTER 13
-
+#define FLECHA_IZQ GetAsyncKeyState(VK_LEFT) & 0x8000
+#define FLECHA_DER GetAsyncKeyState(VK_RIGHT) & 0x8000
+#define ESCAPE GetAsyncKeyState(VK_ESCAPE) & 0x8000
+#define NO_FLECHAS_NI_ESC (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000))
 std::vector<SitioWeb*> Pestana::sitiosDisponibles;
 std::vector<SitioWeb*> Pestana::historialSitios;
 
@@ -134,79 +134,42 @@ std::string Pestana::imprimir()
 	return s.str();
 }
 int indice = 0;
+
 std::string Pestana::navegarPorHistorialStr()
 {
-	//system("pause");
-	//system("cls");
-	std::stringstream s;
-	s << " >>>>>>>>>>>>>>>>	Historial		<<<<<<<<<<<<<<<<" << '\n';
-	s << "salir (Q), moverse (<-  ->),  " << '\n';
-	char tecla;
-
-	tecla = _getch();  // Captura una tecla
-
-	//if (tecla == ENTER) { "cada vez que se navega por el historial, no se debe intentar visitar el sitio web"
-		//setSitio(historialSitios.at(indice));
-		//return "sitioActual actualizado.   <-  ->  para navegar.   Q para salir \n";
-	//}
-
-	if (tecla == 0 || tecla == -32) {// Esto es necesario para detectar las teclas especiales como las flechas
-		
-		tecla = _getch(); //una vez que ve que son especiales(en el if), vuelve a leerlas
-
-		if (tecla != FLECHA_IZQ && tecla != FLECHA_DER)
-			return "";
-
-		if (tecla == FLECHA_IZQ) { //izq
-			if (indice - 1 >= 0) {
-				s << "Posicion:" << indice - 1 << "/" << historialSitios.size() - 1 << '\n';
-				s << historialSitios.at(indice - 1)->toString() << '\n';
-				indice--;
-			}
-		}
-		if (tecla == FLECHA_DER) { //der
-			if (indice + 1 < historialSitios.size()) {
-				s << "Posicion:" << indice + 1 << "/" << historialSitios.size() - 1 << '\n';
-				s << historialSitios.at(indice + 1)->toString() << '\n';
-				indice++;
-			}
-		}
-		
-	}
-	else {
-		return "";
-	}
-
-
-	s << " >>>>>>>>>>>>>>>>	Fin	Historial	<<<<<<<<<<<<<<<<" << '\n';
-
-	return s.str();
-}
-
-std::string Pestana::navegarPorHistorialStr2()
-{
 	std::stringstream s;
 	s << " >>>>>>>>>>>>>>>>	Historial		<<<<<<<<<<<<<<<<" << '\n';
 	s << "salir (Q), moverse (<-  ->),  " << '\n';
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+	if (FLECHA_IZQ) {
 		if (indice - 1 >= 0) {
 			s << "Posicion:" << indice - 1 << "/" << historialSitios.size() - 1 << '\n';
 			s << historialSitios.at(indice - 1)->toString() << '\n';
 			indice--;
 		}
+		else {
+			s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+			s << historialSitios.at(indice)->toString() << '\n';
+		}
 	}
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+	if (FLECHA_DER) {
 		if (indice + 1 < historialSitios.size()) {
 			s << "Posicion:" << indice + 1 << "/" << historialSitios.size() - 1 << '\n';
 			s << historialSitios.at(indice + 1)->toString() << '\n';
 			indice++;
 		}
+		else {
+			s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+			s << historialSitios.at(indice)->toString() << '\n';
+		}
 	}
-	else {
+	if (ESCAPE) {
 		return "";
 	}
-	
+	if (NO_FLECHAS_NI_ESC) {
+		return "ingrese comando valido \n";
+	}
+
 	s << " >>>>>>>>>>>>>>>>	Fin	Historial	<<<<<<<<<<<<<<<<" << '\n';
 
 	return s.str();
@@ -218,15 +181,16 @@ void Pestana::navegarPorHistorial()
 	std::cout << "Posicion:" << 0 << "/" << historialSitios.size() - 1 << '\n';
 	std::cout << *historialSitios.at(0) << '\n';
 	while (true) {
-		std::string h = navegarPorHistorialStr2();
+		std::string h = navegarPorHistorialStr();
 
 		if (h!="") {
+			system("clear");
 			std::cout << h << '\n';
+			system("pause");
 		}
 		else {
-			break;//si puso algo diferente a flecha
+			break;
 		}
-		
 	}
 
 }
