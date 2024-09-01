@@ -138,6 +138,7 @@ int indice = 0;
 std::string Pestana::navegarPorHistorialStr()
 {
 	std::stringstream s;
+	s << imprimir() << '\n';
 	s << " >>>>>>>>>>>>>>>>	Historial		<<<<<<<<<<<<<<<<" << '\n';
 	s << "salir (Q), moverse (<-  ->),  " << '\n';
 
@@ -166,8 +167,8 @@ std::string Pestana::navegarPorHistorialStr()
 	if (ESCAPE) {
 		return "";
 	}
-	if (NO_FLECHAS_NI_ESC) {
-		return "ingrese comando valido \n";
+	if (NO_FLECHAS_NI_ESC) { // se puede mover a navegarPorHistorial(), que retorne algo diferente
+		return "Navegue con ( <-, ->, ESC ) \n";
 	}
 
 	s << " >>>>>>>>>>>>>>>>	Fin	Historial	<<<<<<<<<<<<<<<<" << '\n';

@@ -17,7 +17,6 @@ int main() {
     Pestana* pestana2 = new Pestana();
     std::cout << pestana2->asignarActual("yahoo.com") << '\n';
     pestana2->navegarPorHistorial();
-    std::cout << pestana2->imprimir() << '\n';
 
     /*
     *  std::cout << "Presiona las flechas direccionales. Presiona ESC para salir." << std::endl;
