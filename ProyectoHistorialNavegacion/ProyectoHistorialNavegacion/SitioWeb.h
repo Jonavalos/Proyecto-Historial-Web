@@ -15,12 +15,27 @@ private:
 	std::string url;		//https//::www.google.com/algo (no usar // porque lo comenta)			
 	std::string etiqueta;	//tag
 	bool marcado;			//bookmark
+
 public:
+
+	
+
+	SitioWeb(std::string dominio); //Para uso exclusivo 'find' de <algorithm>, no usar
 	SitioWeb(std::string titu, std::string dom, std::string ur);
 	SitioWeb(std::string titu, std::string dom, std::string ur, std::string etiqueta, bool marcado);
 	SitioWeb();
 	virtual~SitioWeb();
 	
+	bool operator==(const SitioWeb& obj) const { //Para uso exclusivo 'find' de <algorithm>, no verifica todo, no usar
+		return (this->dominio == obj.dominio);
+	}
+	friend std::ostream& operator<<(std::ostream& os, const SitioWeb& obj)
+	{
+		os << obj.toString();
+		return os;
+	}
+	
+
 	std::string getTitulo();
 	std::string getDominio();
 	std::string getUrl();
@@ -36,7 +51,11 @@ public:
 	void guardar(std::fstream& strm);
 	static SitioWeb* recuperar(std::fstream& strm);
 
-	std::string toString();
+
+	void guardarEnSitiosDisponibles();
+
+
+	std::string toString() const;
 
 };
 

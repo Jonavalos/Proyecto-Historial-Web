@@ -1,5 +1,10 @@
 #include "SitioWeb.h"
 
+SitioWeb::SitioWeb(std::string dominio)
+	: titulo(""), dominio(dominio), url(""), etiqueta(""), marcado(false)
+{
+}
+
 SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur) : titulo(titu), dominio(dom), url(ur), etiqueta(""), marcado(false)
 {
 
@@ -110,11 +115,20 @@ SitioWeb* SitioWeb::recuperar(std::fstream& strm) //Binario
 	return new SitioWeb(tit, domi, ur, etiq, marca);
 }
 
-std::string SitioWeb::toString()
+void SitioWeb::guardarEnSitiosDisponibles()
+{
+	std::fstream strm("sitiosDispinibles.csv", std::ios::app | std::ios::binary);
+	if(strm.good())
+		this->guardar(strm);
+	strm.close();
+
+}
+
+std::string SitioWeb::toString() const
 {
 	std::stringstream s;
 	s << "[		" << url << "			]" << '\n';
-	s << "[	" << dominio << "		-> " << titulo << "		]" << '\n';
+	s << "[		" << dominio << " -> " << titulo << "			]" << '\n';
 	if (marcado)
 		s << "[		" << "Marcado(Bookmark): activo" << "		]" << '\n';
 	s << "[		" << "Etiqueta(Tag): " << etiqueta << "			]" << '\n';
