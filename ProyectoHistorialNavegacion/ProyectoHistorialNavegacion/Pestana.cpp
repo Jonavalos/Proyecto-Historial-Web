@@ -1,6 +1,7 @@
 #include "Pestana.h"
 #define FLECHA_IZQ 75
 #define FLECHA_DER 77
+#define ENTER 13
 
 std::vector<SitioWeb*> Pestana::sitiosDisponibles;
 std::vector<SitioWeb*> Pestana::historialSitios;
@@ -56,9 +57,10 @@ SitioWeb* Pestana::getSitioActual()
 	return sitioActual;
 }
 
-void Pestana::setSitio(SitioWeb& si)		//Por referencia
+void Pestana::setSitio(SitioWeb* si)		//Por referencia
 {
-	sitioActual = &si;
+	sitioActual = si;
+	historialSitios.push_back(sitioActual);
 }
 
 void Pestana::guardarSitioActual(std::fstream& strm)
@@ -134,30 +136,36 @@ std::string Pestana::navegarPorHistorialStr()
 
 	tecla = _getch();  // Captura una tecla
 
+	if (tecla == ENTER) {
+		setSitio(historialSitios.at(indice));
+		return "sitioActual actualizado.   <-  ->  para navegar.   Q para salir \n";
+	}
 
-
-	if (tecla == 0 || tecla == -32) {
-		// Esto es necesario para capturar las teclas especiales como las flechas
-		tecla = _getch();
+	if (tecla == 0 || tecla == -32) {// Esto es necesario para detectar las teclas especiales como las flechas
+		
+		tecla = _getch(); //una vez que ve que son especiales(en el if), vuelve a leerlas
 
 		if (tecla != FLECHA_IZQ && tecla != FLECHA_DER)
 			return "";
 
 		if (tecla == FLECHA_IZQ) { //izq
 			if (indice - 1 >= 0) {
-				s << "Posicion:" << indice - 1 << '\n';
+				s << "Posicion:" << indice - 1 << "/" << historialSitios.size() - 1 << '\n';
 				s << historialSitios.at(indice - 1)->toString() << '\n';
 				indice--;
 			}
 		}
 		if (tecla == FLECHA_DER) { //der
 			if (indice + 1 < historialSitios.size()) {
-				s << "Posicion:" << indice + 1 << '\n';
+				s << "Posicion:" << indice + 1 << "/" << historialSitios.size() - 1 << '\n';
 				s << historialSitios.at(indice + 1)->toString() << '\n';
 				indice++;
 			}
 		}
 		
+	}
+	else {
+		return "";
 	}
 
 
@@ -168,8 +176,8 @@ std::string Pestana::navegarPorHistorialStr()
 
 void Pestana::navegarPorHistorial()
 {
-	 // Captura una tecla
-	std::cout<<"Posicion:" << 0 << '\n';
+	char tecla;
+	std::cout << "Posicion:" << 0 << "/" << historialSitios.size() - 1 << '\n';
 	std::cout << *historialSitios.at(0) << '\n';
 	while (true) {
 		std::string h = navegarPorHistorialStr();
@@ -178,7 +186,7 @@ void Pestana::navegarPorHistorial()
 			std::cout << h << '\n';
 		}
 		else {
-			break;
+			break;//si puso algo diferente a flecha
 		}
 		
 	}

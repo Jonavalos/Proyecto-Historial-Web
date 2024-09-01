@@ -11,11 +11,13 @@ int main() {
     Pestana* pestana = new Pestana();
     pestana->leerSitiosDisponibles();
     std::cout << pestana->asignarActual("firefox.com") << '\n';
+    std::cout << pestana->asignarActual("google.com") << '\n';
+    std::cout << pestana->asignarActual("firefox.com") << '\n';
 
     Pestana* pestana2 = new Pestana();
     std::cout << pestana2->asignarActual("yahoo.com") << '\n';
     pestana2->navegarPorHistorial();
-
+    std::cout << pestana2->getSitioActual()->toString() << '\n';
 
 
 

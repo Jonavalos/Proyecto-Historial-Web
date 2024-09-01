@@ -17,7 +17,7 @@ public:
 	void vaciarVectorSitiosDisponibles();
 	void vaciarHistorialSitios();
 	SitioWeb* getSitioActual();
-	void setSitio(SitioWeb& si);
+	void setSitio(SitioWeb* si);
 
 	void guardarSitioActual(std::fstream& strm);
 	static Pestana* recuperar(std::fstream& strm);
