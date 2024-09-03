@@ -9,6 +9,7 @@ std::vector<SitioWeb*> Pestana::historialSitios;
 
 Pestana::Pestana()
 {
+	incognito = false;
 	sitioActual = nullptr;
 	//leerSitiosDisponibles();
 }
