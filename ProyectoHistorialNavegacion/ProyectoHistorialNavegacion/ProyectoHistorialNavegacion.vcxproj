@@ -127,11 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Pantalla.cpp" />
     <ClCompile Include="Pestana.cpp" />
     <ClCompile Include="SitioWeb.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Pantalla.h" />
     <ClInclude Include="Pestana.h" />
     <ClInclude Include="SitioWeb.h" />
   </ItemGroup>

@@ -7,18 +7,20 @@
 class Pestana
 {
 private:
-	static std::vector<SitioWeb*>  sitiosDisponibles;
-	static std::vector<SitioWeb*>  historialSitios;
+	static std::vector<SitioWeb*> sitiosDisponibles;
+	static std::vector<SitioWeb*> historialSitios;
 	SitioWeb* sitioActual;
+	bool incognito;
 public:
 	Pestana();
-	Pestana(SitioWeb* si);
+	Pestana(SitioWeb* si, bool in = false);
 	static void leerSitiosDisponibles();
 	virtual~Pestana();
 	void vaciarVectorSitiosDisponibles();
 	void vaciarHistorialSitios();
 	SitioWeb* getSitioActual();
 	void setSitio(SitioWeb* si);
+
 
 	void guardarSitioActual(std::fstream& strm);
 	static Pestana* recuperar(std::fstream& strm);
@@ -29,6 +31,8 @@ public:
 	std::string mostrarHistorialCompleto();
 
 	std::string toString();
+
+	std::string encabezado();
 
 	std::string imprimir(); //imprime el actual dentro de la pestana
 
@@ -43,3 +47,4 @@ verificar si existe en vector
 setearlo en atributo
 y de ahi imprimirlo
 */
+
