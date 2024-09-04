@@ -192,7 +192,7 @@ s << historialSitios.at(indice)->toString() << '\n';
 }
 
 if (LETRA_M) {
-	s << "Apreto M\n";		//Era para asegurarme
+	s << "Apreto M\n";		//Era para asegurarme si estaba sirviendo
 }
 if (ESCAPE) {
 return "";
