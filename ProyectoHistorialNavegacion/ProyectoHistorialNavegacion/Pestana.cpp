@@ -3,7 +3,8 @@
 #define LETRA_i GetAsyncKeyState('I') & 0x8000
 #define FLECHA_DER GetAsyncKeyState(VK_RIGHT) & 0x8000
 #define ESCAPE GetAsyncKeyState(VK_ESCAPE) & 0x8000
-#define NO_FLECHAS_NI_ESC_NI_i (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) )
+#define LETRA_M GetAsyncKeyState('M') & 0x8000
+#define NO_FLECHAS_NI_ESC_NI_i_NI_m (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) && !(GetAsyncKeyState('M') & 0x8000) )
 std::vector<SitioWeb*> Pestana::sitiosDisponibles;
 std::vector<SitioWeb*> Pestana::historialSitios;
 
@@ -133,7 +134,7 @@ std::string Pestana::encabezado()
 {
 std::stringstream s;
 s << " >>>>>>>>>>>>>>>> Historial <<<<<<<<<<<<<<<<" << '\n';
-s << "salir (ESC), moverse (<- ->), incognito(i)" << '\n';
+s << "salir (ESC), moverse (<- ->), incognito(i), marcar(m)" << '\n';
 return s.str();
 }
 std::string Pestana::imprimir()//sitio actual
@@ -189,11 +190,15 @@ s << encabezado();
 s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 s << historialSitios.at(indice)->toString() << '\n';
 }
+
+if (LETRA_M) {
+	s << "Apreto M\n";		//Era para asegurarme
+}
 if (ESCAPE) {
 return "";
 }
-if (NO_FLECHAS_NI_ESC_NI_i) { // se puede mover a navegarPorHistorial(), que retorne algo diferente
-return "Navegue con ( <-, ->, ESC, i ) \n";
+if (NO_FLECHAS_NI_ESC_NI_i_NI_m) { // se puede mover a navegarPorHistorial(), que retorne algo diferente
+return "Navegue con ( <-, ->, ESC, i, m) \n";
 }
 
 s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';
