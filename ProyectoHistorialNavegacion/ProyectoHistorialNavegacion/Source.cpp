@@ -1,4 +1,4 @@
-#include "Pestana.h"
+#include "Pantalla.h"
 
 int main() {
     //SitioWeb* google = new SitioWeb("Google", "google.com", "https::www.google.com", "buscador", true);	
@@ -16,7 +16,11 @@ int main() {
 
     Pestana* pestana2 = new Pestana();
     std::cout << pestana2->asignarActual("yahoo.com") << '\n';
-    pestana2->navegarPorHistorial();
+    
+    Pantalla pantalla;
+    pantalla.agregarPestanaActual(pestana);
+    pantalla.agregarPestanaActual(pestana2);
+    pantalla.navegarPestanas();
 
     /*
     *  std::cout << "Presiona las flechas direccionales. Presiona ESC para salir." << std::endl;

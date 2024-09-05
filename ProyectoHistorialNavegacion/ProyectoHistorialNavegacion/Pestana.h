@@ -20,6 +20,7 @@ public:
 	void vaciarHistorialSitios();
 	SitioWeb* getSitioActual();
 
+	std::vector<SitioWeb*> getHistorialSitios();
 
 	void guardarSitioActual(std::fstream& strm);
 	static Pestana* recuperar(std::fstream& strm);
@@ -37,9 +38,9 @@ public:
 
 	std::string imprimir(); //imprime el actual dentro de la pestana
 
-	std::string navegar();
+	std::string navegarStr();
 
-	void navegarPorHistorial();
+	void navegar();
 };
 
 

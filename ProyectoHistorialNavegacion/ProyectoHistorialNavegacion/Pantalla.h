@@ -11,7 +11,8 @@ public:
 	Pantalla(Pestana* pestana);
 	virtual ~Pantalla();
 
-
-
+	std::string navegarPestanasStr();
+	void navegarPestanas();
+	bool agregarPestanaActual(Pestana* pestana);
 
 };

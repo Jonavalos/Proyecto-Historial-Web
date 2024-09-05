@@ -4,9 +4,20 @@
 #include<string>
 #include<fstream>
 #include <conio.h>
-#define SEPARA_DATO ' '
-#define SEPARA_REGISTRO '\n'
 #define LONGITUD_MAXIMA_STRING 50
+#define FLECHA_IZQ GetAsyncKeyState(VK_LEFT) & 0x8000
+#define FLECHA_DER GetAsyncKeyState(VK_RIGHT) & 0x8000
+#define FLECHA_UP GetAsyncKeyState(VK_UP) & 0x8000
+#define FLECHA_DOWN GetAsyncKeyState(VK_DOWN) & 0x8000
+#define LETRA_i GetAsyncKeyState('I') & 0x8000	//incognito
+#define LETRA_B GetAsyncKeyState('B') & 0x8000	//buscar
+#define LETRA_E GetAsyncKeyState('E') & 0x8000	//etiquetar
+#define ESCAPE GetAsyncKeyState(VK_ESCAPE) & 0x8000
+#define LETRA_M GetAsyncKeyState('M') & 0x8000
+#define NO_FLECHAS_NI_ESC_NI_i_NI_m (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) && !(GetAsyncKeyState('M') & 0x8000) )
+#define NO_B_NI_E (!(GetAsyncKeyState('B') & 0x8000) && !(GetAsyncKeyState('E') & 0x8000))
+#define NO_UP_DOWN (!(GetAsyncKeyState(VK_DOWN) & 0x8000) && !(GetAsyncKeyState(VK_UP) & 0x8000))
+
 class SitioWeb
 {
 private:

@@ -1,13 +1,4 @@
 #include "Pestana.h"
-#define FLECHA_IZQ GetAsyncKeyState(VK_LEFT) & 0x8000
-#define LETRA_i GetAsyncKeyState('I') & 0x8000	//incognito
-#define LETRA_B GetAsyncKeyState('B') & 0x8000	//buscar
-#define LETRA_E GetAsyncKeyState('E') & 0x8000	//etiquetar
-#define FLECHA_DER GetAsyncKeyState(VK_RIGHT) & 0x8000
-#define ESCAPE GetAsyncKeyState(VK_ESCAPE) & 0x8000
-#define LETRA_M GetAsyncKeyState('M') & 0x8000
-#define NO_FLECHAS_NI_ESC_NI_i_NI_m (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) && !(GetAsyncKeyState('M') & 0x8000) )
-#define NO_B_NI_E (!(GetAsyncKeyState('B') & 0x8000) && !(GetAsyncKeyState('E') & 0x8000))
 std::vector<SitioWeb*> Pestana::sitiosDisponibles;
 //std::vector<SitioWeb*> Pestana::historialSitios;
 
@@ -62,6 +53,11 @@ void Pestana::vaciarHistorialSitios()
 SitioWeb* Pestana::getSitioActual()
 {
 	return sitioActual;
+}
+
+std::vector<SitioWeb*> Pestana::getHistorialSitios()
+{
+	return historialSitios;
 }
 
 void Pestana::guardarSitioActual(std::fstream& strm)
@@ -160,7 +156,7 @@ return s.str();
 }
 int indice = 0;
 
-std::string Pestana::navegar()
+std::string Pestana::navegarStr()
 {
 std::stringstream s;
 
@@ -226,7 +222,12 @@ if (LETRA_E) {
 	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 	s << historialSitios.at(indice)->toString() << '\n';
 }
-
+if (FLECHA_DOWN) {
+	return "down";
+}
+if (FLECHA_UP) {
+	return "up";
+}
 if (ESCAPE) {
 return "";
 }
@@ -239,26 +240,25 @@ s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';
 return s.str();
 }
 
-void Pestana::navegarPorHistorial()
+void Pestana::navegar()
 {
-char tecla;
-std::cout << "Posicion:" << 0 << "/" << historialSitios.size() - 1 << '\n';
-std::cout << *historialSitios.at(0) << '\n';
-while (true) {
-std::string h = navegar();
-if (h == "1") {
-	system("cls");
-	h = "Pagina no encontrada";
-	system("pause");
-}
-if (h!="") {
-system("cls");
-std::cout << h << '\n';
-system("pause");
-}
-else {
-break;
-}
-}
+//std::cout << "Posicion:" << 0 << "/" << historialSitios.size() - 1 << '\n';
+//std::cout << *historialSitios.at(0) << '\n';
+//while (true) {
+//std::string h = navegarStr();
+//if (h == "1") {
+//	system("cls");
+//	h = "Pagina no encontrada";
+//	system("pause");
+//}
+//if (h!="") {
+//system("cls");
+//std::cout << h << '\n';
+//system("pause");
+//}
+//else {
+//break;
+//}
+//}
 
 }
