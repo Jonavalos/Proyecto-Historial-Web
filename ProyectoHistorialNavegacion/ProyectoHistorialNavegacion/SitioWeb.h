@@ -52,7 +52,7 @@ public:
 	void guardar(std::fstream& strm);
 	static SitioWeb* recuperar(std::fstream& strm);
 
-
+	void toggleMarcado();
 	void guardarEnSitiosDisponibles();
 
 

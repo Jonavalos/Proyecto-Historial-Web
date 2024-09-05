@@ -8,7 +8,7 @@ class Pestana
 {
 private:
 	static std::vector<SitioWeb*> sitiosDisponibles;
-	static std::vector<SitioWeb*> historialSitios;
+	std::vector<SitioWeb*> historialSitios;
 	SitioWeb* sitioActual;
 	bool incognito;
 public:
@@ -19,7 +19,6 @@ public:
 	void vaciarVectorSitiosDisponibles();
 	void vaciarHistorialSitios();
 	SitioWeb* getSitioActual();
-	void setSitio(SitioWeb* si);
 
 
 	void guardarSitioActual(std::fstream& strm);
@@ -30,13 +29,15 @@ public:
 
 	std::string mostrarHistorialCompleto();
 
-	std::string toString();
+	bool buscar();
+
+	bool etiquetar();
 
 	std::string encabezado();
 
 	std::string imprimir(); //imprime el actual dentro de la pestana
 
-	std::string navegarPorHistorialStr();
+	std::string navegar();
 
 	void navegarPorHistorial();
 };

@@ -115,6 +115,11 @@ SitioWeb* SitioWeb::recuperar(std::fstream& strm) //Binario
 	return new SitioWeb(tit, domi, ur, etiq, marca);
 }
 
+void SitioWeb::toggleMarcado()
+{
+	marcado = !marcado;
+}
+
 void SitioWeb::guardarEnSitiosDisponibles()
 {
 	std::fstream strm("sitiosDispinibles.csv", std::ios::app | std::ios::binary);

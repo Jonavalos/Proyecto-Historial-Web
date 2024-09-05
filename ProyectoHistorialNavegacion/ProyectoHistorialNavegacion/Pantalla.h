@@ -11,4 +11,7 @@ public:
 	Pantalla(Pestana* pestana);
 	virtual ~Pantalla();
 
+
+
+
 };

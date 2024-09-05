@@ -1,12 +1,15 @@
 #include "Pestana.h"
 #define FLECHA_IZQ GetAsyncKeyState(VK_LEFT) & 0x8000
-#define LETRA_i GetAsyncKeyState('I') & 0x8000
+#define LETRA_i GetAsyncKeyState('I') & 0x8000	//incognito
+#define LETRA_B GetAsyncKeyState('B') & 0x8000	//buscar
+#define LETRA_E GetAsyncKeyState('E') & 0x8000	//etiquetar
 #define FLECHA_DER GetAsyncKeyState(VK_RIGHT) & 0x8000
 #define ESCAPE GetAsyncKeyState(VK_ESCAPE) & 0x8000
 #define LETRA_M GetAsyncKeyState('M') & 0x8000
 #define NO_FLECHAS_NI_ESC_NI_i_NI_m (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) && !(GetAsyncKeyState('M') & 0x8000) )
+#define NO_B_NI_E (!(GetAsyncKeyState('B') & 0x8000) && !(GetAsyncKeyState('E') & 0x8000))
 std::vector<SitioWeb*> Pestana::sitiosDisponibles;
-std::vector<SitioWeb*> Pestana::historialSitios;
+//std::vector<SitioWeb*> Pestana::historialSitios;
 
 Pestana::Pestana()
 {
@@ -61,14 +64,6 @@ SitioWeb* Pestana::getSitioActual()
 	return sitioActual;
 }
 
-void Pestana::setSitio(SitioWeb* si) //Por referencia
-{
-	sitioActual = si;
-	if (!incognito)
-		historialSitios.push_back(sitioActual);
-
-}
-
 void Pestana::guardarSitioActual(std::fstream& strm)
 {
 	sitioActual->guardar(strm);
@@ -89,7 +84,8 @@ bool Pestana::asignarActual(std::string dominio)
 
 	if (it != sitiosDisponibles.end()) {
 		sitioActual = *it;
-		historialSitios.push_back(sitioActual);
+		if(!incognito)
+			historialSitios.push_back(sitioActual);
 		return true;
 	}
 	return false;
@@ -120,21 +116,35 @@ s << " <- Fin del historial" << '\n';
 return s.str();
 }
 
-std::string Pestana::toString()
+bool Pestana::buscar()
 {
-std::stringstream s;
-s << " >>>>>>>>>>>>>>>> PESTANA <<<<<<<<<<<<<<<<" << '\n';
-s << sitioActual->toString();
-s << mostrarHistorialCompleto() << '\n';
-s << " >>>>>>>>>>>>>>>> Fin <<<<<<<<<<<<<<<<" << '\n';
-
-return s.str();
+	system("cls");
+	std::string dominio = "";
+	std::cout << "Ingrese el dominio del sitio a buscar" << '\n'; std::cin >> dominio;
+	system("cls");
+	return asignarActual(dominio);
 }
+
+bool Pestana::etiquetar()
+{
+	system("cls");
+	std::string tag = "";
+	std::cout << "Ingrese la etiqueta(Tag): " << '\n'; std::cin >> tag;
+	system("cls");
+	if (tag.length() > 15) {
+		std::cout << "Limite de caracteres alcanzado..." << '\n';
+		return false;
+	}
+	sitioActual->setEtiqueta(tag);
+	return true;
+}
+
+
 std::string Pestana::encabezado()
 {
 std::stringstream s;
 s << " >>>>>>>>>>>>>>>> Historial <<<<<<<<<<<<<<<<" << '\n';
-s << "salir (ESC), moverse (<- ->), incognito(i), marcar(m)" << '\n';
+s << "salir (ESC), moverse (<- ->)" << '\n';
 return s.str();
 }
 std::string Pestana::imprimir()//sitio actual
@@ -142,6 +152,7 @@ std::string Pestana::imprimir()//sitio actual
 std::stringstream s;
 
 s << "~~ PESTANA ~~" << '\n';
+s << "incognito(i), marcar(m), buscar(b), etiquetar(e)" << '\n';
 s << "Incognito: " << incognito << '\n';
 s << sitioActual->toString();
 s << "~~ FinPestana ~~" << '\n';
@@ -149,7 +160,7 @@ return s.str();
 }
 int indice = 0;
 
-std::string Pestana::navegarPorHistorialStr()
+std::string Pestana::navegar()
 {
 std::stringstream s;
 
@@ -184,21 +195,43 @@ s << historialSitios.at(indice)->toString() << '\n';
 }
 }
 if (LETRA_i) {
-incognito = !incognito;
+incognito = !incognito; //conmutacion incognito
 s << imprimir() << '\n'; //sitio actual
 s << encabezado();
-s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-s << historialSitios.at(indice)->toString() << '\n';
+s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n'; //indice
+s << historialSitios.at(indice)->toString() << '\n'; //cuerpo del historial
 }
 
 if (LETRA_M) {
-	s << "Apreto M\n";		//Era para asegurarme si estaba sirviendo
+	sitioActual->toggleMarcado(); //conmutacion de marcado
+	s << imprimir() << '\n';
+	s << encabezado();
+	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+	s << historialSitios.at(indice)->toString() << '\n';
+
 }
+if (LETRA_B) {
+	if (!buscar())
+		return "1";
+
+	s << imprimir() << '\n';
+	s << encabezado();
+	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+	s << historialSitios.at(indice)->toString() << '\n';
+}
+if (LETRA_E) {
+	etiquetar();
+	s << imprimir() << '\n';
+	s << encabezado();
+	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+	s << historialSitios.at(indice)->toString() << '\n';
+}
+
 if (ESCAPE) {
 return "";
 }
-if (NO_FLECHAS_NI_ESC_NI_i_NI_m) { // se puede mover a navegarPorHistorial(), que retorne algo diferente
-return "Navegue con ( <-, ->, ESC, i, m) \n";
+if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E) { // se puede mover a navegarPorHistorial(), que retorne algo diferente
+return "Navegue con ( <-, ->, ESC, i, m, b) \n";
 }
 
 s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';
@@ -212,8 +245,12 @@ char tecla;
 std::cout << "Posicion:" << 0 << "/" << historialSitios.size() - 1 << '\n';
 std::cout << *historialSitios.at(0) << '\n';
 while (true) {
-std::string h = navegarPorHistorialStr();
-
+std::string h = navegar();
+if (h == "1") {
+	system("cls");
+	h = "Pagina no encontrada";
+	system("pause");
+}
 if (h!="") {
 system("cls");
 std::cout << h << '\n';
