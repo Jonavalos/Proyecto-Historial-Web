@@ -11,6 +11,7 @@ private:
 	std::vector<SitioWeb*> historialSitios;
 	SitioWeb* sitioActual;
 	bool incognito;
+	int indice;
 public:
 	Pestana();
 	Pestana(SitioWeb* si, bool in = false);
@@ -19,6 +20,7 @@ public:
 	void vaciarVectorSitiosDisponibles();
 	void vaciarHistorialSitios();
 	SitioWeb* getSitioActual();
+	int getIndice();
 
 	std::vector<SitioWeb*> getHistorialSitios();
 

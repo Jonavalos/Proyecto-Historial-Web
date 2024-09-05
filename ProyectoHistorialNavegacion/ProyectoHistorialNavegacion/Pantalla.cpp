@@ -1,5 +1,4 @@
 #include "Pantalla.h"
-
 Pantalla::Pantalla()
 {
 	pestanaActual = nullptr;
@@ -19,24 +18,25 @@ std::string Pantalla::navegarPestanasStr()
 {
 	std::stringstream s;
 	if (FLECHA_DOWN) {
+		
 		if (indiceP - 1 >= 0) {
 			s << "Posicion:" << indiceP - 1 << "/" << pestanas.size() - 1 << '\n';
 			pestanas.at(indiceP - 1)->navegar();
 			indiceP--;
 		}
 		else {
-			s << "Posicion:" << indiceP - 1 << "/" << pestanas.size() - 1 << '\n';
+			s << "Posicion:" << indiceP << "/" << pestanas.size() - 1 << '\n';
 			pestanas.at(indiceP)->navegar();
 		}
 	}
 	if (FLECHA_UP) {
-		if (indiceP + 1 < pestanas.size()) {
+		if (indiceP + 1 <= pestanas.size()-1) {
 			s << "Posicion:" << indiceP + 1 << "/" << pestanas.size() - 1 << '\n';
 			pestanas.at(indiceP + 1)->navegar();
 			indiceP++;
 		}
 		else {
-			s << "Posicion:" << indiceP - 1 << "/" << pestanas.size() - 1 << '\n';
+			s << "Posicion:" << indiceP << "/" << pestanas.size() - 1 << '\n';
 			pestanas.at(indiceP)->navegar();
 		}
 	}
@@ -73,8 +73,8 @@ void Pantalla::navegarPestanas()
 					system("pause");
 				}
 				if (h == "up" || h=="down") {
-					navegarPestanasStr();
-					h = "cambiando";
+					h=navegarPestanasStr();
+					//h = "cambiando";
 				}
 				if (h != "") {
 					system("cls");

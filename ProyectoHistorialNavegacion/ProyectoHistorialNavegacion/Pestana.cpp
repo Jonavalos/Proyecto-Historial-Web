@@ -55,6 +55,11 @@ SitioWeb* Pestana::getSitioActual()
 	return sitioActual;
 }
 
+int Pestana::getIndice()
+{
+	return indice;
+}
+
 std::vector<SitioWeb*> Pestana::getHistorialSitios()
 {
 	return historialSitios;
@@ -140,7 +145,7 @@ std::string Pestana::encabezado()
 {
 std::stringstream s;
 s << " >>>>>>>>>>>>>>>> Historial <<<<<<<<<<<<<<<<" << '\n';
-s << "salir (ESC), moverse (<- ->)" << '\n';
+s << "salir (ESC), moverse entre paginas(<- ->), moverse entre pestanas(up down)" << '\n';
 return s.str();
 }
 std::string Pestana::imprimir()//sitio actual
@@ -154,7 +159,6 @@ s << sitioActual->toString();
 s << "~~ FinPestana ~~" << '\n';
 return s.str();
 }
-int indice = 0;
 
 std::string Pestana::navegarStr()
 {
