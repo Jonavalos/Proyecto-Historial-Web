@@ -30,7 +30,7 @@ void Pestana::leerSitiosDisponibles()
 Pestana::~Pestana()
 {
 	if (this->sitioActual == nullptr) {
-		//delete sitio; //No se si deberia borrar, por ahora no, eventualmente
+		//delete sitio; //Por ahora no, eventualmente
 	}
 }
 
@@ -38,14 +38,6 @@ void Pestana::vaciarVectorSitiosDisponibles()
 {
 	std::vector<SitioWeb*>::iterator iter;
 	for (iter = sitiosDisponibles.begin(); iter != sitiosDisponibles.end(); iter++) {
-		delete (*iter);
-	}
-}
-
-void Pestana::vaciarHistorialSitios()
-{
-	std::vector<SitioWeb*>::iterator iter;
-	for (iter = historialSitios.begin(); iter != historialSitios.end(); iter++) {
 		delete (*iter);
 	}
 }
@@ -65,18 +57,7 @@ std::vector<SitioWeb*> Pestana::getHistorialSitios()
 	return historialSitios;
 }
 
-void Pestana::guardarSitioActual(std::fstream& strm)
-{
-	sitioActual->guardar(strm);
-}
-
-Pestana* Pestana::recuperar(std::fstream& strm)
-{
-	SitioWeb* aux = SitioWeb::recuperar(strm);
-	return new Pestana(aux);
-}
-
-bool Pestana::asignarActual(std::string dominio)
+bool Pestana::asignarActual(std::string dominio) //para buscar
 {
 	SitioWeb sitioABuscar(dominio);
 
@@ -133,7 +114,7 @@ s << " >>>>>>>>>>>>>>>> Historial <<<<<<<<<<<<<<<<" << '\n';
 s << "salir (ESC), moverse entre paginas(<- ->), moverse entre pestanas(up down)" << '\n';
 return s.str();
 }
-std::string Pestana::imprimir()//sitio actual
+std::string Pestana::imprimirActual()//sitio actual
 {
 std::stringstream s;
 
@@ -151,14 +132,14 @@ std::stringstream s;
 
 if (FLECHA_IZQ) {
 if (indice - 1 >= 0) {
-s << imprimir() << '\n'; //sitio actual
+s << imprimirActual() << '\n';
 s << encabezado();
 s << "Posicion:" << indice - 1 << "/" << historialSitios.size() - 1 << '\n';
 s << historialSitios.at(indice - 1)->toString() << '\n';
 indice--;
 }
 else {
-s << imprimir() << '\n'; //sitio actual
+s << imprimirActual() << '\n';
 s << encabezado();
 s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 s << historialSitios.at(indice)->toString() << '\n';
@@ -166,14 +147,14 @@ s << historialSitios.at(indice)->toString() << '\n';
 }
 if (FLECHA_DER) {
 if (indice + 1 < historialSitios.size()) {
-s << imprimir() << '\n'; //sitio actual
+s << imprimirActual() << '\n';
 s << encabezado();
 s << "Posicion:" << indice + 1 << "/" << historialSitios.size() - 1 << '\n';
 s << historialSitios.at(indice + 1)->toString() << '\n';
 indice++;
 }
 else {
-s << imprimir() << '\n'; //sitio actual
+s << imprimirActual() << '\n';
 s << encabezado();
 s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 s << historialSitios.at(indice)->toString() << '\n';
@@ -181,7 +162,7 @@ s << historialSitios.at(indice)->toString() << '\n';
 }
 if (LETRA_i) {
 incognito = !incognito; //conmutacion incognito
-s << imprimir() << '\n'; //sitio actual
+s << imprimirActual() << '\n';
 s << encabezado();
 s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n'; //indice
 s << historialSitios.at(indice)->toString() << '\n'; //cuerpo del historial
@@ -189,7 +170,7 @@ s << historialSitios.at(indice)->toString() << '\n'; //cuerpo del historial
 
 if (LETRA_M) {
 	sitioActual->toggleMarcado(); //conmutacion de marcado
-	s << imprimir() << '\n';
+	s << imprimirActual() << '\n';
 	s << encabezado();
 	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 	s << historialSitios.at(indice)->toString() << '\n';
@@ -199,14 +180,14 @@ if (LETRA_B) {
 	if (!buscar())
 		return "1";
 
-	s << imprimir() << '\n';
+	s << imprimirActual() << '\n';
 	s << encabezado();
 	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 	s << historialSitios.at(indice)->toString() << '\n';
 }
 if (LETRA_E) {
 	etiquetar();
-	s << imprimir() << '\n';
+	s << imprimirActual() << '\n';
 	s << encabezado();
 	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 	s << historialSitios.at(indice)->toString() << '\n';

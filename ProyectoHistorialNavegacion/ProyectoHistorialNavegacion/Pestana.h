@@ -18,16 +18,11 @@ public:
 	static void leerSitiosDisponibles();
 	virtual~Pestana();
 	void vaciarVectorSitiosDisponibles();
-	void vaciarHistorialSitios();
 	SitioWeb* getSitioActual();
 	int getIndice();
 
 	std::vector<SitioWeb*> getHistorialSitios();
 
-	void guardarSitioActual(std::fstream& strm);
-	static Pestana* recuperar(std::fstream& strm);
-
-	//busca el sitioWeb y lo asigna al atributo sitioActual
 	bool asignarActual(std::string dominio);
 
 	
@@ -38,17 +33,9 @@ public:
 
 	std::string encabezado();
 
-	std::string imprimir(); //imprime el actual dentro de la pestana
+	std::string imprimirActual(); //imprime el actual dentro de la pestana
 
 	std::string navegarStr();
 
 
 };
-
-
-/*
-verificar si existe en vector
-setearlo en atributo
-y de ahi imprimirlo
-*/
-

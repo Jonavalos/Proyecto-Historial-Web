@@ -10,7 +10,7 @@ Pantalla::Pantalla(Pestana* pestana)
 }
 
 Pantalla::~Pantalla() {
-
+	//por ahora no, eventualmente
 }
 int indiceP = 0;
 
@@ -21,23 +21,19 @@ std::string Pantalla::navegarPestanasStr()
 		
 		if (indiceP - 1 >= 0) {
 			s << "Posicion:" << indiceP - 1 << "/" << pestanas.size() - 1 << '\n';
-			//s<< pestanas.at(indiceP - 1)->navegarStr();
 			indiceP--;
 		}
 		else {
 			s << "Posicion:" << indiceP << "/" << pestanas.size() - 1 << '\n';
-			//s<< pestanas.at(indiceP)->navegarStr();
 		}
 	}
 	if (FLECHA_UP) {
 		if (indiceP + 1 <= pestanas.size()-1) {
 			s << "Posicion:" << indiceP + 1 << "/" << pestanas.size() - 1 << '\n';
-			//s<< pestanas.at(indiceP + 1)->navegarStr();
 			indiceP++;
 		}
 		else {
 			s << "Posicion:" << indiceP << "/" << pestanas.size() - 1 << '\n';
-			//s<<pestanas.at(indiceP)->navegarStr();
 		}
 	}
 	if (ESCAPE) {
@@ -51,10 +47,7 @@ std::string Pantalla::navegarPestanasStr()
 }
 
 void Pantalla::navegarPestanas()
-{
-	/*std::cout << "Posicion:" << 0 << "/" << pestanas.at(indiceP)->getHistorialSitios().size() - 1 << '\n';
-	std::cout << *(pestanas.at(indiceP)->getHistorialSitios().at(0)) << '\n';*/
-	
+{	
 
 	while (true) {
 		std::string p = navegarPestanasStr();
