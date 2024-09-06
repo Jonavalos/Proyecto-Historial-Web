@@ -54,7 +54,7 @@ void Pantalla::navegarPestanas()
 		if (p == "1") {
 			system("cls");
 			p = "navegue con flechas";
-			system("pause");
+
 		}
 		if (p != "") { //mientras no sea ESC, navegar en Pestana
 

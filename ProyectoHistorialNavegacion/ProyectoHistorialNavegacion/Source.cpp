@@ -4,21 +4,20 @@ int main() {
 
     Pestana* pestana = new Pestana();
     pestana->leerSitiosDisponibles();
-    std::cout << pestana->asignarActual("firefox.com") << '\n';
-    std::cout << pestana->asignarActual("google.com") << '\n';
-    std::cout << pestana->asignarActual("firefox.com") << '\n';
+    pestana->asignarActual("firefox.com");
+    pestana->asignarActual("google.com");
+    pestana->asignarActual("firefox.com");
 
     Pestana* pestana2 = new Pestana();
-    std::cout << pestana2->asignarActual("yahoo.com") << '\n';
+    pestana2->asignarActual("yahoo.com");
     
     Pantalla pantalla;
     pantalla.agregarPestanaActual(pestana);
     pantalla.agregarPestanaActual(pestana2);
     pantalla.navegarPestanas();
 
-        return 0;
+    return 0;
 }
-
 
 /*
 To do (para hacer)
@@ -26,5 +25,6 @@ To do (para hacer)
 agregarPestanaActual() en menu
 guardar sesion 
 limitar tamano del historial
+vector de sitios marcados (bookmark)
 
 */

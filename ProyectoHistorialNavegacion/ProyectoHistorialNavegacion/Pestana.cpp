@@ -114,7 +114,7 @@ s << " >>>>>>>>>>>>>>>> Historial <<<<<<<<<<<<<<<<" << '\n';
 s << "salir (ESC), moverse entre paginas(<- ->), moverse entre pestanas(up down)" << '\n';
 return s.str();
 }
-std::string Pestana::imprimirActual()//sitio actual
+std::string Pestana::imprimirActual()
 {
 std::stringstream s;
 
@@ -201,7 +201,7 @@ if (FLECHA_UP) {
 if (ESCAPE) {
 return "";
 }
-if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E) { // se puede mover a navegarPorHistorial(), que retorne algo diferente
+if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E) {
 return "Navegue con ( <-, ->, ESC, i, m, b) \n";
 }
 
