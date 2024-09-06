@@ -21,23 +21,23 @@ std::string Pantalla::navegarPestanasStr()
 		
 		if (indiceP - 1 >= 0) {
 			s << "Posicion:" << indiceP - 1 << "/" << pestanas.size() - 1 << '\n';
-			pestanas.at(indiceP - 1)->navegar();
+			//s<< pestanas.at(indiceP - 1)->navegarStr();
 			indiceP--;
 		}
 		else {
 			s << "Posicion:" << indiceP << "/" << pestanas.size() - 1 << '\n';
-			pestanas.at(indiceP)->navegar();
+			//s<< pestanas.at(indiceP)->navegarStr();
 		}
 	}
 	if (FLECHA_UP) {
 		if (indiceP + 1 <= pestanas.size()-1) {
 			s << "Posicion:" << indiceP + 1 << "/" << pestanas.size() - 1 << '\n';
-			pestanas.at(indiceP + 1)->navegar();
+			//s<< pestanas.at(indiceP + 1)->navegarStr();
 			indiceP++;
 		}
 		else {
 			s << "Posicion:" << indiceP << "/" << pestanas.size() - 1 << '\n';
-			pestanas.at(indiceP)->navegar();
+			//s<<pestanas.at(indiceP)->navegarStr();
 		}
 	}
 	if (ESCAPE) {
@@ -70,11 +70,9 @@ void Pantalla::navegarPestanas()
 				if (h == "1") {
 					system("cls");
 					h = "Pagina no encontrada";
-					system("pause");
 				}
 				if (h == "up" || h=="down") {
 					h=navegarPestanasStr();
-					//h = "cambiando";
 				}
 				if (h != "") {
 					system("cls");

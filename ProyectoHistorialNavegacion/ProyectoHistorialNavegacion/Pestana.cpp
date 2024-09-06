@@ -1,18 +1,18 @@
 #include "Pestana.h"
 std::vector<SitioWeb*> Pestana::sitiosDisponibles;
-//std::vector<SitioWeb*> Pestana::historialSitios;
 
 Pestana::Pestana()
 {
 	incognito = false;
 	sitioActual = nullptr;
-	//leerSitiosDisponibles();
+	indice = 0;
 }
 
 Pestana::Pestana(SitioWeb* si, bool in)
 {
 	sitioActual = si;
 	incognito = in;
+	indice = 0;
 }
 
 void Pestana::leerSitiosDisponibles()
@@ -100,21 +100,6 @@ bool Pestana::asignarActual(std::string dominio)
 	{return *p == sitioABuscar} es el cuerpo de la funcion
 	Resumen: usa sitioABuscar y lo compara con la desreferencia de p, devuelve un bool
 */
-}
-
-std::string Pestana::mostrarHistorialCompleto()
-{
-std::stringstream s;
-s << '\n';
-s << "HISTORIAL DE NAVEGACION -> " << '\n';
-s << '\n';
-std::vector<SitioWeb*>::iterator iter;
-for (iter = historialSitios.begin(); iter != historialSitios.end(); iter++) {
-s << **iter << '\n';
-}
-s << '\n';
-s << " <- Fin del historial" << '\n';
-return s.str();
 }
 
 bool Pestana::buscar()
@@ -242,27 +227,4 @@ return "Navegue con ( <-, ->, ESC, i, m, b) \n";
 s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';
 
 return s.str();
-}
-
-void Pestana::navegar()
-{
-//std::cout << "Posicion:" << 0 << "/" << historialSitios.size() - 1 << '\n';
-//std::cout << *historialSitios.at(0) << '\n';
-//while (true) {
-//std::string h = navegarStr();
-//if (h == "1") {
-//	system("cls");
-//	h = "Pagina no encontrada";
-//	system("pause");
-//}
-//if (h!="") {
-//system("cls");
-//std::cout << h << '\n';
-//system("pause");
-//}
-//else {
-//break;
-//}
-//}
-
 }

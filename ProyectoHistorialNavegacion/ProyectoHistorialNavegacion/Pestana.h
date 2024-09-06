@@ -30,7 +30,7 @@ public:
 	//busca el sitioWeb y lo asigna al atributo sitioActual
 	bool asignarActual(std::string dominio);
 
-	std::string mostrarHistorialCompleto();
+	
 
 	bool buscar();
 
@@ -42,7 +42,7 @@ public:
 
 	std::string navegarStr();
 
-	void navegar();
+
 };
 
 
