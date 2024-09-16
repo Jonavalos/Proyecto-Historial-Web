@@ -14,5 +14,6 @@ public:
 	std::string navegarPestanasStr();
 	void navegarPestanas();
 	bool agregarPestanaActual(Pestana* pestana);
+	
 
 };

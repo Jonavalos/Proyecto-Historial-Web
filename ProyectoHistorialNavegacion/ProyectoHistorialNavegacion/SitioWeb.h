@@ -13,6 +13,7 @@
 #define LETRA_B GetAsyncKeyState('B') & 0x8000	//buscar
 #define LETRA_E GetAsyncKeyState('E') & 0x8000	//etiquetar
 #define ESCAPE GetAsyncKeyState(VK_ESCAPE) & 0x8000
+#define LETRA_V GetAsyncKeyState('V') & 0x8000	//Ver lista marcados
 #define LETRA_M GetAsyncKeyState('M') & 0x8000	//marcar
 #define NO_FLECHAS_NI_ESC_NI_i_NI_m (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) && !(GetAsyncKeyState('M') & 0x8000) )
 #define NO_B_NI_E (!(GetAsyncKeyState('B') & 0x8000) && !(GetAsyncKeyState('E') & 0x8000))
@@ -21,7 +22,6 @@
 class SitioWeb
 {
 private:
-	
 	std::string titulo;		//Google (nombre)
 	std::string dominio;	//google.com
 	std::string url;		//https//::www.google.com/algo (no usar // porque lo comenta)			

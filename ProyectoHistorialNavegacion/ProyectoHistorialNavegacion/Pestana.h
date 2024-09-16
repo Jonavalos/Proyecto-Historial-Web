@@ -16,6 +16,7 @@ public:
 	Pestana();
 	Pestana(SitioWeb* si, bool in = false);
 	static void leerSitiosDisponibles();
+	static std::vector < SitioWeb*> getSitiosDisponibles();
 	virtual~Pestana();
 	void vaciarVectorSitiosDisponibles();
 	SitioWeb* getSitioActual();
@@ -25,9 +26,11 @@ public:
 
 	bool asignarActual(std::string dominio);
 
-	
+	std::vector<SitioWeb*> marcados();
 
 	bool buscar();
+
+	std::string mostrarMarcados();
 
 	bool etiquetar();
 
@@ -37,5 +40,5 @@ public:
 
 	std::string navegarStr();
 
-
+	int ingresarMarcado(int n);
 };

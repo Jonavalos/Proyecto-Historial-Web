@@ -27,6 +27,11 @@ void Pestana::leerSitiosDisponibles()
 	strm.close();
 }
 
+std::vector<SitioWeb*> Pestana::getSitiosDisponibles()
+{
+	return sitiosDisponibles;
+}
+
 Pestana::~Pestana()
 {
 	if (this->sitioActual == nullptr) {
@@ -92,6 +97,20 @@ bool Pestana::buscar()
 	return asignarActual(dominio);
 }
 
+std::string Pestana::mostrarMarcados()
+{
+	std::stringstream s;
+
+	std::vector<SitioWeb*> aux = marcados();
+	if (aux.size()) {
+		for (int i = 0; i < aux.size(); i++) {
+			s << aux.at(i)->toString();
+		}
+		return s.str();
+	}
+	return "1";
+}
+
 bool Pestana::etiquetar()
 {
 	system("cls");
@@ -106,6 +125,15 @@ bool Pestana::etiquetar()
 	return true;
 }
 
+std::vector<SitioWeb*> Pestana::marcados() {
+	std::vector<SitioWeb*> vec;
+	for (SitioWeb* sitio:  Pestana::getSitiosDisponibles()) {
+		if (sitio->getMarcado()) {
+			vec.push_back(sitio);
+		}
+	}
+	return vec;
+}
 
 std::string Pestana::encabezado()
 {
@@ -201,11 +229,60 @@ if (FLECHA_UP) {
 if (ESCAPE) {
 return "";
 }
+if (LETRA_V) {
+	system("cls");
+	std::string a = mostrarMarcados();
+	if (a == "1") {
+		return "No hay sitios marcados\n";
+	}
+	s << a;
+	std::vector<SitioWeb*>aux = marcados();
+	int num = ingresarMarcado(aux.size());
+	if(num != -1){
+		asignarActual(aux.at(num)->getDominio());
+	}
+	s << imprimirActual() << '\n';
+	s << encabezado();
+	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+	s << historialSitios.at(indice)->toString() << '\n';
+}
 if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E) {
-return "Navegue con ( <-, ->, ESC, i, m, b) \n";
+return "Navegue con ( <-, ->, ESC, i, m, b,v) \n<-, -> = Historial\ni = Incognito\nm = Marcar\nb = Buscar\nv = Ver marcadores\n";
 }
 
 s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';
 
 return s.str();
+}
+
+int Pestana::ingresarMarcado(int n)
+{
+	std::string op;
+	while(true) {
+		std::cout << "Desea navegar en un sitio marcado?\n(0)->No\n(1)->Si\n";
+		std::cin>>op;
+		if (op == "1" || op == "0") {
+			break;
+	}
+		std::cout << "Ha insertado un valor invalido\n";
+	}
+	if (op == "1") {
+		int o = -1;
+		while(true) {
+			std::cout << "Digite la posicion de la pagina que desea visitar(Empezando en 0)\n";
+			try {
+				std::cin >> o;
+				if (o >= 0 && o < n) {
+					break;
+				}
+				std::cout << "Ha digitado un valor invalido\n";
+			}
+			catch (const std::invalid_argument& e) {
+				std::cout << "Ha digitado un valor invalido\n";
+				o = -1;
+			}
+		}
+		return o;
+	}
+	return -1;
 }

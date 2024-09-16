@@ -53,7 +53,7 @@ void Pantalla::navegarPestanas()
 		std::string p = navegarPestanasStr();
 		if (p == "1") {
 			system("cls");
-			p = "navegue con flechas";
+			p = "Navegue con flechas";
 
 		}
 		if (p != "") { //mientras no sea ESC, navegar en Pestana
@@ -76,7 +76,6 @@ void Pantalla::navegarPestanas()
 					break;
 				}
 			}
-
 			system("cls");
 			std::cout << p << '\n';
 			system("pause");
