@@ -127,9 +127,13 @@ bool Pestana::etiquetar()
 
 std::vector<SitioWeb*> Pestana::marcados() {		//No entra al ciclo porque no le da la gana
 	std::vector<SitioWeb*> vec;
-	for (SitioWeb* sitio:sitiosDisponibles) {
-		if (sitio->getMarcado()) {
+	/*for (SitioWeb* sitio:sitiosDisponibles) {*/
+	for (int i = 0; i < sitiosDisponibles.size();) {
+		/*if (sitio->getMarcado()) {
 			vec.push_back(sitio);
+		}*/
+		if (sitiosDisponibles.at(i)->getMarcado()) {
+			vec.push_back(sitiosDisponibles.at(i));
 		}
 	}
 	return vec;
