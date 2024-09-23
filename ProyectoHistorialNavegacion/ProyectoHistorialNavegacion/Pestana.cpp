@@ -1,5 +1,6 @@
 #include "Pestana.h"
 std::vector<SitioWeb*> Pestana::sitiosDisponibles;
+std::vector<SitioWeb*> Pestana::vecMarcados;
 
 Pestana::Pestana()
 {
@@ -70,9 +71,12 @@ bool Pestana::asignarActual(std::string dominio) //para buscar
 		[&sitioABuscar](SitioWeb* p) { return *p == sitioABuscar; });
 
 	if (it != sitiosDisponibles.end()) {
+		if (historialSitios.size() == 10) {
+			historialSitios.pop_back();
+		}
 		sitioActual = *it;
 		if(!incognito)
-			historialSitios.push_back(sitioActual);
+			historialSitios.insert(historialSitios.begin(), sitioActual);
 		return true;
 	}
 	return false;
@@ -104,7 +108,7 @@ std::string Pestana::mostrarMarcados()
 	std::vector<SitioWeb*> aux = marcados();
 	if (aux.size()>0) {
 		for (int i = 0; i < aux.size(); i++) {
-			s << aux.at(i)->toString();
+			s << aux.at(i)->toString()<<"\n\n";
 		}
 		return s.str();
 	}
@@ -128,7 +132,7 @@ bool Pestana::etiquetar()
 std::vector<SitioWeb*> Pestana::marcados() {		//No entra al ciclo porque no le da la gana
 	std::vector<SitioWeb*> vec;
 	/*for (SitioWeb* sitio:sitiosDisponibles) {*/
-	for (int i = 0; i < sitiosDisponibles.size();) {
+	for (int i = 0; i < sitiosDisponibles.size();i++) {
 		/*if (sitio->getMarcado()) {
 			vec.push_back(sitio);
 		}*/
@@ -151,7 +155,7 @@ std::string Pestana::imprimirActual()
 std::stringstream s;
 
 s << "~~ PESTANA ~~" << '\n';
-s << "incognito(i), marcar(m), buscar(b), etiquetar(e)" << '\n';
+s << "incognito(i), marcar(m), buscar(b)" << '\n';
 s << "Incognito: " << incognito << '\n';
 s << sitioActual->toString();
 s << "~~ FinPestana ~~" << '\n';
@@ -201,12 +205,17 @@ s << historialSitios.at(indice)->toString() << '\n'; //cuerpo del historial
 }
 
 if (LETRA_M) {
-	sitioActual->toggleMarcado(); //conmutacion de marcado
-	s << imprimirActual() << '\n';
-	s << encabezado();
-	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-	s << historialSitios.at(indice)->toString() << '\n';
-
+	if (!incognito) {
+		sitioActual->toggleMarcado(); //conmutacion de marcado
+		if (sitioActual->getMarcado()) {
+			etiquetar();
+		}
+	}
+		s << imprimirActual() << '\n';
+		s << encabezado();
+		s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+		s << historialSitios.at(indice)->toString() << '\n';
+	
 }
 if (LETRA_B) {
 	if (!buscar())
@@ -217,13 +226,13 @@ if (LETRA_B) {
 	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 	s << historialSitios.at(indice)->toString() << '\n';
 }
-if (LETRA_E) {
-	etiquetar();
-	s << imprimirActual() << '\n';
-	s << encabezado();
-	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-	s << historialSitios.at(indice)->toString() << '\n';
-}
+//if (LETRA_E) {
+//	etiquetar();
+//	s << imprimirActual() << '\n';
+//	s << encabezado();
+//	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+//	s << historialSitios.at(indice)->toString() << '\n';
+//}
 if (FLECHA_DOWN) {
 	return "down";
 }
@@ -239,7 +248,7 @@ if (LETRA_V) {
 	if (a == "1") {
 		return "No hay sitios marcados\n";
 	}
-	s << a;
+	std::cout<< a;
 	std::vector<SitioWeb*>aux = marcados();
 	int num = ingresarMarcado(aux.size());
 	if(num != -1){

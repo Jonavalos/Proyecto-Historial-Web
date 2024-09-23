@@ -134,9 +134,10 @@ std::string SitioWeb::toString() const
 	std::stringstream s;
 	s << "[		" << url << "			]" << '\n';
 	s << "[		" << dominio << " -> " << titulo << "			]" << '\n';
-	if (marcado)
+	if (marcado) {
 		s << "[		" << "Marcado(Bookmark): activo" << "		]" << '\n';
-	s << "[		" << "Etiqueta(Tag): " << etiqueta << "			]" << '\n';
+		s << "[		" << "Etiqueta(Tag): " << etiqueta << "			]" << '\n';
+	}
 	return s.str();
 }
 

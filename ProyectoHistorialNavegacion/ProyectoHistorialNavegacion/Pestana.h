@@ -7,6 +7,7 @@
 class Pestana
 {
 private:
+	static std::vector<SitioWeb*> vecMarcados;
 	static std::vector<SitioWeb*> sitiosDisponibles;
 	std::vector<SitioWeb*> historialSitios;
 	SitioWeb* sitioActual;
