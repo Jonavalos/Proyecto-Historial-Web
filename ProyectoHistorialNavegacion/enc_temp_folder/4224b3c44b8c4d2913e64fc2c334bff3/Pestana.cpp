@@ -102,7 +102,7 @@ std::string Pestana::mostrarMarcados()
 	std::stringstream s;
 
 	std::vector<SitioWeb*> aux = marcados();
-	if (aux.size()>0) {
+	if (aux.size()) {
 		for (int i = 0; i < aux.size(); i++) {
 			s << aux.at(i)->toString();
 		}
