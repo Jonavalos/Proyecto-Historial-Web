@@ -1,20 +1,38 @@
-#include "Pantalla.h"
-Pantalla::Pantalla()
+#include "Sesion.h"
+Sesion::Sesion()
 {
-	pestanaActual = nullptr;
+	std::fstream strm("sitiosDispinibles.csv", std::ios::in);
+	if (strm.good() && strm.is_open()) {
+		SitioWeb* aux;
+		while ((aux = SitioWeb::recuperar(strm)) != nullptr) {
+			sitios.push_back(aux);
+		}
+	}
+	strm.close();
+	pestanaActual = new Pestana(nullptr, false,sitios);
+	pestanas.push_back(pestanaActual);
 }
 
-Pantalla::Pantalla(Pestana* pestana)
+Sesion::Sesion(Pestana* pestana)
 {
+	std::fstream strm("sitiosDispinibles.csv", std::ios::in);
+	if (strm.good() && strm.is_open()) {
+		SitioWeb* aux;
+		while ((aux = SitioWeb::recuperar(strm)) != nullptr) {
+			sitios.push_back(aux);
+		}
+	}
+	strm.close();
 	pestanaActual = pestana;
+	
 }
 
-Pantalla::~Pantalla() {
+Sesion::~Sesion() {
 	//por ahora no, eventualmente
 }
 int indiceP = 0;
 
-std::string Pantalla::navegarPestanasStr()
+std::string Sesion::navegarPestanasStr()
 {
 	std::stringstream s;
 	if (FLECHA_DOWN) {
@@ -46,7 +64,7 @@ std::string Pantalla::navegarPestanasStr()
 	return s.str();
 }
 
-void Pantalla::navegarPestanas()
+std::string Sesion::navegarPestanas()
 {	
 
 	while (true) {
@@ -62,10 +80,13 @@ void Pantalla::navegarPestanas()
 				std::string h = pestanas.at(indiceP)->navegarStr();
 				if (h == "1") {
 					system("cls");
-					h = "Pagina no encontrada";
+					h = "404-Not Found";
 				}
 				if (h == "up" || h=="down") {
 					h=navegarPestanasStr();
+				}
+				if (h == "change") {
+					return "change";
 				}
 				if (h != "") {
 					system("cls");
@@ -86,7 +107,7 @@ void Pantalla::navegarPestanas()
 	}
 }
 
-bool Pantalla::agregarPestanaActual(Pestana* pestana)
+bool Sesion::agregarPestanaActual(Pestana* pestana)
 {
 	if (!pestana)
 		return false;

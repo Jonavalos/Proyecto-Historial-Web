@@ -1,6 +1,5 @@
 #include "Pestana.h"
-std::vector<SitioWeb*> Pestana::sitiosDisponibles;
-std::vector<SitioWeb*> Pestana::vecMarcados;
+
 
 Pestana::Pestana()
 {
@@ -9,8 +8,9 @@ Pestana::Pestana()
 	indice = 0;
 }
 
-Pestana::Pestana(SitioWeb* si, bool in)
+Pestana::Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> sit)
 {
+	sitiosDisponibles = sit;
 	sitioActual = si;
 	incognito = in;
 	indice = 0;
@@ -56,6 +56,11 @@ SitioWeb* Pestana::getSitioActual()
 int Pestana::getIndice()
 {
 	return indice;
+}
+
+void Pestana::setSitiosDisponibles(std::vector<SitioWeb*> a)
+{
+	this->sitiosDisponibles = a;
 }
 
 std::vector<SitioWeb*> Pestana::getHistorialSitios()
@@ -154,11 +159,16 @@ std::string Pestana::imprimirActual()
 {
 std::stringstream s;
 
-s << "~~ PESTANA ~~" << '\n';
-s << "incognito(i), marcar(m), buscar(b)" << '\n';
-s << "Incognito: " << incognito << '\n';
-s << sitioActual->toString();
-s << "~~ FinPestana ~~" << '\n';
+if (sitioActual) {
+	s << "~~ PESTANA ~~" << '\n';
+	s << "incognito(i), marcar(m), buscar(b)" << '\n';
+	s << "Incognito: " << incognito << '\n';
+	s << sitioActual->toString();
+	s << "~~ FinPestana ~~" << '\n';
+}
+else {
+	s << "No se ha ingresado un SitioWeb\n";
+}
 return s.str();
 }
 
@@ -168,32 +178,42 @@ std::stringstream s;
 
 if (FLECHA_IZQ) {
 if (indice - 1 >= 0) {
-s << imprimirActual() << '\n';
-s << encabezado();
-s << "Posicion:" << indice - 1 << "/" << historialSitios.size() - 1 << '\n';
-s << historialSitios.at(indice - 1)->toString() << '\n';
-indice--;
-}
-else {
+indice -= 1;
 s << imprimirActual() << '\n';
 s << encabezado();
 s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 s << historialSitios.at(indice)->toString() << '\n';
+}
+else {
+s << imprimirActual() << '\n';
+s << encabezado();
+if (historialSitios.size() != 0) {
+	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+	s << historialSitios.at(indice)->toString() << '\n';
+}
+else {
+	std::cout << "Aun no se han realizado busquedas\n";
+}
 }
 }
 if (FLECHA_DER) {
 if (indice + 1 < historialSitios.size()) {
-s << imprimirActual() << '\n';
-s << encabezado();
-s << "Posicion:" << indice + 1 << "/" << historialSitios.size() - 1 << '\n';
-s << historialSitios.at(indice + 1)->toString() << '\n';
-indice++;
-}
-else {
+indice+=1;
 s << imprimirActual() << '\n';
 s << encabezado();
 s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 s << historialSitios.at(indice)->toString() << '\n';
+}
+else {
+s << imprimirActual() << '\n';
+s << encabezado();
+if (historialSitios.size() != 0) {
+	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+	s << historialSitios.at(indice)->toString() << '\n';
+}
+else {
+	s << "Aun no se han realizado busquedas\n";
+}
 }
 }
 if (LETRA_i) {
@@ -253,8 +273,14 @@ if (LETRA_V) {
 	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 	s << historialSitios.at(indice)->toString() << '\n';
 }
-if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E) {
-return "Navegue con ( <-, ->, ESC, i, m, b,v) \n<-, -> = Historial\ni = Incognito\nm = Marcar\nb = Buscar\nv = Ver marcadores\n";
+if (LETRA_S) {
+	return "change";
+}
+if (LETRA_C) {
+	//Crear pestana
+}
+if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E && NO_S_NI_C) {
+return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s) \n<-, -> = Historial\ni = Incognito\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion";
 }
 
 s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';

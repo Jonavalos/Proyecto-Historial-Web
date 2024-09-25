@@ -8,21 +8,21 @@ class Pestana
 {
 private:
 	static std::vector<SitioWeb*> vecMarcados;
-	static std::vector<SitioWeb*> sitiosDisponibles;
+	std::vector<SitioWeb*> sitiosDisponibles;
 	std::vector<SitioWeb*> historialSitios;
 	SitioWeb* sitioActual;
 	bool incognito;
 	int indice;
 public:
 	Pestana();
-	Pestana(SitioWeb* si, bool in = false);
-	static void leerSitiosDisponibles();
-	static std::vector < SitioWeb*> getSitiosDisponibles();
+	Pestana(SitioWeb* si, bool in = false, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
+	void leerSitiosDisponibles();
+	std::vector < SitioWeb*> getSitiosDisponibles();
 	virtual~Pestana();
 	void vaciarVectorSitiosDisponibles();
 	SitioWeb* getSitioActual();
 	int getIndice();
-
+	void setSitiosDisponibles(std::vector<SitioWeb*>);
 	std::vector<SitioWeb*> getHistorialSitios();
 
 	bool asignarActual(std::string dominio);

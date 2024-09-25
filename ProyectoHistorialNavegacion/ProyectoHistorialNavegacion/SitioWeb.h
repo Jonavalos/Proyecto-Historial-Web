@@ -18,6 +18,10 @@
 #define NO_FLECHAS_NI_ESC_NI_i_NI_m (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) && !(GetAsyncKeyState('M') & 0x8000) )
 #define NO_B_NI_E (!(GetAsyncKeyState('B') & 0x8000) && !(GetAsyncKeyState('E') & 0x8000))
 #define NO_UP_DOWN (!(GetAsyncKeyState(VK_DOWN) & 0x8000) && !(GetAsyncKeyState(VK_UP) & 0x8000))
+#define LETRA_S GetAsyncKeyState('S') & 0x8000	//cambiar de sesion
+#define LETRA_C GetAsyncKeyState('C') & 0x8000	//crear pestana nueva
+#define NO_S_NI_C (!(GetAsyncKeyState('C') & 0x8000) && !(GetAsyncKeyState('S') & 0x8000))
+
 
 class SitioWeb
 {

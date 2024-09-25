@@ -1,8 +1,8 @@
-#include "Pantalla.h"
+#include "Control.h"
 
 int main() {
-
-    Pestana* pestana = new Pestana();
+    Control::getInstance()->navegar();
+   /* Pestana* pestana = new Pestana();
     pestana->leerSitiosDisponibles();
     pestana->asignarActual("firefox.com");
     pestana->asignarActual("google.com");
@@ -11,10 +11,10 @@ int main() {
     Pestana* pestana2 = new Pestana();
     pestana2->asignarActual("yahoo.com");
     
-    Pantalla pantalla;
+    Sesion pantalla;
     pantalla.agregarPestanaActual(pestana);
     pantalla.agregarPestanaActual(pestana2);
-    pantalla.navegarPestanas();
+    pantalla.navegarPestanas();*/
 
     return 0;
 }

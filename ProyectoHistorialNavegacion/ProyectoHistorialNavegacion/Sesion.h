@@ -1,18 +1,19 @@
 #pragma once
 #include"Pestana.h"
 
-class Pantalla
+class Sesion
 {
 private:
 	std::vector<Pestana*> pestanas;
 	Pestana* pestanaActual;
+	std::vector<SitioWeb*> sitios;
 public:
-	Pantalla();
-	Pantalla(Pestana* pestana);
-	virtual ~Pantalla();
+	Sesion();
+	Sesion(Pestana* pestana);
+	virtual ~Sesion();
 
 	std::string navegarPestanasStr();
-	void navegarPestanas();
+	std::string navegarPestanas();
 	bool agregarPestanaActual(Pestana* pestana);
 	
 
