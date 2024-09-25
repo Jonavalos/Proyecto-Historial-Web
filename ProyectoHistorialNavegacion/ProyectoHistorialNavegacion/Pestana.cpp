@@ -226,13 +226,7 @@ if (LETRA_B) {
 	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 	s << historialSitios.at(indice)->toString() << '\n';
 }
-//if (LETRA_E) {
-//	etiquetar();
-//	s << imprimirActual() << '\n';
-//	s << encabezado();
-//	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-//	s << historialSitios.at(indice)->toString() << '\n';
-//}
+
 if (FLECHA_DOWN) {
 	return "down";
 }
