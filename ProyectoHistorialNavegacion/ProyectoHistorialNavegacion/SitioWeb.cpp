@@ -1,7 +1,7 @@
 #include "SitioWeb.h"
 
-SitioWeb::SitioWeb(std::string dominio)
-	: titulo(""), dominio(dominio), url(""), etiqueta(""), marcado(false)
+SitioWeb::SitioWeb(std::string filtro)
+	: titulo(filtro), dominio(filtro), url(filtro), etiqueta(""), marcado(false)
 {
 }
 

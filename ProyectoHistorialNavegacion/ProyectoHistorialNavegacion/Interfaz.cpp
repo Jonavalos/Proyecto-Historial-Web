@@ -18,6 +18,16 @@ std::string Interfaz::buscarDominio()
 	return dominio;
 }
 
+std::string Interfaz::buscarFiltro()
+{
+	system("cls");
+	std::string filtro = "";
+	std::cout << "Ingrese el filtro (string) a buscar" << '\n';
+	std::cin >> filtro;
+	system("cls");
+	return filtro;
+}
+
 std::string Interfaz::etiquear()
 {
 	system("cls");
@@ -46,6 +56,42 @@ int Interfaz::mostrarMarcados(std::vector<SitioWeb*> marcados)
 	std::string op;
 	while (true) {
 		std::cout << "Desea navegar en un sitio marcado?\n(0)->No\n(1)->Si\n";
+		std::cin >> op;
+		if (op == "1" || op == "0") {
+			break;
+		}
+		std::cout << "Ha insertado un valor invalido\n";
+	}
+	if (op == "1") {
+		int o = -1;
+		while (true) {
+			std::cout << "Digite la posicion de la pagina que desea visitar(Empezando en 0)\n";
+			try {
+				std::cin >> o;
+				if (o >= 0 && o < marcados.size()) {
+					break;
+				}
+				std::cout << "Ha digitado un valor invalido\n";
+			}
+			catch (const std::invalid_argument& e) {
+				std::cout << "Ha digitado un valor invalido\n";
+				o = -1;
+			}
+		}
+		return o;
+	}
+	return -1;
+}
+
+int Interfaz::mostrarFiltrados(std::vector<SitioWeb*> marcados)
+{
+	for (SitioWeb* sitio : marcados) {
+		std::cout << sitio->toString() << "\n\n";
+	}
+
+	std::string op;
+	while (true) {
+		std::cout << "Desea navegar en un sitio filtrado?\n(0)->No\n(1)->Si\n";
 		std::cin >> op;
 		if (op == "1" || op == "0") {
 			break;

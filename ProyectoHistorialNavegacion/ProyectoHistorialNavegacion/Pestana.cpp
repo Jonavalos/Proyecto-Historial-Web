@@ -76,9 +76,9 @@ std::vector<SitioWeb*> Pestana::getHistorialSitios()
 	return historialSitios;
 }
 
-bool Pestana::asignarActual(std::string dominio) //para buscar
+bool Pestana::asignarActual(std::string filtro) //para buscar
 {
-	SitioWeb sitioABuscar(dominio);
+	SitioWeb sitioABuscar(filtro);
 
 	auto it = std::find_if(sitiosDisponibles.begin(), sitiosDisponibles.end(),
 		[&sitioABuscar](SitioWeb* p) { return *p == sitioABuscar; });
@@ -94,7 +94,7 @@ bool Pestana::asignarActual(std::string dominio) //para buscar
 	}
 	return false;
 
-	//explicacion miedo
+	//explicacion miedo		//ya no es dominio, ahora string filtro se setea en todos los atributos tipo string de SitioWeb
 	/*
 	itera el vector comparandolo con el dominio de sitioABuscar, si lo encuentra lo almacena en it
 	lo de abajo es una lambda (funcion anonima interna).
@@ -142,6 +142,24 @@ std::vector<SitioWeb*> Pestana::marcados() {
 		}
 	}
 	return vec;
+}
+std::vector<SitioWeb*> Pestana::filtrados(std::string filtro)
+{
+	std::vector<SitioWeb*> vec;
+	for (SitioWeb* sitio : historialSitios) {
+		if (contiene(filtro, sitio->getTitulo())) {
+			vec.push_back(sitio);
+		}
+	}
+	return vec;
+}
+bool Pestana::contiene(std::string filtro, std::string texto)
+{
+	bool encontrado = false;
+	if (texto.find(filtro) != std::string::npos) {	//npos es una constante de c++ 
+		encontrado = true;						//que contiene el valor  max de indice de string
+	}
+	return encontrado;
 }
 std::string Pestana::imprimirActual()
 {
@@ -208,6 +226,18 @@ if (LETRA_V) {
 	}
 	int num = Interfaz::mostrarMarcados(aux);
 	if(num != -1){
+		asignarActual(aux.at(num)->getDominio());
+	}
+}
+if (LETRA_F) {
+	system("cls");
+	std::string filtro = Interfaz::buscarFiltro();
+	std::vector<SitioWeb*>aux = filtrados(filtro);
+	if (aux.size() == 0) {
+		return "No coincide el filtro\n";
+	}
+	int num = Interfaz::mostrarFiltrados(aux);
+	if (num != -1) {
 		asignarActual(aux.at(num)->getDominio());
 	}
 }

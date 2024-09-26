@@ -22,6 +22,7 @@
 #define LETRA_S GetAsyncKeyState('S') & 0x8000	//cambiar de sesion
 #define LETRA_C GetAsyncKeyState('C') & 0x8000	//crear pestana nueva
 #define LETRA_G GetAsyncKeyState('G') & 0x8000	//Guardar y salir
+#define LETRA_F GetAsyncKeyState('F') & 0x8000	//filtrar
 #define NO_S_NI_C (!(GetAsyncKeyState('C') & 0x8000) && !(GetAsyncKeyState('S') & 0x8000))
 
 
@@ -45,7 +46,7 @@ public:
 	virtual~SitioWeb();
 	
 	bool operator==(const SitioWeb& obj) const { //Para uso exclusivo 'find' de <algorithm>, no verifica todo, no usar
-		return (this->dominio == obj.dominio);
+		return (this->dominio == obj.dominio || this->titulo == obj.titulo || this->url == obj.url);
 	}
 	friend std::ostream& operator<<(std::ostream& os, const SitioWeb& obj)
 	{

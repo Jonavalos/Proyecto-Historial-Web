@@ -58,7 +58,7 @@ int main() {
     //if (pes2)
     //    delete pes2;
 
-    //return 0;
+    return 0;
 
 }
 

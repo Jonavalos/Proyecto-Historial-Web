@@ -31,6 +31,8 @@ public:
 	bool asignarActual(std::string dominio);
 
 	std::vector<SitioWeb*> marcados();
+	std::vector<SitioWeb*> filtrados(std::string filtro);
+	bool contiene(std::string filtro, std::string texto);
 
 	bool buscar();
 
