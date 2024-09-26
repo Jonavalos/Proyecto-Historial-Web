@@ -16,6 +16,14 @@ Pestana::Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> sit)
 	indice = 0;
 }
 
+Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sit)
+{
+	sitiosDisponibles = sit;
+	sitioActual = si;
+	incognito = in;
+	this->indice = indice;
+}
+
 void Pestana::leerSitiosDisponibles()
 {
 	std::fstream strm("sitiosDispinibles.csv", std::ios::in);
@@ -99,11 +107,7 @@ bool Pestana::asignarActual(std::string dominio) //para buscar
 
 bool Pestana::buscar()
 {
-	system("cls");
-	std::string dominio = "";
-	std::cout << "Ingrese el dominio del sitio a buscar" << '\n'; std::cin >> dominio;
-	system("cls");
-	return asignarActual(dominio);
+	return asignarActual(Interfaz::buscarDominio());
 }
 
 std::string Pestana::mostrarMarcados()
@@ -122,45 +126,29 @@ std::string Pestana::mostrarMarcados()
 
 bool Pestana::etiquetar()
 {
-	system("cls");
-	std::string tag = "";
-	std::cout << "Ingrese la etiqueta(Tag): " << '\n'; std::cin >> tag;
-	system("cls");
-	if (tag.length() > 15) {
-		std::cout << "Limite de caracteres alcanzado..." << '\n';
+	std::string tag = Interfaz::etiquear();
+	if (Interfaz::etiquetaEsValida(tag)) {
 		return false;
 	}
 	sitioActual->setEtiqueta(tag);
 	return true;
 }
 
-std::vector<SitioWeb*> Pestana::marcados() {		//No entra al ciclo porque no le da la gana
+std::vector<SitioWeb*> Pestana::marcados() {		
 	std::vector<SitioWeb*> vec;
-	/*for (SitioWeb* sitio:sitiosDisponibles) {*/
-	for (int i = 0; i < sitiosDisponibles.size();i++) {
-		/*if (sitio->getMarcado()) {
+	for (SitioWeb* sitio:sitiosDisponibles) {
+		if (sitio->getMarcado()) {
 			vec.push_back(sitio);
-		}*/
-		if (sitiosDisponibles.at(i)->getMarcado()) {
-			vec.push_back(sitiosDisponibles.at(i));
 		}
 	}
 	return vec;
-}
-
-std::string Pestana::encabezado()
-{
-std::stringstream s;
-s << " >>>>>>>>>>>>>>>> Historial <<<<<<<<<<<<<<<<" << '\n';
-s << "salir (ESC), moverse entre paginas(<- ->), moverse entre pestanas(up down)" << '\n';
-return s.str();
 }
 std::string Pestana::imprimirActual()
 {
 std::stringstream s;
 
 if (sitioActual) {
-	s << "~~ PESTANA ~~" << '\n';
+	s << "~~ PESTANA ACTUAL ~~" << '\n';
 	s << "incognito(i), marcar(m), buscar(b)" << '\n';
 	s << "Incognito: " << incognito << '\n';
 	s << sitioActual->toString();
@@ -178,73 +166,29 @@ std::stringstream s;
 
 if (FLECHA_IZQ) {
 if (indice - 1 >= 0) {
-indice -= 1;
-s << imprimirActual() << '\n';
-s << encabezado();
-s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-s << historialSitios.at(indice)->toString() << '\n';
-}
-else {
-s << imprimirActual() << '\n';
-s << encabezado();
-if (historialSitios.size() != 0) {
-	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-	s << historialSitios.at(indice)->toString() << '\n';
-}
-else {
-	std::cout << "Aun no se han realizado busquedas\n";
-}
+	indice -= 1;
 }
 }
 if (FLECHA_DER) {
 if (indice + 1 < historialSitios.size()) {
-indice+=1;
-s << imprimirActual() << '\n';
-s << encabezado();
-s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-s << historialSitios.at(indice)->toString() << '\n';
-}
-else {
-s << imprimirActual() << '\n';
-s << encabezado();
-if (historialSitios.size() != 0) {
-	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-	s << historialSitios.at(indice)->toString() << '\n';
-}
-else {
-	s << "Aun no se han realizado busquedas\n";
-}
+	indice+=1;
 }
 }
 if (LETRA_i) {
 incognito = !incognito; //conmutacion incognito
-s << imprimirActual() << '\n';
-s << encabezado();
-s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n'; //indice
-s << historialSitios.at(indice)->toString() << '\n'; //cuerpo del historial
 }
 
 if (LETRA_M) {
-	if (!incognito) {
+	if (!incognito && sitioActual) {
 		sitioActual->toggleMarcado(); //conmutacion de marcado
 		if (sitioActual->getMarcado()) {
 			etiquetar();
 		}
 	}
-		s << imprimirActual() << '\n';
-		s << encabezado();
-		s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-		s << historialSitios.at(indice)->toString() << '\n';
-	
 }
-if (LETRA_B) {
+if (LETRA_B) {	//Y FILTRAR
 	if (!buscar())
 		return "1";
-
-	s << imprimirActual() << '\n';
-	s << encabezado();
-	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-	s << historialSitios.at(indice)->toString() << '\n';
 }
 
 if (FLECHA_DOWN) {
@@ -258,64 +202,132 @@ return "";
 }
 if (LETRA_V) {
 	system("cls");
-	std::string a = mostrarMarcados();
-	if (a == "1") {
+	std::vector<SitioWeb*>aux = marcados();
+	if (aux.size() == 0) {
 		return "No hay sitios marcados\n";
 	}
-	std::cout<< a;
-	std::vector<SitioWeb*>aux = marcados();
-	int num = ingresarMarcado(aux.size());
+	int num = Interfaz::mostrarMarcados(aux);
 	if(num != -1){
 		asignarActual(aux.at(num)->getDominio());
 	}
-	s << imprimirActual() << '\n';
-	s << encabezado();
-	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-	s << historialSitios.at(indice)->toString() << '\n';
 }
 if (LETRA_S) {
 	return "change";
 }
 if (LETRA_C) {
-	//Crear pestana
+	return "create";
+}
+if (LETRA_G) {		//Preguntar manana(Jueves)
+	return "save";
 }
 if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E && NO_S_NI_C) {
 return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s) \n<-, -> = Historial\ni = Incognito\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion";
 }
-
+s << Interfaz::imprimirSitioActual(sitioActual,incognito) << '\n';
+s << Interfaz::encabezado();
+if (historialSitios.size() != 0) {
+	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+	s << historialSitios.at(indice)->toString() << '\n';
+}
+else {
+	s << "Aun no se han realizado busquedas\n";
+}
 s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';
 
 return s.str();
 }
 
-int Pestana::ingresarMarcado(int n)
+//int Pestana::ingresarMarcado(int n)
+//{
+//	std::string op;
+//	while(true) {
+//		std::cout << "Desea navegar en un sitio marcado?\n(0)->No\n(1)->Si\n";
+//		std::cin>>op;
+//		if (op == "1" || op == "0") {
+//			break;
+//	}
+//		std::cout << "Ha insertado un valor invalido\n";
+//	}
+//	if (op == "1") {
+//		int o = -1;
+//		while(true) {
+//			std::cout << "Digite la posicion de la pagina que desea visitar(Empezando en 0)\n";
+//			try {
+//				std::cin >> o;
+//				if (o >= 0 && o < n) {
+//					break;
+//				}
+//				std::cout << "Ha digitado un valor invalido\n";
+//			}
+//			catch (const std::invalid_argument& e) {
+//				std::cout << "Ha digitado un valor invalido\n";
+//				o = -1;
+//			}
+//		}
+//		return o;
+//	}
+//	return -1;
+//}
+
+void Pestana::guardar(std::fstream& strm)
 {
-	std::string op;
-	while(true) {
-		std::cout << "Desea navegar en un sitio marcado?\n(0)->No\n(1)->Si\n";
-		std::cin>>op;
-		if (op == "1" || op == "0") {
-			break;
+	bool incog = incognito;
+	int ind = indice;
+	bool sitioActualExiste = (sitioActual != nullptr);
+	int cantHistorial = historialSitios.size();
+	std::string url;
+	
+
+	strm.write(reinterpret_cast<char*>(&incog), sizeof(bool));
+	strm.write(reinterpret_cast<char*>(&ind), sizeof(int));
+	strm.write(reinterpret_cast<char*>(&sitioActualExiste), sizeof(bool));
+
+	if (sitioActualExiste) {
+		/*url = sitioActual->getUrl().c_str();
+		strm.write(url, LONGITUD_MAXIMA_STRING);*/
+		url = sitioActual->getUrl(); // Usar std::string para mantener la validez
+		strm.write(url.c_str(), LONGITUD_MAXIMA_STRING);
 	}
-		std::cout << "Ha insertado un valor invalido\n";
+
+	strm.write(reinterpret_cast<char*>(&cantHistorial), sizeof(int));
+	for (SitioWeb* sitio:historialSitios) {
+		url = sitio->getUrl().c_str();
+		strm.write(url.c_str(), LONGITUD_MAXIMA_STRING);
 	}
-	if (op == "1") {
-		int o = -1;
-		while(true) {
-			std::cout << "Digite la posicion de la pagina que desea visitar(Empezando en 0)\n";
-			try {
-				std::cin >> o;
-				if (o >= 0 && o < n) {
-					break;
-				}
-				std::cout << "Ha digitado un valor invalido\n";
-			}
-			catch (const std::invalid_argument& e) {
-				std::cout << "Ha digitado un valor invalido\n";
-				o = -1;
-			}
-		}
-		return o;
+}
+
+SitioWeb* Pestana::sitioPorURL(std::vector<SitioWeb*> sit, std::string url)
+{
+	std::vector<SitioWeb*>::iterator iter;
+	for (iter = sit.begin(); iter != sit.end(); iter++) {
+		if ((*iter)->getUrl() == url)
+			return (*iter);
 	}
-	return -1;
+	return nullptr;
+}
+
+Pestana* Pestana::leer(std::fstream& strm, std::vector<SitioWeb*> a) {
+	bool incog=false;
+	int ind = 0;
+	bool sitioActualExiste = false;
+	int cantHistorial = 0;
+	char url[LONGITUD_MAXIMA_STRING];
+	std::vector<SitioWeb*> historial;
+	SitioWeb* auxiliar = nullptr;
+	SitioWeb* actual = nullptr;
+
+	strm.read(reinterpret_cast<char*>(&incog), sizeof(bool));
+	strm.read(reinterpret_cast<char*>(&ind), sizeof(int));
+	strm.read(reinterpret_cast<char*>(&sitioActualExiste), sizeof(bool));
+	if (sitioActualExiste) {
+		strm.read(url, LONGITUD_MAXIMA_STRING);
+		actual=sitioPorURL(a,url);
+	}
+	strm.read(reinterpret_cast<char*>(&cantHistorial), sizeof(int));
+	for (int i = 0; i < cantHistorial; i++) {
+		strm.read(url, LONGITUD_MAXIMA_STRING);
+		auxiliar = sitioPorURL(a, url);
+		if (auxiliar) historial.push_back(auxiliar);
+	}
+	return new Pestana(actual, incog, ind, historial);
 }

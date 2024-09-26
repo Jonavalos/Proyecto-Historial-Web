@@ -3,8 +3,6 @@
 Control* Control::instance = nullptr;
 
 Control::Control() {
-    sesionActual = new Sesion();
-    sesiones.push_back(sesionActual);
 }
 Control* Control::getInstance()
 {
@@ -27,6 +25,7 @@ Control* Control::leer()
 void Control::navegar()
 {
     while (true) {
+        if (!sesionActual) { crearNuevaSesion(); }
         std::string aux = "";
         aux = sesionActual->navegarPestanas();
         if (aux == "change") {
@@ -62,7 +61,11 @@ void Control::modificarSesion()
 
 void Control::crearNuevaSesion()
 {
-    sesionActual = new Sesion();
+    system("cls");
+    std::string nom;
+    std::cout<<"Digite el nombre de la nueva sesion:\n";
+    std::cin >> nom;
+    sesionActual = new Sesion(nom);
     sesiones.push_back(sesionActual);
     std::cout << "Se ha ingresado una nueva sesion con exito\n";
     system("pause");
@@ -74,7 +77,7 @@ void Control::cambiarSesion()
     std::cout << "Actualmente hay " << sesiones.size() << " sesiones\n";
     std::cout << "A cual de las siguientes sesiones desea viajar? Digite el numero de la sesion\n";
     for (int i = 0; i < sesiones.size(); i++) {
-        std::cout << "Sesion#" << i << "\n";
+        std::cout << "Sesion#" << i << " : "<<sesiones.at(i)->getNombre()<<"\n";
     }
     while (true) {
         try {

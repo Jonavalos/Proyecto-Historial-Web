@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Control.cpp" />
+    <ClCompile Include="Interfaz.cpp" />
     <ClCompile Include="Sesion.cpp" />
     <ClCompile Include="Pestana.cpp" />
     <ClCompile Include="SitioWeb.cpp" />
@@ -135,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Control.h" />
+    <ClInclude Include="Interfaz.h" />
     <ClInclude Include="Sesion.h" />
     <ClInclude Include="Pestana.h" />
     <ClInclude Include="SitioWeb.h" />

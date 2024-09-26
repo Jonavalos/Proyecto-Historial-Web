@@ -4,6 +4,7 @@
 #include<string>
 #include<fstream>
 #include <conio.h>
+#include<vector>
 #define LONGITUD_MAXIMA_STRING 50
 #define FLECHA_IZQ GetAsyncKeyState(VK_LEFT) & 0x8000
 #define FLECHA_DER GetAsyncKeyState(VK_RIGHT) & 0x8000
@@ -20,6 +21,7 @@
 #define NO_UP_DOWN (!(GetAsyncKeyState(VK_DOWN) & 0x8000) && !(GetAsyncKeyState(VK_UP) & 0x8000))
 #define LETRA_S GetAsyncKeyState('S') & 0x8000	//cambiar de sesion
 #define LETRA_C GetAsyncKeyState('C') & 0x8000	//crear pestana nueva
+#define LETRA_G GetAsyncKeyState('G') & 0x8000	//Guardar y salir
 #define NO_S_NI_C (!(GetAsyncKeyState('C') & 0x8000) && !(GetAsyncKeyState('S') & 0x8000))
 
 

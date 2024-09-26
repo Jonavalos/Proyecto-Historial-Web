@@ -9,11 +9,13 @@ Sesion::Sesion()
 		}
 	}
 	strm.close();
+	nombreSesion = "Usuario";
 	pestanaActual = new Pestana(nullptr, false,sitios);
 	pestanas.push_back(pestanaActual);
+	indiceP = 0;
 }
 
-Sesion::Sesion(Pestana* pestana)
+Sesion::Sesion(std::string nom)
 {
 	std::fstream strm("sitiosDispinibles.csv", std::ios::in);
 	if (strm.good() && strm.is_open()) {
@@ -23,14 +25,18 @@ Sesion::Sesion(Pestana* pestana)
 		}
 	}
 	strm.close();
-	pestanaActual = pestana;
+	nombreSesion = nom;
+
+	pestanaActual = new Pestana(nullptr, false, sitios);
+	pestanas.push_back(pestanaActual);
+	indiceP = 0;
 	
 }
 
 Sesion::~Sesion() {
 	//por ahora no, eventualmente
 }
-int indiceP = 0;
+
 
 std::string Sesion::navegarPestanasStr()
 {
@@ -86,20 +92,21 @@ std::string Sesion::navegarPestanas()
 					h=navegarPestanasStr();
 				}
 				if (h == "change") {
-					return "change";
+					return h;
 				}
+				if (h == "create") {
+					pestanaActual = new Pestana(nullptr, false, sitios);
+					pestanas.push_back(pestanaActual);
+					h = "Se ha creado una nueva pestana";
+				}	
 				if (h != "") {
-					system("cls");
-					std::cout << h << '\n';
-					system("pause");
+					Interfaz::mostrar(h);
 				}
 				else {
-					break;
-				}
+						break;
+					}
 			}
-			system("cls");
-			std::cout << p << '\n';
-			system("pause");
+			Interfaz::mostrar(p);
 		}
 		else {
 			break;
@@ -115,4 +122,31 @@ bool Sesion::agregarPestanaActual(Pestana* pestana)
 	pestanaActual = pestana;
 	pestanas.push_back(pestana);
 	return true;
+}
+
+std::string Sesion::getNombre()
+{
+	return nombreSesion;
+}
+
+void Sesion::guardar(std::fstream& strm)
+{
+
+	/*std::vector<Pestana*> pestanas;
+	Pestana* pestanaActual;
+	std::vector<SitioWeb*> sitios;
+	std::string nombreSesion;
+
+
+	std::string nombre;
+	Pestana* actual = nullptr;*/
+	
+
+
+
+}
+
+Sesion* Sesion::leer(std::fstream& strm, std::vector<SitioWeb*> a)
+{
+	return nullptr;
 }

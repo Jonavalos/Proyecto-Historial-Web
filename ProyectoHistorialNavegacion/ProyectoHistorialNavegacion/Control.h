@@ -10,6 +10,7 @@ private:
 public:
 	static Control* getInstance();
 	static Control* leer();
+	void guardar();
 	void navegar();
 	void modificarSesion();
 	void cambiarSesion();
