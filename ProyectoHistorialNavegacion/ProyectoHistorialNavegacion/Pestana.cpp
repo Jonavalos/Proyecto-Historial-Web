@@ -236,7 +236,7 @@ if (LETRA_H) {
 	if (aux.size() == 0) {
 		return "No coincide el filtro\n";
 	}
-	int num = Interfaz::mostrarFiltrados(aux);
+	int num = Interfaz::mostarBusquedaHistorial(aux);
 	if (num != -1) {
 		asignarActual(aux.at(num)->getDominio());
 	}
