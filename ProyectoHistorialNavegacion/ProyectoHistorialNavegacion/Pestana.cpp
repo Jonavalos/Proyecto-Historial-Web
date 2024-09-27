@@ -14,6 +14,7 @@ Pestana::Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> sit)
 	sitioActual = si;
 	incognito = in;
 	indice = 0;
+	filtro = "";
 }
 
 Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sit)
@@ -22,6 +23,7 @@ Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sit)
 	sitioActual = si;
 	incognito = in;
 	this->indice = indice;
+	filtro = "";
 }
 
 void Pestana::leerSitiosDisponibles()
@@ -250,18 +252,35 @@ if (LETRA_C) {
 if (LETRA_G) {		//Preguntar manana(Jueves)
 	return "save";
 }
-if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E && NO_S_NI_C) {
-return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s) \n<-, -> = Historial\ni = Incognito\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion";
+
+if (LETRA_F) {
+	system("cls");
+	filtro = Interfaz::buscarFiltro();
 }
-s << Interfaz::imprimirSitioActual(sitioActual,incognito) << '\n';
+if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E && NO_S_NI_C) {
+	return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s) \n<-, -> = Historial\ni = Incognito\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion";
+}
+s << Interfaz::imprimirSitioActual(sitioActual, incognito) << '\n';
 s << Interfaz::encabezado();
 if (historialSitios.size() != 0) {
-	s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-	s << historialSitios.at(indice)->toString() << '\n';
+	if (contiene(filtro, historialSitios.at(indice)->getTitulo())) {
+		s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+		s << historialSitios.at(indice)->toString() << '\n';
+	}
+
 }
-else {
+//if (NO_LETRA_F) {
+//	s << Interfaz::imprimirSitioActual(sitioActual, incognito) << '\n';
+//	s << Interfaz::encabezado();
+//	if (historialSitios.size() != 0) {
+//		s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+//		s << historialSitios.at(indice)->toString() << '\n';
+//	}
+//}
+if (historialSitios.size() == 0) {
 	s << "Aun no se han realizado busquedas\n";
 }
+
 s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';
 
 return s.str();

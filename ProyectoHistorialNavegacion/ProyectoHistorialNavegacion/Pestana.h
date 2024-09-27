@@ -14,6 +14,7 @@ private:
 	SitioWeb* sitioActual;
 	bool incognito;
 	int indice;
+	std::string filtro;
 public:
 	Pestana();
 	Pestana(SitioWeb* si, bool in = false, std::vector<SitioWeb*> = std::vector<SitioWeb*>());

@@ -91,7 +91,7 @@ int Interfaz::mostarBusquedaHistorial(std::vector<SitioWeb*> marcados)
 
 	std::string op;
 	while (true) {
-		std::cout << "Desea navegar en un sitio filtrado?\n(0)->No\n(1)->Si\n";
+		std::cout << "Desea navegar en un sitio ?\n(0)->No\n(1)->Si\n";
 		std::cin >> op;
 		if (op == "1" || op == "0") {
 			break;
