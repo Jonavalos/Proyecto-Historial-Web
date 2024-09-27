@@ -23,6 +23,7 @@
 #define LETRA_C GetAsyncKeyState('C') & 0x8000	//crear pestana nueva
 #define LETRA_G GetAsyncKeyState('G') & 0x8000	//Guardar y salir
 #define LETRA_F GetAsyncKeyState('F') & 0x8000	//filtrar
+#define LETRA_H GetAsyncKeyState('H') & 0x8000	//Busqueda en historial (contains string)
 #define NO_S_NI_C (!(GetAsyncKeyState('C') & 0x8000) && !(GetAsyncKeyState('S') & 0x8000))
 
 

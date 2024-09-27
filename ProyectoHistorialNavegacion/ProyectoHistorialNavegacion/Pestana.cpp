@@ -143,7 +143,7 @@ std::vector<SitioWeb*> Pestana::marcados() {
 	}
 	return vec;
 }
-std::vector<SitioWeb*> Pestana::filtrados(std::string filtro)
+std::vector<SitioWeb*> Pestana::busquedaEnHistorial(std::string filtro)
 {
 	std::vector<SitioWeb*> vec;
 	for (SitioWeb* sitio : historialSitios) {
@@ -229,10 +229,10 @@ if (LETRA_V) {
 		asignarActual(aux.at(num)->getDominio());
 	}
 }
-if (LETRA_F) {
+if (LETRA_H) {
 	system("cls");
 	std::string filtro = Interfaz::buscarFiltro();
-	std::vector<SitioWeb*>aux = filtrados(filtro);
+	std::vector<SitioWeb*>aux = busquedaEnHistorial(filtro);
 	if (aux.size() == 0) {
 		return "No coincide el filtro\n";
 	}
