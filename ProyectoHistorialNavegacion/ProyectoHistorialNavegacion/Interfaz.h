@@ -12,7 +12,7 @@ public:
 	static std::string etiquear();
 	static bool etiquetaEsValida(std::string tag);
 	static int mostrarMarcados(std::vector<SitioWeb*> marcados);
-	static int mostrarFiltrados(std::vector<SitioWeb*> marcados);
+	static int mostarBusquedaHistorial(std::vector<SitioWeb*> marcados);
 	static void mostrar(std::string m);
 	static std::string imprimirSitioActual(SitioWeb* actual,bool inc);
 

@@ -83,7 +83,7 @@ int Interfaz::mostrarMarcados(std::vector<SitioWeb*> marcados)
 	return -1;
 }
 
-int Interfaz::mostrarFiltrados(std::vector<SitioWeb*> marcados)
+int Interfaz::mostarBusquedaHistorial(std::vector<SitioWeb*> marcados)
 {
 	for (SitioWeb* sitio : marcados) {
 		std::cout << sitio->toString() << "\n\n";
