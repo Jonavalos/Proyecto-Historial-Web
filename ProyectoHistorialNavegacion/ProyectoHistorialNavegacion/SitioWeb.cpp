@@ -124,10 +124,10 @@ SitioWeb* SitioWeb::recuperar(std::fstream& strm) //Binario
 		etiq->push_back(tag);
 	}
 
-	//if (strm.fail()) {
-	//	//Ocurrio un error, deberia tirar excepcion
-	//	return nullptr;
-	//}
+	if (strm.fail()) {
+		//Ocurrio un error, deberia tirar excepcion
+		return nullptr;
+	}
 
 	return new SitioWeb(tit, domi, ur, etiq, marca);
 }

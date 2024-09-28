@@ -15,6 +15,8 @@ public:
 	void modificarSesion();
 	void cambiarSesion();
 	void crearNuevaSesion();
+	void importarExportar();
+	std::vector<Sesion*> importar();
 
 };
 

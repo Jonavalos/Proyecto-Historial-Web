@@ -31,6 +31,9 @@ void Control::navegar()
         if (aux == "change") {
             modificarSesion();
         }
+        if (aux == "save") {
+            importarExportar();
+        }
     }
 }
 
@@ -69,6 +72,40 @@ void Control::crearNuevaSesion()
     sesiones.push_back(sesionActual);
     std::cout << "Se ha ingresado una nueva sesion con exito\n";
     system("pause");
+}
+
+void Control::importarExportar()
+{
+    int op = Interfaz::guardarONo();
+    
+    switch (op) {
+    case 1: {
+        std::vector<Sesion*> ses = importar();
+        //Imprimir todas las sesiones guardadas y preguntar cual desea importar(creo que asi seria)
+
+    }
+    case 2: {//Exportar(Llevar)
+
+    }
+    case 3:
+        break;
+    }
+}
+
+std::vector<Sesion*> Control::importar()
+{
+    std::vector<Sesion*> vec;
+    std::fstream leer("Sesiones.csv", std::ios::in | std::ios::binary);
+    if (leer.is_open()) {
+        while (true) {
+            Sesion* sesion = Sesion::leer(leer);
+            if (sesion == nullptr) {
+                break;
+            }
+            vec.push_back(sesion);
+        }
+        leer.close();
+    }
 }
 
 void Control::cambiarSesion()

@@ -249,7 +249,7 @@ if (LETRA_S) {
 if (LETRA_C) {
 	return "create";
 }
-if (LETRA_G) {		//Preguntar manana(Jueves)
+if (LETRA_G) {		
 	return "save";
 }
 

@@ -12,6 +12,7 @@ private:
 public:
 	Sesion();
 	Sesion(std::string nom);
+	Sesion(std::string nom, int ind, Pestana* act, std::vector<SitioWeb*> sit, std::vector<Pestana*> pest);
 	
 	virtual ~Sesion();
 
@@ -19,9 +20,10 @@ public:
 	std::string navegarPestanas();
 	bool agregarPestanaActual(Pestana* pestana);
 	std::string getNombre();
+	std::vector<SitioWeb*> getSitios();
 
 	//Archivos
 	void guardar(std::fstream& strm);
-	static Sesion* leer(std::fstream& strm, std::vector<SitioWeb*> a);
+	static Sesion* leer(std::fstream& strm);
 
 };

@@ -16,6 +16,7 @@ public:
 	static int mostarBusquedaHistorial(std::vector<SitioWeb*> marcados);
 	static void mostrar(std::string m);
 	static std::string imprimirSitioActual(SitioWeb* actual,bool inc);
+	static int guardarONo();
 
 };
 

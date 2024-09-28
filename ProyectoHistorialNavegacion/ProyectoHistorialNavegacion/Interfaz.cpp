@@ -158,3 +158,22 @@ std::string Interfaz::imprimirSitioActual(SitioWeb* actual,bool inc)
 	}
 	return s.str();
 }
+
+int Interfaz::guardarONo()
+{
+	int op = -1;
+	while (true) {
+		try {
+			system("cls");
+			std::cout << "Importar/Exportar\n";
+			std::cout << "(1)Importar\n(2)Exportar\n(3)Cancelar\n";
+			std::cin >> op;
+			if (op > 0 && op < 4) {
+				return op;
+			}
+		}
+		catch (...) {
+		}
+	}
+	
+}

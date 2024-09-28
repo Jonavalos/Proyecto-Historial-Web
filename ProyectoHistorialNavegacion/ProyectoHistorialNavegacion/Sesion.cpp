@@ -33,6 +33,15 @@ Sesion::Sesion(std::string nom)
 	
 }
 
+Sesion::Sesion(std::string nom, int ind, Pestana* act, std::vector<SitioWeb*> sit, std::vector<Pestana*> pest)
+{
+	this->nombreSesion = nom;
+	this->indiceP = ind;
+	this->pestanaActual = act;
+	this->sitios = sit;
+	this->pestanas = pest;
+}
+
 Sesion::~Sesion() {
 	//por ahora no, eventualmente
 }
@@ -94,8 +103,12 @@ std::string Sesion::navegarPestanas()
 				if (h == "change") {
 					return h;
 				}
+				if (h == "save") {
+					return h;
+				}
 				if (h == "create") {
 					pestanaActual = new Pestana(nullptr, false, sitios);
+					indiceP += 1;
 					pestanas.push_back(pestanaActual);
 					h = "Se ha creado una nueva pestana";
 				}	
@@ -129,24 +142,87 @@ std::string Sesion::getNombre()
 	return nombreSesion;
 }
 
-void Sesion::guardar(std::fstream& strm)
+std::vector<SitioWeb*> Sesion::getSitios()
 {
-
-	/*std::vector<Pestana*> pestanas;
-	Pestana* pestanaActual;
-	std::vector<SitioWeb*> sitios;
-	std::string nombreSesion;
-
-
-	std::string nombre;
-	Pestana* actual = nullptr;*/
-	
-
-
-
+	return sitios;
 }
 
-Sesion* Sesion::leer(std::fstream& strm, std::vector<SitioWeb*> a)
+void Sesion::guardar(std::fstream& strm)
 {
-	return nullptr;
+	int indice = indiceP;
+	const char* nom = nombreSesion.c_str();
+	bool pesActualExiste = (pestanaActual != nullptr);
+	int cantPestanas = pestanas.size();
+	int cantSitios = sitios.size();
+
+	strm.write(reinterpret_cast<char*>(&indice), sizeof(int));
+	strm.write(nom, LONGITUD_MAXIMA_STRING);
+	
+	strm.write(reinterpret_cast<char*>(&cantSitios), sizeof(int));
+	for (SitioWeb* s : sitios) {
+		s->guardar(strm);
+	}
+
+	strm.write(reinterpret_cast<char*>(&pesActualExiste), sizeof(bool));
+	if (pesActualExiste) {
+		pestanaActual->guardar(strm);
+	}
+	
+	strm.write(reinterpret_cast<char*>(&cantPestanas), sizeof(int));
+	for (Pestana* s : pestanas) {
+		s->guardar(strm);
+	}
+}
+
+Sesion* Sesion::leer(std::fstream& strm)
+{
+	int indice=0;
+	bool existePesAct = false;
+	char nombre[LONGITUD_MAXIMA_STRING];
+	int cantPestanas = 0;
+	int cantSitios = 0;
+	Pestana* actual = nullptr;
+	SitioWeb* sit = nullptr;
+	Pestana* pes = nullptr;
+	std::vector<SitioWeb*> sitios;
+	std::vector<Pestana*> pestanas;
+
+	if (!strm.read(reinterpret_cast<char*>(&indice), sizeof(int))) {
+		return nullptr; 
+	}
+
+	if (!strm.read(nombre, LONGITUD_MAXIMA_STRING)) {
+		return nullptr; 
+	}
+
+	if (!strm.read(reinterpret_cast<char*>(&cantSitios), sizeof(int))) {
+		return nullptr;
+	}
+
+	for (int i = 0; i < cantSitios;i++) {
+		sit = SitioWeb::recuperar(strm);
+		if (!sit)	return nullptr;
+		sitios.push_back(sit);
+	}
+
+	if (!strm.read(reinterpret_cast<char*>(&existePesAct), sizeof(bool))) {
+		return nullptr;
+	}
+	if (existePesAct) {
+		actual = Pestana::leer(strm,sitios);
+		if (!actual)	return nullptr;
+		actual->setSitiosDisponibles(sitios);
+	}
+
+	if (!strm.read(reinterpret_cast<char*>(&cantPestanas), sizeof(int))) {
+		return nullptr; 
+	}
+
+	for (int i = 0; i < cantPestanas; i++) {
+		pes = Pestana::leer(strm,sitios);
+		if (!pes) return nullptr;
+		pes->setSitiosDisponibles(sitios);
+		pestanas.push_back(pes);
+	}
+	return new Sesion(nombre, indice, actual, sitios, pestanas);
 }
