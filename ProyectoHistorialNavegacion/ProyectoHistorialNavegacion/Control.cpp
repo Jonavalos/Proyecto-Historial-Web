@@ -106,6 +106,7 @@ std::vector<Sesion*> Control::importar()
         }
         leer.close();
     }
+    return vec;
 }
 
 void Control::cambiarSesion()

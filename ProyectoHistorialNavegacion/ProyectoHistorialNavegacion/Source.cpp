@@ -3,7 +3,7 @@
 //este programa incluye bibliotecas: iostream, sstream, string, conio.h, algorithm, windows.h, vector
 
 int main() {
-   /*Control::getInstance()->navegar(); */     //Guardar y leer de pestanas ya sirve 
+   Control::getInstance()->navegar();     //Guardar y leer de pestanas ya sirve 
 
    /* Pestana* pestana = new Pestana();
     pestana->leerSitiosDisponibles();

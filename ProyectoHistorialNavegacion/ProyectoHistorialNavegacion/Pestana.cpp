@@ -194,8 +194,11 @@ if (indice + 1 < historialSitios.size()) {
 	indice+=1;
 }
 }
-if (LETRA_i) {
-incognito = !incognito; //conmutacion incognito
+if (LETRA_i) {		//!incognito, crea una nueva en incognito. incognito, lo pasa a normal 
+	if (incognito)
+		incognito = false;
+	else
+		return "i";
 }
 
 if (LETRA_M) {
@@ -261,14 +264,17 @@ if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E && NO_S_NI_C) {
 	return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s) \n<-, -> = Historial\ni = Incognito\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion";
 }
 s << Interfaz::imprimirSitioActual(sitioActual, incognito) << '\n';
-s << Interfaz::encabezado();
-if (historialSitios.size() != 0) {
-	if (contiene(filtro, historialSitios.at(indice)->getTitulo())) {
-		s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-		s << historialSitios.at(indice)->toString() << '\n';
-	}
+if (!incognito) {
+	s << Interfaz::encabezado();
+	if (historialSitios.size() != 0) {
+		if (contiene(filtro, historialSitios.at(indice)->getTitulo())) {
+			s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
+			s << historialSitios.at(indice)->toString() << '\n';
+		}
 
+	}
 }
+
 //if (NO_LETRA_F) {
 //	s << Interfaz::imprimirSitioActual(sitioActual, incognito) << '\n';
 //	s << Interfaz::encabezado();

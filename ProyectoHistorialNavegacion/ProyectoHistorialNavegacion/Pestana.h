@@ -17,8 +17,8 @@ private:
 	std::string filtro;
 public:
 	Pestana();
-	Pestana(SitioWeb* si, bool in = false, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
-	Pestana(SitioWeb* si, bool in = false,int indice = 0, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
+	Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
+	Pestana(SitioWeb* si, bool in,int indice = 0, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
 
 	void leerSitiosDisponibles();
 	std::vector < SitioWeb*> getSitiosDisponibles();

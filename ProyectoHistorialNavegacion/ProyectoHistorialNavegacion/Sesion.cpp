@@ -111,7 +111,13 @@ std::string Sesion::navegarPestanas()
 					indiceP += 1;
 					pestanas.push_back(pestanaActual);
 					h = "Se ha creado una nueva pestana";
-				}	
+				}
+				if (h == "i") {
+					pestanaActual = new Pestana(nullptr, true, sitios);
+					indiceP += 1;
+					pestanas.push_back(pestanaActual);
+					h = "Se ha creado una nueva pestana MODO INCOGNITO";
+				}
 				if (h != "") {
 					Interfaz::mostrar(h);
 				}
