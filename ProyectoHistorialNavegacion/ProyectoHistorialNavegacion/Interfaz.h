@@ -9,6 +9,7 @@ public:
 	static std::string encabezado();
 	static std::string buscarDominio();
 	static std::string buscarFiltro();
+	static std::string buscarConTag();
 	static std::string etiquear();
 	static bool etiquetaEsValida(std::string tag);
 	static int mostrarMarcados(std::vector<SitioWeb*> marcados);

@@ -1,19 +1,19 @@
 #include "SitioWeb.h"
 
 SitioWeb::SitioWeb(std::string filtro)
-	: titulo(filtro), dominio(filtro), url(filtro), etiqueta(""), marcado(false)
+	: titulo(filtro), dominio(filtro), url(filtro), tags(new std::vector<std::string>), marcado(false)
 {
 }
 
-SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur) : titulo(titu), dominio(dom), url(ur), etiqueta(""), marcado(false)
+SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur) : titulo(titu), dominio(dom), url(ur), tags(new std::vector<std::string>), marcado(false)
 {
 
 }
 
-SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur, std::string etiqueta, bool marcado)
-	: titulo(titu), dominio(dom), url(ur), etiqueta(etiqueta), marcado(marcado) {}
+SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur, std::vector<std::string>* tags, bool marcado)
+	: titulo(titu), dominio(dom), url(ur), tags(tags), marcado(marcado) {}
 
-SitioWeb::SitioWeb() : titulo(""), dominio(""), url(""), etiqueta(""), marcado(false)
+SitioWeb::SitioWeb() : titulo(""), dominio(""), url(""), tags(new std::vector<std::string>), marcado(false)
 {
 }
 
@@ -39,9 +39,9 @@ std::string SitioWeb::getUrl()
 	return url;
 }
 
-std::string SitioWeb::getEtiqueta()
+std::vector<std::string>* SitioWeb::getTags()
 {
-	return etiqueta;
+	return tags;
 }
 
 bool SitioWeb::getMarcado()
@@ -66,9 +66,14 @@ void SitioWeb::setUrl(std::string ur)
 	url = ur;
 }
 
-void SitioWeb::setEtiqueta(std::string tag)
+void SitioWeb::setTags(std::vector<std::string>* tags)
 {
-	etiqueta = tag;
+	this->tags = tags;
+}
+
+void SitioWeb::agregarTag(std::string tag)
+{
+	tags->push_back(tag);
 }
 
 void SitioWeb::setMarcado(bool mar)
@@ -134,9 +139,9 @@ std::string SitioWeb::toString() const
 	std::stringstream s;
 	s << "[		" << url << "			]" << '\n';
 	s << "[		" << dominio << " -> " << titulo << "			]" << '\n';
-	if (marcado) {
+	if (marcado && !tags->empty()) {
 		s << "[		" << "Marcado(Bookmark): activo" << "		]" << '\n';
-		s << "[		" << "Etiqueta(Tag): " << etiqueta << "			]" << '\n';
+		s << "[		" << "Ultima Etiqueta(Tag): " << tags->at(0) << "			]" << '\n';
 	}
 	return s.str();
 }

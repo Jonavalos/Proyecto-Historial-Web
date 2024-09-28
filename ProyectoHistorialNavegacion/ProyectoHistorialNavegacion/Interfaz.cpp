@@ -28,6 +28,16 @@ std::string Interfaz::buscarFiltro()
 	return filtro;
 }
 
+std::string Interfaz::buscarConTag()
+{
+	system("cls");
+	std::string filtro = "";
+	std::cout << "Ingrese el tag (string) a buscar" << '\n';
+	std::cin >> filtro;
+	system("cls");
+	return filtro;
+}
+
 std::string Interfaz::etiquear()
 {
 	system("cls");

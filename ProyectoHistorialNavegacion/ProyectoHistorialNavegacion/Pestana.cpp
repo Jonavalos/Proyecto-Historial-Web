@@ -132,7 +132,7 @@ bool Pestana::etiquetar()
 	if (Interfaz::etiquetaEsValida(tag)) {
 		return false;
 	}
-	sitioActual->setEtiqueta(tag);
+	sitioActual->agregarTag(tag);
 	return true;
 }
 

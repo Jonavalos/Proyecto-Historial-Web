@@ -34,7 +34,7 @@ private:
 	std::string titulo;		//Google (nombre)
 	std::string dominio;	//google.com
 	std::string url;		//https//::www.google.com/algo (no usar // porque lo comenta)			
-	std::string etiqueta;	//tag
+	std::vector<std::string>* tags;	//tags
 	bool marcado;			//bookmark
 
 public:
@@ -43,7 +43,7 @@ public:
 
 	SitioWeb(std::string dominio); //Para uso exclusivo 'find' de <algorithm>, no usar
 	SitioWeb(std::string titu, std::string dom, std::string ur);
-	SitioWeb(std::string titu, std::string dom, std::string ur, std::string etiqueta, bool marcado);
+	SitioWeb(std::string titu, std::string dom, std::string ur, std::vector<std::string>* tags, bool marcado);
 	SitioWeb();
 	virtual~SitioWeb();
 	
@@ -60,13 +60,14 @@ public:
 	std::string getTitulo();
 	std::string getDominio();
 	std::string getUrl();
-	std::string getEtiqueta();
+	std::vector<std::string>* getTags();
 	bool getMarcado();
 	
 	void setTitulo(std::string titu);
 	void setDominio(std::string dom);
 	void setUrl(std::string ur);
-	void setEtiqueta(std::string mar);
+	void setTags(std::vector<std::string>* tags);
+	void agregarTag(std::string tag);
 	void setMarcado(bool mar);
 
 	void guardar(std::fstream& strm);
