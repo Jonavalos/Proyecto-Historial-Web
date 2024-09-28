@@ -20,6 +20,30 @@ public:
 	Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
 	Pestana(SitioWeb* si, bool in,int indice = 0, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
 
+	bool verificarTimerHistorial() {
+
+		//for (auto it = historialSitios.begin(); it != historialSitios.end(); ) {
+		//	if ((*it)->debeEliminarse()) {
+		//		it = historialSitios.erase(it);  // Eliminar y actualizar el iterador
+		//		return true;
+		//	}
+		//	else {
+		//		++it;  // Avanzar al siguiente elemento solo si no se eliminó
+		//	}
+		//}
+		//return false;
+
+		for (SitioWeb* sitio : historialSitios) {
+			if (sitio->debeEliminarse()) {
+				historialSitios.pop_back();
+				if (indice > 0)
+					indice -= 1;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void leerSitiosDisponibles();
 	std::vector < SitioWeb*> getSitiosDisponibles();
 	virtual~Pestana();

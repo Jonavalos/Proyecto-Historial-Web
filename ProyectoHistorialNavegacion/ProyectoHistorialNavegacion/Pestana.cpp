@@ -90,6 +90,7 @@ bool Pestana::asignarActual(std::string filtro) //para buscar
 			historialSitios.pop_back();
 		}
 		sitioActual = *it;
+		sitioActual->restartTimer();
 		if(!incognito)
 			historialSitios.insert(historialSitios.begin(), sitioActual);
 		return true;
@@ -183,7 +184,12 @@ return s.str();
 std::string Pestana::navegarStr()
 {
 std::stringstream s;
-
+//if (sitioActual)
+//{
+//	if (sitioActual->debeEliminarse())
+//		sitioActual = nullptr;
+//}
+verificarTimerHistorial();
 if (FLECHA_IZQ) {
 if (indice - 1 >= 0) {
 	indice -= 1;
@@ -209,8 +215,8 @@ if (LETRA_M) {
 		}
 	}
 }
-if (LETRA_B) {	//Y FILTRAR
-	if (!buscar())
+if (LETRA_B) {	//Y FILTRAR		//se resetea el timer del sitioActual (el que acaba de buscar)
+	if (!buscar())	
 		return "1";
 }
 
@@ -274,15 +280,6 @@ if (!incognito) {
 
 	}
 }
-
-//if (NO_LETRA_F) {
-//	s << Interfaz::imprimirSitioActual(sitioActual, incognito) << '\n';
-//	s << Interfaz::encabezado();
-//	if (historialSitios.size() != 0) {
-//		s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
-//		s << historialSitios.at(indice)->toString() << '\n';
-//	}
-//}
 if (historialSitios.size() == 0) {
 	s << "Aun no se han realizado busquedas\n";
 }
@@ -291,38 +288,6 @@ s << " >>>>>>>>>>>>>>>> Fin Historial <<<<<<<<<<<<<<<<" << '\n';
 
 return s.str();
 }
-
-//int Pestana::ingresarMarcado(int n)
-//{
-//	std::string op;
-//	while(true) {
-//		std::cout << "Desea navegar en un sitio marcado?\n(0)->No\n(1)->Si\n";
-//		std::cin>>op;
-//		if (op == "1" || op == "0") {
-//			break;
-//	}
-//		std::cout << "Ha insertado un valor invalido\n";
-//	}
-//	if (op == "1") {
-//		int o = -1;
-//		while(true) {
-//			std::cout << "Digite la posicion de la pagina que desea visitar(Empezando en 0)\n";
-//			try {
-//				std::cin >> o;
-//				if (o >= 0 && o < n) {
-//					break;
-//				}
-//				std::cout << "Ha digitado un valor invalido\n";
-//			}
-//			catch (const std::invalid_argument& e) {
-//				std::cout << "Ha digitado un valor invalido\n";
-//				o = -1;
-//			}
-//		}
-//		return o;
-//	}
-//	return -1;
-//}
 
 void Pestana::guardar(std::fstream& strm)
 {

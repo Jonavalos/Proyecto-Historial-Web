@@ -5,6 +5,10 @@
 #include<fstream>
 #include <conio.h>
 #include<vector>
+#include <iostream>
+#include <chrono>
+#include <thread>
+
 #define LONGITUD_MAXIMA_STRING 50
 #define FLECHA_IZQ GetAsyncKeyState(VK_LEFT) & 0x8000
 #define FLECHA_DER GetAsyncKeyState(VK_RIGHT) & 0x8000
@@ -36,7 +40,7 @@ private:
 	std::string url;		//https//::www.google.com/algo (no usar // porque lo comenta)			
 	std::vector<std::string>* tags;	//tags
 	bool marcado;			//bookmark
-
+	std::chrono::time_point<std::chrono::steady_clock> tiempo_creacion;
 public:
 
 	
@@ -55,8 +59,14 @@ public:
 		os << obj.toString();
 		return os;
 	}
-	
-
+	bool debeEliminarse() const {
+		auto ahora = std::chrono::steady_clock::now();
+		auto duracion = std::chrono::duration_cast<std::chrono::seconds>(ahora - tiempo_creacion).count();
+		return duracion >= 20; // en segundos
+	}
+	bool restartTimer() {
+		tiempo_creacion = std::chrono::steady_clock::now(); return true;
+	}
 	std::string getTitulo();
 	std::string getDominio();
 	std::string getUrl();

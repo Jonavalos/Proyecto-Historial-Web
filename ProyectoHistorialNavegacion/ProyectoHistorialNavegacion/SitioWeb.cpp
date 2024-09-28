@@ -3,18 +3,24 @@
 SitioWeb::SitioWeb(std::string filtro)
 	: titulo(filtro), dominio(filtro), url(filtro), tags(new std::vector<std::string>), marcado(false)
 {
+	tiempo_creacion = std::chrono::steady_clock::now();
 }
 
 SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur) : titulo(titu), dominio(dom), url(ur), tags(new std::vector<std::string>), marcado(false)
 {
-
+	tiempo_creacion = std::chrono::steady_clock::now();
 }
 
 SitioWeb::SitioWeb(std::string titu, std::string dom, std::string ur, std::vector<std::string>* tags, bool marcado)
-	: titulo(titu), dominio(dom), url(ur), tags(tags), marcado(marcado) {}
+	: titulo(titu), dominio(dom), url(ur), tags(tags), marcado(marcado) {
+	
+	tiempo_creacion = std::chrono::steady_clock::now();
+
+}
 
 SitioWeb::SitioWeb() : titulo(""), dominio(""), url(""), tags(new std::vector<std::string>), marcado(false)
 {
+	tiempo_creacion = std::chrono::steady_clock::now();
 }
 
 SitioWeb::~SitioWeb()

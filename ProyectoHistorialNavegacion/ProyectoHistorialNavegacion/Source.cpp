@@ -1,6 +1,6 @@
 #include "Control.h"
 
-//este programa incluye bibliotecas: iostream, sstream, string, conio.h, algorithm, windows.h, vector
+//este programa incluye bibliotecas: iostream, sstream, string, conio.h, algorithm, windows.h, ,fstream, vector, chrono, thread
 
 int main() {
    Control::getInstance()->navegar();     //Guardar y leer de pestanas ya sirve 
