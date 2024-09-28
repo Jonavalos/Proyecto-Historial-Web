@@ -88,14 +88,19 @@ void SitioWeb::guardar(std::fstream& strm)	//Binario
 	const char* tit = titulo.c_str();
 	const char* domi = dominio.c_str();
 	const char* ur = url.c_str();
-	const char* etiq = etiqueta.c_str();
+	const char* etiq;
 	bool marca = marcado;
+	int cantTags = tags->size();
 
 	strm.write(tit, LONGITUD_MAXIMA_STRING);	
 	strm.write(domi, LONGITUD_MAXIMA_STRING);
 	strm.write(ur, LONGITUD_MAXIMA_STRING);
-	strm.write(etiq, LONGITUD_MAXIMA_STRING);
 	strm.write(reinterpret_cast<char*>(&marca), sizeof(bool));
+	strm.write(reinterpret_cast<char*>(&cantTags), sizeof(int));
+	for (const std::string& a:*tags) {
+		etiq = a.c_str();
+		strm.write(etiq, LONGITUD_MAXIMA_STRING);
+	}
 }
 
 SitioWeb* SitioWeb::recuperar(std::fstream& strm) //Binario
@@ -103,19 +108,26 @@ SitioWeb* SitioWeb::recuperar(std::fstream& strm) //Binario
 	char tit[LONGITUD_MAXIMA_STRING];
 	char domi[LONGITUD_MAXIMA_STRING];
 	char ur[LONGITUD_MAXIMA_STRING];
-	char etiq[LONGITUD_MAXIMA_STRING];
+	std::vector<std::string>* etiq = new std::vector<std::string>;
 	bool marca;
+	int cantTags=0;
 
 	strm.read(tit, LONGITUD_MAXIMA_STRING);
 	strm.read(domi, LONGITUD_MAXIMA_STRING);
 	strm.read(ur, LONGITUD_MAXIMA_STRING);
-	strm.read(etiq, LONGITUD_MAXIMA_STRING);
 	strm.read(reinterpret_cast<char*>(&marca), sizeof(bool));
+	strm.read(reinterpret_cast<char*>(&cantTags),sizeof(int));
 
-	if (strm.fail()) {
-		//Ocurrio un error, deberia tirar excepcion
-		return nullptr;
+	for (int i = 0; i < cantTags;i++) {
+		char tag[LONGITUD_MAXIMA_STRING];
+		strm.read(tag, LONGITUD_MAXIMA_STRING);
+		etiq->push_back(tag);
 	}
+
+	//if (strm.fail()) {
+	//	//Ocurrio un error, deberia tirar excepcion
+	//	return nullptr;
+	//}
 
 	return new SitioWeb(tit, domi, ur, etiq, marca);
 }

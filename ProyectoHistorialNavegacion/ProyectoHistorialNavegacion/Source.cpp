@@ -3,7 +3,7 @@
 //este programa incluye bibliotecas: iostream, sstream, string, conio.h, algorithm, windows.h, vector
 
 int main() {
-   Control::getInstance()->navegar();      //Guardar y leer de pestanas ya sirve 
+   /*Control::getInstance()->navegar();*/      //Guardar y leer de pestanas ya sirve 
 
    /* Pestana* pestana = new Pestana();
     pestana->leerSitiosDisponibles();
@@ -59,6 +59,66 @@ int main() {
     //    delete pestana;
     //if (pes2)
     //    delete pes2;
+    std::vector<std::string>* tags = new std::vector<std::string>;
+    tags->push_back("buscador");
+    tags->push_back("hola");
+
+    std::vector<std::string>* tags2 = new std::vector<std::string>;
+    tags2->push_back("busca");
+    tags2->push_back("h");
+    tags2->push_back("tigre");
+
+
+
+    SitioWeb* sitio = new SitioWeb("Google", "google.com", "google.com.com", tags, false);
+    SitioWeb* sitio3 = new SitioWeb("Firefox", "firefox.com", "firefox.com.com", tags2, false);
+
+    std::fstream guardar("pruebaSitio.csv",std::ios::out);
+
+    if (guardar.good() && guardar.is_open()) {
+       sitio->guardar(guardar);
+       sitio3->guardar(guardar);
+    }
+    guardar.close();
+
+    std::fstream leer("pruebaSitio.csv", std::ios::in);
+
+    SitioWeb* sitio2 = nullptr;
+    SitioWeb* sitio4 = nullptr;
+
+    if (leer.good() && leer.is_open()) {
+        sitio2 = SitioWeb::recuperar(leer);
+        sitio4 = SitioWeb::recuperar(leer);
+    }
+    leer.close();
+    
+    std::cout << sitio->getUrl() << "\n\n";
+    std::cout << sitio2->getUrl() << "\n\n";
+    std::cout << sitio3->getUrl() << "\n\n";
+    std::cout << sitio4->getUrl() << "\n\n";
+
+    for (std::string a : *sitio->getTags()) {
+        std::cout << a << "\n";
+    }
+    std::cout << "\n";
+    for (std::string a : *sitio2->getTags()) {
+        std::cout << a << "\n";
+    }
+    std::cout << "\n";
+
+
+    for (std::string a : *sitio3->getTags()) {
+        std::cout << a << "\n";
+    }
+    std::cout << "\n";
+
+    for (std::string a : *sitio4->getTags()) {
+        std::cout << a << "\n";
+    }
+    std::cout << "\n";
+
+
+
 
     return 0;
 
