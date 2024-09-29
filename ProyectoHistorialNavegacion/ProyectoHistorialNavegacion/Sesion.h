@@ -15,6 +15,7 @@ public:
 	Sesion(std::string nom, int ind, Pestana* act, std::vector<SitioWeb*> sit, std::vector<Pestana*> pest);
 	
 	virtual ~Sesion();
+	
 
 	std::string navegarPestanasStr();
 	std::string navegarPestanas();

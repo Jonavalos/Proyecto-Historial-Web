@@ -9,14 +9,17 @@ private:
 	static Control* instance;
 public:
 	static Control* getInstance();
-	static Control* leer();
-	void guardar();
 	void navegar();
 	void modificarSesion();
 	void cambiarSesion();
 	void crearNuevaSesion();
 	void importarExportar();
-	std::vector<Sesion*> importar();
+	void importar();
+	std::vector<Sesion*> leerSesiones();
+	void exportar();
+	void guardarSesionActual();
+	void guardarSesiones();
+	
 
 };
 

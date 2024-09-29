@@ -17,14 +17,24 @@ Pestana::Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> sit)
 	filtro = "";
 }
 
-Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sit)
+Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sitios, std::vector<SitioWeb*> hist)
 {
-	sitiosDisponibles = sit;
-	sitioActual = si;
-	incognito = in;
+	this->sitioActual = si;
+	this->incognito = in;
 	this->indice = indice;
-	filtro = "";
+	this->sitiosDisponibles = sitios;
+	this->historialSitios = hist;
+	this->filtro = "";
 }
+
+//Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sit)
+//{
+//	sitiosDisponibles = sit;
+//	sitioActual = si;
+//	incognito = in;
+//	this->indice = indice;
+//	this->filtro = "";
+//}
 
 void Pestana::leerSitiosDisponibles()
 {
@@ -227,7 +237,7 @@ if (FLECHA_UP) {
 	return "up";
 }
 if (ESCAPE) {
-return "";
+return "exit";
 }
 if (LETRA_V) {
 	system("cls");
@@ -267,7 +277,7 @@ if (LETRA_F) {
 	filtro = Interfaz::buscarFiltro();
 }
 if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E && NO_S_NI_C) {
-	return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s) \n<-, -> = Historial\ni = Incognito\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion";
+	return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s,f,g) \n<-, -> = Historial\ni = Incognito\nESC = Salir\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion\nf = Filtrar\ng = Importar/Exportar";
 }
 s << Interfaz::imprimirSitioActual(sitioActual, incognito) << '\n';
 if (!incognito) {
@@ -277,7 +287,6 @@ if (!incognito) {
 			s << "Posicion:" << indice << "/" << historialSitios.size() - 1 << '\n';
 			s << historialSitios.at(indice)->toString() << '\n';
 		}
-
 	}
 }
 if (historialSitios.size() == 0) {
@@ -349,5 +358,6 @@ Pestana* Pestana::leer(std::fstream& strm, std::vector<SitioWeb*> a) {
 		auxiliar = sitioPorURL(a, url);
 		if (auxiliar) historial.push_back(auxiliar);
 	}
-	return new Pestana(actual, incog, ind, historial);
+	return new Pestana(actual, incog, ind, a, historial);
+
 }

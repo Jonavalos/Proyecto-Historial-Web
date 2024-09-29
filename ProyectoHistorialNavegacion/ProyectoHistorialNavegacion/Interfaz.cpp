@@ -59,7 +59,9 @@ bool Interfaz::etiquetaEsValida(std::string tag)
 
 int Interfaz::mostrarMarcados(std::vector<SitioWeb*> marcados)
 {
+	int i = 0;
 	for (SitioWeb* sitio:marcados) {
+		std::cout << "Sitio#" << i++ << "\n";
 		std::cout<< sitio->toString() << "\n\n";
 	}
 
@@ -71,23 +73,24 @@ int Interfaz::mostrarMarcados(std::vector<SitioWeb*> marcados)
 			break;
 		}
 		std::cout << "Ha insertado un valor invalido\n";
+		system("pause");
 	}
 	if (op == "1") {
 		int o = -1;
 		while (true) {
 			std::cout << "Digite la posicion de la pagina que desea visitar(Empezando en 0)\n";
-			try {
 				std::cin >> o;
+				if (std::cin.fail()) {
+					std::cin.clear();
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					o = -1;
+				}
 				if (o >= 0 && o < marcados.size()) {
 					break;
 				}
-				std::cout << "Ha digitado un valor invalido\n";
+				std::cout << "Ha insertado un valor invalido\n";
+				system("pause");
 			}
-			catch (const std::invalid_argument& e) {
-				std::cout << "Ha digitado un valor invalido\n";
-				o = -1;
-			}
-		}
 		return o;
 	}
 	return -1;
@@ -107,22 +110,23 @@ int Interfaz::mostarBusquedaHistorial(std::vector<SitioWeb*> marcados)
 			break;
 		}
 		std::cout << "Ha insertado un valor invalido\n";
+		system("pause");
 	}
 	if (op == "1") {
 		int o = -1;
 		while (true) {
 			std::cout << "Digite la posicion de la pagina que desea visitar(Empezando en 0)\n";
-			try {
 				std::cin >> o;
+				if (std::cin.fail()) {
+					std::cin.clear();
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					o = -1;
+				}
 				if (o >= 0 && o < marcados.size()) {
 					break;
 				}
-				std::cout << "Ha digitado un valor invalido\n";
-			}
-			catch (const std::invalid_argument& e) {
-				std::cout << "Ha digitado un valor invalido\n";
-				o = -1;
-			}
+				std::cout << "Ha insertado un valor invalido\n";
+				system("pause");
 		}
 		return o;
 	}
@@ -163,17 +167,183 @@ int Interfaz::guardarONo()
 {
 	int op = -1;
 	while (true) {
-		try {
 			system("cls");
 			std::cout << "Importar/Exportar\n";
 			std::cout << "(1)Importar\n(2)Exportar\n(3)Cancelar\n";
 			std::cin >> op;
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				op = -1;
+			}
 			if (op > 0 && op < 4) {
 				return op;
 			}
-		}
-		catch (...) {
-		}
+			std::cout << "Ha insertado un valor invalido\n";
+			system("pause");
 	}
 	
+}
+
+bool Interfaz::salir()
+{
+	while (true) {
+	system("cls");
+	std::cout << "Salir?\n(ESC)Salir\n(0)Cancelar\n";
+	system("pause");
+	if (ESCAPE) {
+		despedida();
+		return true;
+	}
+	if (CERO) {
+		return false;
+	}
+	std::cout << "Ha insertado un valor invalido\n";
+	system("pause");
+	}
+}
+
+void Interfaz::despedida()
+{
+	std::cout << "Ha sido un placer. Hasta pronto!\n";
+}
+
+int Interfaz::insertarSesiones(int n)
+{
+	int op = 0;
+	while (true) {
+			system("cls");
+			std::cout << "Se han encontrado " << n << " sesiones\n";
+			std::cout << "Que desea hacer?\n";
+			std::cout << "(1)Reemplazar las sesiones existentes\n";
+			std::cout << "(2)Agregar las sesiones leidas a las actuales.\n";
+			std::cin >> op;
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				op = -1;
+			}
+			if (op == 1 || op == 2) {
+				return op;
+			}
+			std::cout << "Ha insertado un valor invalido\n";
+			system("pause");
+	}
+}
+
+void Interfaz::sesionesVacias()
+{
+	std::cout << "No se han encontrado sesiones guardadas\n";
+	system("pause");
+}
+
+int Interfaz::guardar()
+{
+	int op = 0;
+	while (true) {
+	
+			system("cls");
+			std::cout << "Guardar Sesiones\n";
+			std::cout << "Que desea hacer?\n";
+			std::cout << "(1)Guardar sesion actual\n";
+			std::cout << "(2)Guardar todas las sesiones\n";
+			std::cin >> op;
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				op = -1;
+			}
+			if (op == 1 || op == 2) {
+				return op;
+			}
+			std::cout << "Ha insertado un valor invalido\n";
+			system("pause");
+	}
+}
+
+bool Interfaz::confirmacionGuardar()
+{
+	int op = -1;
+	while (true) {
+			system("cls");
+			std::cout << "Esta seguro?\nSe borraran las sesiones que se hayan guardado anteriormente\n";
+			std::cout << "(1)Si\n(0)No\n";
+			std::cin >> op;
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				op = -1;
+			}
+			if (op == 1 || op == 0) {
+				return op;
+			}
+			std::cout << "Ha insertado un valor invalido\n";
+			system("pause");
+	}
+}
+
+int Interfaz::modificarSesion()
+{
+	int op = -1;
+	while (true) {
+		system("cls");
+		std::cout << "(0)Cambiar Sesion \n(1)Crear nueva sesion\n(2)Cancelar\n";
+		std::cin >> op;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			op = -1;
+		}
+		if (op == 1 || op == 0 || op == 2) {
+			return op;
+		}
+		std::cout << "Ha insertado un valor invalido\n";
+		system("pause");
+	}
+	
+}
+
+std::string Interfaz::nombreSesion()
+{
+	system("cls");
+	std::string nom;
+	std::cout << "Digite el nombre de la nueva sesion:\n";
+	std::cin >> nom;
+	return nom;
+}
+
+void Interfaz::sesionIngresada()
+{
+	std::cout << "Se ha ingresado una nueva sesion con exito\n";
+	system("pause");
+}
+
+void Interfaz::cantidadSesiones(int n)
+{
+	system("cls");
+	std::cout << "Actualmeste hay " << n << " sesiones\n";
+	std::cout << "A cual de las siguientes sesiones desea viajar? Digite el numero de la sesion\n";
+}
+
+void Interfaz::mostrarSesion(int i, std::string nombre)
+{
+	std::cout << "Sesion# " << i << " : " << nombre << "\n";
+}
+
+int Interfaz::cambiarSesion(int n)
+{
+	int op = -1;
+	while (true) {
+		std::cin >> op;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			op = -1;
+		}
+		if (op >= 0 && op < n) {
+			return op;
+		}
+		std::cout << "Ha insertado un valor invalido\n";
+		system("pause");
+	}
 }

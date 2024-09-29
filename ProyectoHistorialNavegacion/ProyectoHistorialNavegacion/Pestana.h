@@ -3,8 +3,10 @@
 #include<forward_list>
 #include<vector>
 #include <algorithm>
+#include <limits>
 #include <windows.h>
 #include"Interfaz.h"
+#undef max
 
 class Pestana
 {
@@ -18,7 +20,7 @@ private:
 public:
 	Pestana();
 	Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
-	Pestana(SitioWeb* si, bool in,int indice = 0, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
+	Pestana(SitioWeb* si = nullptr, bool in = false,int indice = 0, std::vector<SitioWeb*> sitios = std::vector<SitioWeb*>(), std::vector<SitioWeb*> hist = std::vector<SitioWeb*>());
 
 	bool verificarTimerHistorial() {
 
@@ -75,7 +77,6 @@ public:
 	//Archivos
 
 	static SitioWeb* sitioPorURL(std::vector<SitioWeb*> sit,std::string url);
-
 	void guardar(std::fstream& strm);
 	static Pestana* leer(std::fstream& strm, std::vector<SitioWeb*> a);
 

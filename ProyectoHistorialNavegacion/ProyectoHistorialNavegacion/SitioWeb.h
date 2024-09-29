@@ -30,7 +30,7 @@
 #define NO_LETRA_F !(GetAsyncKeyState('F') & 0x8000)	// negacion F ( "!LETRA_F" no sirve )
 #define LETRA_H GetAsyncKeyState('H') & 0x8000	//Busqueda en historial (contains string)
 #define NO_S_NI_C (!(GetAsyncKeyState('C') & 0x8000) && !(GetAsyncKeyState('S') & 0x8000))
-
+#define CERO (GetAsyncKeyState(0x30) & 0x8000)
 
 class SitioWeb
 {
@@ -42,8 +42,6 @@ private:
 	bool marcado;			//bookmark
 	std::chrono::time_point<std::chrono::steady_clock> tiempo_creacion;
 public:
-
-	
 
 	SitioWeb(std::string dominio); //Para uso exclusivo 'find' de <algorithm>, no usar
 	SitioWeb(std::string titu, std::string dom, std::string ur);
@@ -62,7 +60,7 @@ public:
 	bool debeEliminarse() const {
 		auto ahora = std::chrono::steady_clock::now();
 		auto duracion = std::chrono::duration_cast<std::chrono::seconds>(ahora - tiempo_creacion).count();
-		return duracion >= 20; // en segundos
+		return duracion >= 30; // en segundos
 	}
 	bool restartTimer() {
 		tiempo_creacion = std::chrono::steady_clock::now(); return true;

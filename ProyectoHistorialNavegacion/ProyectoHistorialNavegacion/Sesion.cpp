@@ -10,7 +10,7 @@ Sesion::Sesion()
 	}
 	strm.close();
 	nombreSesion = "Usuario";
-	pestanaActual = new Pestana(nullptr, false,sitios);
+	pestanaActual = new Pestana(nullptr, false,0,sitios);
 	pestanas.push_back(pestanaActual);
 	indiceP = 0;
 }
@@ -27,7 +27,7 @@ Sesion::Sesion(std::string nom)
 	strm.close();
 	nombreSesion = nom;
 
-	pestanaActual = new Pestana(nullptr, false, sitios);
+	pestanaActual = new Pestana(nullptr, false,0, sitios);
 	pestanas.push_back(pestanaActual);
 	indiceP = 0;
 	
@@ -69,9 +69,6 @@ std::string Sesion::navegarPestanasStr()
 			s << "Posicion:" << indiceP << "/" << pestanas.size() - 1 << '\n';
 		}
 	}
-	if (ESCAPE) {
-		return "";
-	}
 	if (NO_UP_DOWN) {
 		return "1";
 	}
@@ -89,7 +86,7 @@ std::string Sesion::navegarPestanas()
 			p = "Navegue con flechas";
 
 		}
-		if (p != "") { //mientras no sea ESC, navegar en Pestana
+		if (p != "") { 
 
 			while (true) {
 				std::string h = pestanas.at(indiceP)->navegarStr();
@@ -106,14 +103,17 @@ std::string Sesion::navegarPestanas()
 				if (h == "save") {
 					return h;
 				}
+				if (h == "exit") {
+					return h;
+				}
 				if (h == "create") {
-					pestanaActual = new Pestana(nullptr, false, sitios);
+					pestanaActual = new Pestana(nullptr, false,0, sitios);
 					indiceP += 1;
 					pestanas.push_back(pestanaActual);
 					h = "Se ha creado una nueva pestana";
 				}
 				if (h == "i") {
-					pestanaActual = new Pestana(nullptr, true, sitios);
+					pestanaActual = new Pestana(nullptr, true,0, sitios);
 					indiceP += 1;
 					pestanas.push_back(pestanaActual);
 					h = "Se ha creado una nueva pestana MODO INCOGNITO";
@@ -217,7 +217,6 @@ Sesion* Sesion::leer(std::fstream& strm)
 	if (existePesAct) {
 		actual = Pestana::leer(strm,sitios);
 		if (!actual)	return nullptr;
-		actual->setSitiosDisponibles(sitios);
 	}
 
 	if (!strm.read(reinterpret_cast<char*>(&cantPestanas), sizeof(int))) {
@@ -227,7 +226,6 @@ Sesion* Sesion::leer(std::fstream& strm)
 	for (int i = 0; i < cantPestanas; i++) {
 		pes = Pestana::leer(strm,sitios);
 		if (!pes) return nullptr;
-		pes->setSitiosDisponibles(sitios);
 		pestanas.push_back(pes);
 	}
 	return new Sesion(nombre, indice, actual, sitios, pestanas);

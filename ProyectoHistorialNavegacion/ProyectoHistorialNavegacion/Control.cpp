@@ -3,23 +3,14 @@
 Control* Control::instance = nullptr;
 
 Control::Control() {
+    sesionActual = nullptr;
 }
 Control* Control::getInstance()
 {
    if(instance == nullptr){
-       instance = leer();
-       if (instance == nullptr) {
            instance = new Control();
-       }
-       return instance;
    }
    return instance;
-}
-
-Control* Control::leer()
-{
-    //Lee lo que se guardo, y si no hay nada guardado retorna nullptr
-    return nullptr;
 }
 
 void Control::navegar()
@@ -28,28 +19,17 @@ void Control::navegar()
         if (!sesionActual) { crearNuevaSesion(); }
         std::string aux = "";
         aux = sesionActual->navegarPestanas();
-        if (aux == "change") {
-            modificarSesion();
-        }
-        if (aux == "save") {
-            importarExportar();
+        if (aux == "change") {modificarSesion();}
+        if (aux == "save") {importarExportar();}
+        if (aux == "exit") {
+            if (Interfaz::salir()) break;
         }
     }
 }
 
 void Control::modificarSesion()
 {
-    std::string op = "";
-    while (true) {
-        system("cls");
-        std::cout << "(0)Cambiar Sesion \n(1)Crear nueva sesion\n(2)Cancelar\n";
-        std::cin >> op;
-        if (op == "1" || op == "0" || op == "2") {
-            break;
-        }
-        std::cout << "Ha insertado un valor invalido\n";
-    }
-    int o = std::stoi(op);
+    int o = Interfaz::modificarSesion();
     switch (o) {
     case 0:
         cambiarSesion();
@@ -64,35 +44,58 @@ void Control::modificarSesion()
 
 void Control::crearNuevaSesion()
 {
-    system("cls");
-    std::string nom;
-    std::cout<<"Digite el nombre de la nueva sesion:\n";
-    std::cin >> nom;
+    std::string nom = Interfaz::nombreSesion();
     sesionActual = new Sesion(nom);
     sesiones.push_back(sesionActual);
-    std::cout << "Se ha ingresado una nueva sesion con exito\n";
-    system("pause");
+    Interfaz::sesionIngresada();
 }
 
 void Control::importarExportar()
 {
     int op = Interfaz::guardarONo();
-    
     switch (op) {
     case 1: {
-        std::vector<Sesion*> ses = importar();
-        //Imprimir todas las sesiones guardadas y preguntar cual desea importar(creo que asi seria)
-
+        importar();
+        break;
     }
-    case 2: {//Exportar(Llevar)
-
+    case 2: {
+        exportar();
+        break;
     }
-    case 3:
+    default:
         break;
     }
 }
 
-std::vector<Sesion*> Control::importar()
+void Control::importar()
+{
+    std::vector<Sesion*> ses = leerSesiones();
+    if (!ses.empty()) {
+        int op = Interfaz::insertarSesiones(ses.size());
+        switch(op) {
+        case 1:
+            for (Sesion* s : sesiones) {
+                delete s;
+            }
+            sesiones.clear();
+            for (Sesion* s:ses) {
+                sesiones.push_back(s);
+            }
+            break;
+        case 2:
+            for (Sesion* s : ses) {
+                sesiones.push_back(s);
+            }
+            break;
+        }
+        cambiarSesion();
+        return;
+    }
+    Interfaz::sesionesVacias();
+
+}
+
+std::vector<Sesion*> Control::leerSesiones()
 {
     std::vector<Sesion*> vec;
     std::fstream leer("Sesiones.csv", std::ios::in | std::ios::binary);
@@ -104,29 +107,54 @@ std::vector<Sesion*> Control::importar()
             }
             vec.push_back(sesion);
         }
-        leer.close();
     }
+    leer.close();
     return vec;
+}
+
+void Control::exportar()
+{
+    int op = Interfaz::guardar();
+    bool conf = Interfaz::confirmacionGuardar();
+    if (!conf) return;
+    switch (op) {
+    case 1: //Actual
+        guardarSesionActual();
+        break;
+    case 2: //Todas
+        guardarSesiones();
+        break;
+    }
+}
+
+void Control::guardarSesionActual()
+{
+    std::fstream guardar("Sesiones.csv", std::ios::out | std::ios::binary | std::ios::trunc);
+    if (guardar.is_open()) {
+        sesionActual->guardar(guardar);
+    }
+    guardar.close();
+}
+
+void Control::guardarSesiones()
+{
+    std::fstream guardar("Sesiones.csv", std::ios::out | std::ios::binary | std::ios::trunc);
+    if (guardar.is_open()) {
+        for (Sesion* s : sesiones) {
+            s->guardar(guardar);
+        }
+    }
+    guardar.close();
 }
 
 void Control::cambiarSesion()
 {
     int op = -1;
-    std::cout << "Actualmente hay " << sesiones.size() << " sesiones\n";
-    std::cout << "A cual de las siguientes sesiones desea viajar? Digite el numero de la sesion\n";
-    for (int i = 0; i < sesiones.size(); i++) {
-        std::cout << "Sesion#" << i << " : "<<sesiones.at(i)->getNombre()<<"\n";
+    Interfaz::cantidadSesiones(sesiones.size());
+    int i = 0;
+    for (Sesion* s:sesiones) {
+        Interfaz::mostrarSesion(i++, s->getNombre());
     }
-    while (true) {
-        try {
-            std::cin >> op;
-            if (op >= 0 && op < sesiones.size()) {
-                sesionActual = sesiones.at(op);
-                break;
-            }
-        }
-        catch (...) {
-            op = 0;
-        }
-    }
+    op = Interfaz::cambiarSesion(sesiones.size());
+    sesionActual = sesiones.at(op);
 }
