@@ -8,6 +8,11 @@ private:
 	Control();
 	static Control* instance;
 public:
+	~Control() {
+		for (Sesion* sesion : sesiones) {
+			delete sesion;
+		}
+	}
 	static Control* getInstance();
 	void navegar();
 	void modificarSesion();

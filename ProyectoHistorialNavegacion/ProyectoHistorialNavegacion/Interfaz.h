@@ -5,8 +5,6 @@
 #include"SitioWeb.h"
 #undef max
 
-
-
 class Interfaz
 {
 public:

@@ -164,21 +164,3 @@ std::string SitioWeb::toString() const
 	}
 	return s.str();
 }
-
-
-/*
-std::fstream strm("sitiosDispinibles.csv", std::ios::in);
-		std::string  tituloStr = "", dominioStr = "", urlStr = "", etiquetaStr = "", marcadoStr = "";
-
-		std::getline(strm, tituloStr, SEPARA_DATO);
-		std::getline(strm, dominioStr, SEPARA_DATO);
-		std::getline(strm, urlStr, SEPARA_DATO);
-		std::getline(strm, etiquetaStr, SEPARA_REGISTRO);
-		std::getline(strm, marcadoStr, SEPARA_DATO);
-
-
-		if (tituloStr == "" || dominioStr == "" || urlStr == "")
-			return nullptr;
-
-		return new SitioWeb(blabla)
-*/

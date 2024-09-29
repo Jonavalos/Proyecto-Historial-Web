@@ -43,14 +43,12 @@ Sesion::Sesion(std::string nom, int ind, Pestana* act, std::vector<SitioWeb*> si
 }
 
 Sesion::~Sesion() {
-	for (Pestana* pestana : pestanas) {
+	for (Pestana* pestana : pestanas) { //tiene sitios pero se borran en el siguiente for
 		delete pestana;
 	}
-	for (SitioWeb* sitio : sitios) {
+	for (SitioWeb* sitio : sitios) { //se borran los 25 sitios con sus vectores de tags
 		delete sitio;
 	}
-	if (pestanaActual)
-		delete pestanaActual;
 }
 
 

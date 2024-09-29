@@ -27,11 +27,11 @@ Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sitio
 	this->filtro = "";
 }
 
-Pestana::~Pestana()
+Pestana::~Pestana() //los sitios se eliminan en sesion
 {
-	for (SitioWeb* sitio : historialSitios) {
+	/*for (SitioWeb* sitio : historialSitios) {
 		delete sitio;
-	}
+	}*/
 }
 
 void Pestana::leerSitiosDisponibles()
@@ -303,8 +303,6 @@ void Pestana::guardar(std::fstream& strm)
 	strm.write(reinterpret_cast<char*>(&sitioActualExiste), sizeof(bool));
 
 	if (sitioActualExiste) {
-		/*url = sitioActual->getUrl().c_str();
-		strm.write(url, LONGITUD_MAXIMA_STRING);*/
 		url = sitioActual->getUrl(); // Usar std::string para mantener la validez
 		strm.write(url.c_str(), LONGITUD_MAXIMA_STRING);
 	}
