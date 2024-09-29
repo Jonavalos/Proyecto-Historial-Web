@@ -175,9 +175,6 @@ void Sesion::guardar(std::fstream& strm)
 	}
 
 	strm.write(reinterpret_cast<char*>(&pesActualExiste), sizeof(bool));
-	if (pesActualExiste) {
-		pestanaActual->guardar(strm);
-	}
 	
 	strm.write(reinterpret_cast<char*>(&cantPestanas), sizeof(int));
 	for (Pestana* s : pestanas) {
@@ -192,7 +189,6 @@ Sesion* Sesion::leer(std::fstream& strm)
 	char nombre[LONGITUD_MAXIMA_STRING];
 	int cantPestanas = 0;
 	int cantSitios = 0;
-	Pestana* actual = nullptr;
 	SitioWeb* sit = nullptr;
 	Pestana* pes = nullptr;
 	std::vector<SitioWeb*> sitios;
@@ -219,10 +215,6 @@ Sesion* Sesion::leer(std::fstream& strm)
 	if (!strm.read(reinterpret_cast<char*>(&existePesAct), sizeof(bool))) {
 		return nullptr;
 	}
-	if (existePesAct) {
-		actual = Pestana::leer(strm,sitios);
-		if (!actual)	return nullptr;
-	}
 
 	if (!strm.read(reinterpret_cast<char*>(&cantPestanas), sizeof(int))) {
 		return nullptr; 
@@ -233,5 +225,5 @@ Sesion* Sesion::leer(std::fstream& strm)
 		if (!pes) return nullptr;
 		pestanas.push_back(pes);
 	}
-	return new Sesion(nombre, indice, actual, sitios, pestanas);
+	return new Sesion(nombre, indice,pestanas.at(indice), sitios, pestanas);
 }
