@@ -3,9 +3,10 @@
 //este programa incluye bibliotecas: iostream, sstream, string, conio.h, algorithm, windows.h, ,fstream, vector, chrono, thread
 
 int main() {
-    Control* c = Control::getInstance();
+    /*Control* c = Control::getInstance();
     c->navegar();
-    delete c;
+    delete c;*/
+    Control::getInstance()->navegar();
 
    //SitioWeb* sitio1 = new SitioWeb("Google", "google.com", "https://www.google.com", tags, false);
    //SitioWeb* sitio2 = new SitioWeb("YouTube", "youtube.com", "https://www.youtube.com", tags, false);

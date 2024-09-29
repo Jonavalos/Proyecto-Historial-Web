@@ -13,6 +13,7 @@ public:
 			delete sesion;
 		}
 	}
+	static void deleteInstance();
 	static Control* getInstance();
 	void navegar();
 	void modificarSesion();

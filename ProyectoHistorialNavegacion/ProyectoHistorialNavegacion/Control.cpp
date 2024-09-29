@@ -5,10 +5,16 @@ Control* Control::instance = nullptr;
 Control::Control() {
     sesionActual = nullptr;
 }
+void Control::deleteInstance()
+{
+    if (instance != NULL)
+        delete instance;
+}
 Control* Control::getInstance()
 {
    if(instance == nullptr){
            instance = new Control();
+           atexit(deleteInstance);
    }
    return instance;
 }
