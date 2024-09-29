@@ -27,14 +27,12 @@ Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sitio
 	this->filtro = "";
 }
 
-//Pestana::Pestana(SitioWeb* si, bool in, int indice, std::vector<SitioWeb*> sit)
-//{
-//	sitiosDisponibles = sit;
-//	sitioActual = si;
-//	incognito = in;
-//	this->indice = indice;
-//	this->filtro = "";
-//}
+Pestana::~Pestana()
+{
+	for (SitioWeb* sitio : historialSitios) {
+		delete sitio;
+	}
+}
 
 void Pestana::leerSitiosDisponibles()
 {
@@ -51,13 +49,6 @@ void Pestana::leerSitiosDisponibles()
 std::vector<SitioWeb*> Pestana::getSitiosDisponibles()
 {
 	return sitiosDisponibles;
-}
-
-Pestana::~Pestana()
-{
-	if (this->sitioActual == nullptr) {
-		//delete sitio; //Por ahora no, eventualmente
-	}
 }
 
 void Pestana::vaciarVectorSitiosDisponibles()

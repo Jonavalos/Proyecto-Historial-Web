@@ -21,7 +21,7 @@ public:
 	Pestana();
 	Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
 	Pestana(SitioWeb* si = nullptr, bool in = false,int indice = 0, std::vector<SitioWeb*> sitios = std::vector<SitioWeb*>(), std::vector<SitioWeb*> hist = std::vector<SitioWeb*>());
-
+	virtual~Pestana();
 	bool verificarTimerHistorial() {
 
 		//for (auto it = historialSitios.begin(); it != historialSitios.end(); ) {
@@ -48,7 +48,6 @@ public:
 
 	void leerSitiosDisponibles();
 	std::vector < SitioWeb*> getSitiosDisponibles();
-	virtual~Pestana();
 	void vaciarVectorSitiosDisponibles();
 	SitioWeb* getSitioActual();
 	int getIndice();

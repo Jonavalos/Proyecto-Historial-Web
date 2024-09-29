@@ -25,7 +25,8 @@ SitioWeb::SitioWeb() : titulo(""), dominio(""), url(""), tags(new std::vector<st
 
 SitioWeb::~SitioWeb()
 {
-
+	if (tags)
+		delete tags;
 }
 
 

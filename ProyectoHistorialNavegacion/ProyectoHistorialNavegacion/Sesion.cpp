@@ -43,7 +43,14 @@ Sesion::Sesion(std::string nom, int ind, Pestana* act, std::vector<SitioWeb*> si
 }
 
 Sesion::~Sesion() {
-	//por ahora no, eventualmente
+	for (Pestana* pestana : pestanas) {
+		delete pestana;
+	}
+	for (SitioWeb* sitio : sitios) {
+		delete sitio;
+	}
+	if (pestanaActual)
+		delete pestanaActual;
 }
 
 
