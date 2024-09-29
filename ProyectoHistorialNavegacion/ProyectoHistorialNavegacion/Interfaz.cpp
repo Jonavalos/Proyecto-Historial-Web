@@ -23,6 +23,7 @@ std::string Interfaz::buscarFiltro()
 	system("cls");
 	std::string filtro = "";
 	std::cout << "Ingrese el filtro (string) a buscar" << '\n';
+	std::cout << "Escriba 'reset' para resetear el filtro (sin filtro)" << '\n';
 	std::cin >> filtro;
 	system("cls");
 	return filtro;

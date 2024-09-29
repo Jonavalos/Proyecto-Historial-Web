@@ -266,6 +266,8 @@ if (LETRA_G) {
 if (LETRA_F) {
 	system("cls");
 	filtro = Interfaz::buscarFiltro();
+	if (filtro == "reset")
+		filtro = "";
 }
 if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E && NO_S_NI_C) {
 	return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s,f,g) \n<-, -> = Historial\ni = Incognito\nESC = Salir\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion\nf = Filtrar\ng = Importar/Exportar";
