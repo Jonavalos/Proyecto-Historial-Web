@@ -8,6 +8,13 @@ Pestana::Pestana()
 	indice = 0;
 }
 
+Pestana::Pestana(int n) //para mock y unit tests
+{
+	incognito = false;
+	sitioActual = nullptr;
+	indice = 0;
+}
+
 Pestana::Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> sit)
 {
 	sitiosDisponibles = sit;

@@ -19,6 +19,7 @@ private:
 	std::string filtro;
 public:
 	Pestana();
+	Pestana(int n);
 	Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
 	Pestana(SitioWeb* si = nullptr, bool in = false,int indice = 0, std::vector<SitioWeb*> sitios = std::vector<SitioWeb*>(), std::vector<SitioWeb*> hist = std::vector<SitioWeb*>());
 	virtual~Pestana();
