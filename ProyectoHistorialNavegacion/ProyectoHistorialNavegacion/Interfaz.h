@@ -5,9 +5,9 @@
 #include"SitioWeb.h"
 #undef max
 
-class Interfaz
+class Interfaz	//opciones de los menus
 {
-public:
+public:	
 	static std::string encabezado();
 	static std::string buscarDominio();
 	static std::string buscarFiltro();

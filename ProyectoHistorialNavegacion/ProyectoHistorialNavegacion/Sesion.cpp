@@ -46,7 +46,7 @@ Sesion::~Sesion() {
 	for (Pestana* pestana : pestanas) { //tiene sitios pero se borran en el siguiente for
 		delete pestana;
 	}
-	for (SitioWeb* sitio : sitios) { //se borran los 25 sitios con sus vectores de tags
+	for (SitioWeb* sitio : sitios) { //se borran los 25 sitios, cada uno con su vector respectivo de tags
 		delete sitio;
 	}
 }
@@ -92,7 +92,7 @@ std::string Sesion::navegarPestanas()
 
 		}
 		if (p != "") { 
-
+			//h es la navegacion de pestana. aqui se ejecutan cosas dependiendo de su output
 			while (true) {
 				std::string h = pestanas.at(indiceP)->navegarStr();
 				if (h == "1") {

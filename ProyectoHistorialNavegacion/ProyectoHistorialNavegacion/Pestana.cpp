@@ -41,6 +41,33 @@ Pestana::~Pestana() //los sitios se eliminan en sesion
 	}*/
 }
 
+bool Pestana::verificarTimerHistorial()
+{
+
+	//por si se quiere eliminar todos los sitios repetidos
+	//for (auto it = historialSitios.begin(); it != historialSitios.end(); ) {
+	//	if ((*it)->debeEliminarse()) {
+	//		it = historialSitios.erase(it);  // Eliminar y actualizar el iterador
+	//		return true;
+	//	}
+	//	else {
+	//		++it;  // Avanzar al siguiente elemento solo si no se eliminó
+	//	}
+	//}
+	//return false;
+
+	//elimina pero deja repetidos mas recientes
+	for (SitioWeb* sitio : historialSitios) {
+		if (sitio->debeEliminarse()) {
+			historialSitios.pop_back();
+			if (indice > 0)
+				indice -= 1;
+			return true;
+		}
+	}
+	return false;
+}
+
 void Pestana::leerSitiosDisponibles()
 {
 	std::fstream strm("sitiosDispinibles.csv", std::ios::in);
@@ -86,8 +113,10 @@ std::vector<SitioWeb*> Pestana::getHistorialSitios()
 	return historialSitios;
 }
 
-bool Pestana::asignarActual(std::string filtro) //para buscar
+bool Pestana::asignarActual(std::string filtro) 
 {
+	//para buscar, si lo encuentra lo asigna a sitioActual y lo mete al historial
+
 	SitioWeb sitioABuscar(filtro);
 
 	auto it = std::find_if(sitiosDisponibles.begin(), sitiosDisponibles.end(),
@@ -105,7 +134,7 @@ bool Pestana::asignarActual(std::string filtro) //para buscar
 	}
 	return false;
 
-	//explicacion miedo		//ya no es dominio, ahora string filtro se setea en todos los atributos tipo string de SitioWeb
+	//explicacion miedo		//update: ya no es dominio, ahora string filtro se setea en todos los atributos tipo string de SitioWeb
 	/*
 	itera el vector comparandolo con el dominio de sitioABuscar, si lo encuentra lo almacena en it
 	lo de abajo es una lambda (funcion anonima interna).
@@ -156,6 +185,9 @@ std::vector<SitioWeb*> Pestana::marcados() {
 }
 std::vector<SitioWeb*> Pestana::busquedaEnHistorial(std::string filtro)
 {
+	//verifica que el string filtro exista en el titulo de los sitios del historial
+	//se pasa como parametro el titulo del sitio porque el titulo se incluye en dominio y url. 
+	// ej.: goo existe en google, google.com y https www google . com)
 	std::vector<SitioWeb*> vec;
 	for (SitioWeb* sitio : historialSitios) {
 		if (contiene(filtro, sitio->getTitulo())) {
@@ -166,6 +198,7 @@ std::vector<SitioWeb*> Pestana::busquedaEnHistorial(std::string filtro)
 }
 bool Pestana::contiene(std::string filtro, std::string texto)
 {
+	//verifica si el string filtro existe en texto
 	bool encontrado = false;
 	if (texto.find(filtro) != std::string::npos) {	//npos es una constante de c++ 
 		encontrado = true;						//que contiene el valor  max de indice de string
@@ -191,12 +224,11 @@ return s.str();
 
 std::string Pestana::navegarStr()
 {
+//muchas salidas devuelven letras unicas o comando, esto con el fin de que sirvan como identificador en  sesion
+//para poder ejecutar acciones especificas
 std::stringstream s;
-//if (sitioActual)
-//{
-//	if (sitioActual->debeEliminarse())
-//		sitioActual = nullptr;
-//}
+//verifica el tiempo cada vez que se ejecuta una accion cualquiera
+//no se usan hilos porque "no se pueden usar cosas no vistas en clase"
 verificarTimerHistorial();
 if (FLECHA_IZQ) {
 if (indice - 1 >= 0) {
@@ -208,7 +240,7 @@ if (indice + 1 < historialSitios.size()) {
 	indice+=1;
 }
 }
-if (LETRA_i) {		//!incognito, crea una nueva en incognito. incognito, lo pasa a normal 
+if (LETRA_i) {		//incognito==false  -> crea una nueva en incognito. incognito==true -> lo pasa a normal 
 	if (incognito)
 		incognito = false;
 	else
@@ -276,7 +308,8 @@ if (LETRA_F) {
 	if (filtro == "reset")
 		filtro = "";
 }
-if (NO_FLECHAS_NI_ESC_NI_i_NI_m_NI_b_NI_NI_S_NI_c_NI_g_NI_f_NI_NI_H) {
+if (NO_FLECHAS_NI_ESC_NI_i_NI_m_NI_b_NI_NI_S_NI_c_NI_g_NI_f_NI_H) {
+	//si no son esas letras, recuerda que se usan esas letras especificas para "moverse"
 	return "<-, -> = Historial\nup & down = Pestanas\ni = Incognito\nESC = Salir\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion\nf = Filtrar\ng = Importar/Exportar\nh = Buscar en Historial";
 }
 s << Interfaz::imprimirSitioActual(sitioActual, incognito) << '\n';

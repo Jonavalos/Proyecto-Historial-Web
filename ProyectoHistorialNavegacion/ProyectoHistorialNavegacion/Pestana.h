@@ -11,9 +11,9 @@
 class Pestana
 {
 private:
-	std::vector<SitioWeb*> sitiosDisponibles;
-	std::vector<SitioWeb*> historialSitios;
-	SitioWeb* sitioActual;
+	std::vector<SitioWeb*> sitiosDisponibles;	//sitios que se pueden buscar, los del archivo
+	std::vector<SitioWeb*> historialSitios;		//sitios que se han visitado
+	SitioWeb* sitioActual;						//mostrado en la parte de arriba, el mas reciente
 	bool incognito;
 	int indice;
 	std::string filtro;
@@ -23,29 +23,7 @@ public:
 	Pestana(SitioWeb* si, bool in, std::vector<SitioWeb*> = std::vector<SitioWeb*>());
 	Pestana(SitioWeb* si = nullptr, bool in = false,int indice = 0, std::vector<SitioWeb*> sitios = std::vector<SitioWeb*>(), std::vector<SitioWeb*> hist = std::vector<SitioWeb*>());
 	virtual~Pestana();
-	bool verificarTimerHistorial() {
-
-		//for (auto it = historialSitios.begin(); it != historialSitios.end(); ) {
-		//	if ((*it)->debeEliminarse()) {
-		//		it = historialSitios.erase(it);  // Eliminar y actualizar el iterador
-		//		return true;
-		//	}
-		//	else {
-		//		++it;  // Avanzar al siguiente elemento solo si no se eliminó
-		//	}
-		//}
-		//return false;
-
-		for (SitioWeb* sitio : historialSitios) {
-			if (sitio->debeEliminarse()) {
-				historialSitios.pop_back();
-				if (indice > 0)
-					indice -= 1;
-				return true;
-			}
-		}
-		return false;
-	}
+	bool verificarTimerHistorial();
 
 	void leerSitiosDisponibles();
 	std::vector < SitioWeb*> getSitiosDisponibles();
@@ -67,12 +45,9 @@ public:
 
 	bool etiquetar();
 
-
-	std::string imprimirActual(); //imprime el actual dentro de la pestana
+	std::string imprimirActual();
 
 	std::string navegarStr();
-
-	int ingresarMarcado(int n);
 
 	//Archivos
 

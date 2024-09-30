@@ -1,7 +1,7 @@
 #pragma once
 #include"Sesion.h"
 class Control	
-{
+{				//controladora singleton
 private:
 	std::vector<Sesion*> sesiones;
 	Sesion* sesionActual;

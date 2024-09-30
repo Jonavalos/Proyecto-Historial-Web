@@ -5,9 +5,10 @@
 #include "Pestana.h"
 #include "SitioWeb.h"
 
-// Test para busqueda, asignar, buscar coincidencia. Son las operaciones principales del programa
-//No se puede usar DELETE en los tests
-//Para usar los tests, descomentar el codigo indicado en main
+// Tests que simulan las funciones principales de Pestana 
+// como busqueda, asignar, buscar coincidencia. Son las operaciones principales del programa
+//  NO se puede usar DELETE en los TEST, al Visual no le termina de agradar la idea
+//  Para usar los tests, descomentar el codigo indicado en main
 TEST(PestanaTest, FiltroCoincide) {
     Pestana pestana(1);
     std::vector<std::string>* tags = new std::vector<std::string>();
@@ -115,19 +116,20 @@ TEST(PestanaTest, sinFiltro) {
 
 }
 
-//este programa incluye bibliotecas: iostream, sstream, string, conio.h, algorithm, windows.h, ,fstream, vector, chrono, thread
-//usa microsoft google test descargado desde visual
+// este programa incluye las bibliotecas: iostream, sstream, string, conio.h, algorithm, windows.h, 
+// fstream, vector, chrono, gtest/gtest.h
+// esa ultima usa microsoft google test descargado desde visual
 int main(int argc, char** argv) {
     
-    ////Usar para tests
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    //Usar para tests
+    //::testing::InitGoogleTest(&argc, argv);
+    //return RUN_ALL_TESTS();
 
     //Usar para el programa normal
-    /*Control::getInstance()->navegar();*/
+    Control::getInstance()->navegar();
 
 
-    //Sitios usados como ejemplo en este programa
+   //Sitios usados como ejemplo en este programa
 
    //SitioWeb* sitio1 = new SitioWeb("Google", "google.com", "https://www.google.com", tags, false);
    //SitioWeb* sitio2 = new SitioWeb("YouTube", "youtube.com", "https://www.youtube.com", tags, false);
