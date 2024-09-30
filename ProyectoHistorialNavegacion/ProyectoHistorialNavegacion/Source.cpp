@@ -5,8 +5,6 @@
 #include "Pestana.h"
 #include "SitioWeb.h"
 
-// Simulación simple de la función "contiene"
-
 // Test para busqueda, asignar, buscar coincidencia. Son las operaciones principales del programa
 //No se puede usar DELETE en los tests
 //Para usar los tests, descomentar el codigo indicado en main
