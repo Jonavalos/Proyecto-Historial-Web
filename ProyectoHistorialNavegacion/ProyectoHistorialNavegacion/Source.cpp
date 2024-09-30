@@ -119,12 +119,12 @@ TEST(PestanaTest, sinFiltro) {
 //usa microsoft google test descargado desde visual
 int main(int argc, char** argv) {
     
-    //Usar para tests
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    ////Usar para tests
+    //::testing::InitGoogleTest(&argc, argv);
+    //return RUN_ALL_TESTS();
 
     //Usar para el programa normal
-    //Control::getInstance()->navegar();
+    Control::getInstance()->navegar();
 
    //SitioWeb* sitio1 = new SitioWeb("Google", "google.com", "https://www.google.com", tags, false);
    //SitioWeb* sitio2 = new SitioWeb("YouTube", "youtube.com", "https://www.youtube.com", tags, false);

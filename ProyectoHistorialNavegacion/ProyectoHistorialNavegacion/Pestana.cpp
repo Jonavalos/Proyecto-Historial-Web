@@ -223,7 +223,7 @@ if (LETRA_M) {
 		}
 	}
 }
-if (LETRA_B) {	//Y FILTRAR		//se resetea el timer del sitioActual (el que acaba de buscar)
+if (LETRA_B) {			//se resetea el timer del sitioActual (el que acaba de buscar)
 	if (!buscar())	
 		return "1";
 }
@@ -276,8 +276,8 @@ if (LETRA_F) {
 	if (filtro == "reset")
 		filtro = "";
 }
-if (NO_FLECHAS_NI_ESC_NI_i_NI_m && NO_B_NI_E && NO_S_NI_C) {
-	return "Navegue con ( <-, ->, ESC, i, m, b,v,c,s,f,g) \n<-, -> = Historial\ni = Incognito\nESC = Salir\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion\nf = Filtrar\ng = Importar/Exportar";
+if (NO_FLECHAS_NI_ESC_NI_i_NI_m_NI_b_NI_NI_S_NI_c_NI_g_NI_f_NI_NI_H) {
+	return "<-, -> = Historial\nup & down = Pestanas\ni = Incognito\nESC = Salir\nm = Marcar\nb = Buscar\nv = Ver marcadores\nc = Crear nueva pestana\ns = Cambiar de sesion\nf = Filtrar\ng = Importar/Exportar\nh = Buscar en Historial";
 }
 s << Interfaz::imprimirSitioActual(sitioActual, incognito) << '\n';
 if (!incognito) {

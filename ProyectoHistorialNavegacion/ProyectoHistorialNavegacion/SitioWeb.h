@@ -20,7 +20,7 @@
 #define ESCAPE GetAsyncKeyState(VK_ESCAPE) & 0x8000
 #define LETRA_V GetAsyncKeyState('V') & 0x8000	//Ver lista marcados
 #define LETRA_M GetAsyncKeyState('M') & 0x8000	//marcar
-#define NO_FLECHAS_NI_ESC_NI_i_NI_m (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) && !(GetAsyncKeyState('M') & 0x8000) )
+#define NO_FLECHAS_NI_ESC_NI_i_NI_m_NI_b_NI_NI_S_NI_c_NI_g_NI_f_NI_NI_H (!(GetAsyncKeyState(VK_RIGHT) & 0x8000) && !(GetAsyncKeyState(VK_LEFT) & 0x8000) && !(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && !(GetAsyncKeyState('I') & 0x8000) && !(GetAsyncKeyState('M') & 0x8000) && !(GetAsyncKeyState('B') & 0x8000) && !(GetAsyncKeyState('E') & 0x8000) && !(GetAsyncKeyState('S') & 0x8000) && !(GetAsyncKeyState('C') & 0x8000) && !(GetAsyncKeyState('G') & 0x8000) && !(GetAsyncKeyState('F') & 0x8000) && !(GetAsyncKeyState('H') & 0x8000) && !(GetAsyncKeyState('V') & 0x8000) )
 #define NO_B_NI_E (!(GetAsyncKeyState('B') & 0x8000) && !(GetAsyncKeyState('E') & 0x8000))
 #define NO_UP_DOWN (!(GetAsyncKeyState(VK_DOWN) & 0x8000) && !(GetAsyncKeyState(VK_UP) & 0x8000))
 #define LETRA_S GetAsyncKeyState('S') & 0x8000	//cambiar de sesion
