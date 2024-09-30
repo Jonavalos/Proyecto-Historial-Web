@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include "Pestana.h"
-#include "SitioWeb.h"  // Incluye las clases necesarias
+#include "SitioWeb.h"
 
 // Simulación simple de la función "contiene"
 
@@ -13,17 +13,17 @@
 TEST(PestanaTest, FiltroCoincide) {
     Pestana pestana(1);
     std::vector<std::string>* tags = new std::vector<std::string>();
-    // Creamos sitios web de ejemplo
+    // crear sitios web de ejemplo
     SitioWeb* sitio1 = new SitioWeb("Google", "google.com", "https://www.google.com", tags, false);
     SitioWeb* sitio2 = new SitioWeb("YouTube", "youtube.com", "https://www.youtube.com", tags, false);
     SitioWeb* sitio3 = new SitioWeb("Facebook", "facebook.com", "https://www.facebook.com", tags, false);
-
+    //asignarlos como disponibles en la pestana
     std::vector<SitioWeb*> sitiosDisponibles;
     sitiosDisponibles.push_back(sitio1);
     sitiosDisponibles.push_back(sitio2);
     sitiosDisponibles.push_back(sitio3);
     pestana.setSitiosDisponibles(sitiosDisponibles);
-
+    //asignarlos a pestana actual, o sea, "buscarlos"
     pestana.asignarActual("Google");
     pestana.asignarActual("YouTube");
     pestana.asignarActual("Facebook");
@@ -40,7 +40,7 @@ TEST(PestanaTest, FiltroCoincide) {
 TEST(PestanaTest, FiltroNoCoincide) {
     Pestana pestana(1);
     std::vector<std::string>* tags = new std::vector<std::string>();
-    // Creamos sitios web de ejemplo
+   
     SitioWeb* sitio1 = new SitioWeb("Google", "google.com", "https://www.google.com", tags, false);
     SitioWeb* sitio2 = new SitioWeb("YouTube", "youtube.com", "https://www.youtube.com", tags, false);
     SitioWeb* sitio3 = new SitioWeb("Facebook", "facebook.com", "https://www.facebook.com", tags, false);
@@ -58,20 +58,72 @@ TEST(PestanaTest, FiltroNoCoincide) {
     //buscar itte
     std::vector<SitioWeb*> resultado = pestana.busquedaEnHistorial("itte");
 
-    // comprobar que se no se ha devuelto Twitter
+    // comprobar que se NO se ha devuelto Twitter (falla)
     ASSERT_EQ(resultado.size(), 1);
     EXPECT_EQ(resultado[0]->getTitulo(), "Twitter");
 
 }
 
+TEST(PestanaTest, HistorialVacio) {
+    Pestana pestana(1);
+    std::vector<std::string>* tags = new std::vector<std::string>();
+
+    SitioWeb* sitio1 = new SitioWeb("Google", "google.com", "https://www.google.com", tags, false);
+    SitioWeb* sitio2 = new SitioWeb("YouTube", "youtube.com", "https://www.youtube.com", tags, false);
+    SitioWeb* sitio3 = new SitioWeb("Facebook", "facebook.com", "https://www.facebook.com", tags, false);
+
+    std::vector<SitioWeb*> sitiosDisponibles;
+    sitiosDisponibles.push_back(sitio1);
+    sitiosDisponibles.push_back(sitio2);
+    sitiosDisponibles.push_back(sitio3);
+    pestana.setSitiosDisponibles(sitiosDisponibles);
+
+    //no se agregan al historial
+    /*pestana.asignarActual("Google");
+    pestana.asignarActual("YouTube");
+    pestana.asignarActual("Facebook");*/
+
+    //buscar itte
+    std::vector<SitioWeb*> resultado = pestana.busquedaEnHistorial("ou");
+
+    // comprobar que se NO se ha devuelto YouTube (FALLA)
+    ASSERT_EQ(resultado.size(), 1);
+    EXPECT_EQ(resultado[0]->getTitulo(), "YouTube");
+
+}
+
+TEST(PestanaTest, sinFiltro) {
+    Pestana pestana(1);
+    std::vector<std::string>* tags = new std::vector<std::string>();
+    
+    SitioWeb* sitio1 = new SitioWeb("Google", "google.com", "https://www.google.com", tags, false);
+    SitioWeb* sitio2 = new SitioWeb("YouTube", "youtube.com", "https://www.youtube.com", tags, false);
+    SitioWeb* sitio3 = new SitioWeb("Facebook", "facebook.com", "https://www.facebook.com", tags, false);
+
+    std::vector<SitioWeb*> sitiosDisponibles;
+    sitiosDisponibles.push_back(sitio1);
+    sitiosDisponibles.push_back(sitio2);
+    sitiosDisponibles.push_back(sitio3);
+    pestana.setSitiosDisponibles(sitiosDisponibles);
+
+    pestana.asignarActual("Google");
+    pestana.asignarActual("YouTube");
+
+    //buscar ou
+    std::vector<SitioWeb*> resultado = pestana.busquedaEnHistorial("");
+
+    // comprobar que se ingresaron los 2
+    ASSERT_EQ(resultado.size(), 2);
+
+}
 
 //este programa incluye bibliotecas: iostream, sstream, string, conio.h, algorithm, windows.h, ,fstream, vector, chrono, thread
-
+//usa microsoft google test descargado desde visual
 int main(int argc, char** argv) {
     
     //Usar para tests
-    //::testing::InitGoogleTest(&argc, argv);
-    //return RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 
     //Usar para el programa normal
     //Control::getInstance()->navegar();

@@ -129,7 +129,6 @@
   <ItemGroup>
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="Interfaz.cpp" />
-    <ClCompile Include="Pruebas.cpp" />
     <ClCompile Include="Sesion.cpp" />
     <ClCompile Include="Pestana.cpp" />
     <ClCompile Include="SitioWeb.cpp" />
